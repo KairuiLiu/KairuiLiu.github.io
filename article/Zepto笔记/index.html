@@ -1,0 +1,567 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0"><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="mask-icon" href="/images/logo.svg" color="#222"><link rel="manifest" href="/images/manifest.json"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CPT+Sans:300,300italic,400,400italic,700,700italic%7CFira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/greem/pace-theme-minimal.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script><script class="next-config" data-name="main" type="application/json">{"hostname":"blog.liukairui.me","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.12.3","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":320},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"GPJGYFJZH3","apiKey":"594eec10fca5caccffae82e82d066310","indexName":"hexo","hits":{"per_page":10}}}</script><script src="/js/config.js"></script><meta name="description" content="Zepto是一个轻量的js库，专为移动端定制，与jQuery有着类似的API,所以学前需要先jQuery.主讲:尚硅谷,视频来自B站:BV18s411E7b4"><meta property="og:type" content="article"><meta property="og:title" content="Zepto笔记"><meta property="og:url" content="https://blog.liukairui.me/article/Zepto%E7%AC%94%E8%AE%B0/"><meta property="og:site_name" content="LiuKairui&#39;s Blog"><meta property="og:description" content="Zepto是一个轻量的js库，专为移动端定制，与jQuery有着类似的API,所以学前需要先jQuery.主讲:尚硅谷,视频来自B站:BV18s411E7b4"><meta property="og:locale" content="zh_CN"><meta property="article:published_time" content="2020-11-26T05:37:50.000Z"><meta property="article:modified_time" content="2021-10-18T06:44:13.586Z"><meta property="article:author" content="Liu Kairui"><meta property="article:tag" content="前端"><meta property="article:tag" content="笔记"><meta property="article:tag" content="JavaScript"><meta property="article:tag" content="Zepto"><meta property="article:tag" content="移动端优化"><meta name="twitter:card" content="summary"><link rel="canonical" href="https://blog.liukairui.me/article/Zepto%E7%AC%94%E8%AE%B0/"><script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.liukairui.me/article/Zepto%E7%AC%94%E8%AE%B0/","path":"article/Zepto笔记/","title":"Zepto笔记"}</script><script class="next-config" data-name="calendar" type="application/json">""</script><title>Zepto笔记 | LiuKairui's Blog</title><script>var titleTime,OriginTitile=document.title;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="我们活着是为了什么? | "+OriginTitile,clearTimeout(titleTime)):(document.title="整点薯条 | "+OriginTitile,titleTime=setTimeout(function(){document.title=OriginTitile},2e3))})</script><noscript><link rel="stylesheet" href="/css/noscript.css"></noscript><link rel="alternate" href="/atom.xml" title="LiuKairui's Blog" type="application/atom+xml"><style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head><body itemscope itemtype="http://schema.org/WebPage" class="use-motion"><div class="headband"></div><main class="main"><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-container"><div class="site-nav-toggle"><div class="toggle" aria-label="切换导航栏" role="button"><span class="toggle-line"></span> <span class="toggle-line"></span> <span class="toggle-line"></span></div></div><div class="site-meta"><a href="/" class="brand" rel="start"><i class="logo-line"></i><p class="site-title">LiuKairui's Blog</p><i class="logo-line"></i></a><p class="site-subtitle" itemprop="description">整点薯条</p></div><div class="site-nav-right"><div class="toggle popup-trigger"><i class="fa fa-search fa-fw fa-lg"></i></div></div></div><nav class="site-nav"><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fas fa-hashtag fa-fw"></i>标签</a></li><li class="menu-item menu-item-收藏夹"><a href="/favorites/" rel="section"><i class="fab fa-gratipay fa-fw"></i>收藏夹</a></li><li class="menu-item menu-item-留言板"><a href="/messageBoard/" rel="section"><i class="fab fa-facebook-messenger fa-fw"></i>留言板</a></li><li class="menu-item menu-item-项目"><a href="/projects/" rel="section"><i class="fa fa-satellite fa-fw"></i>项目</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-search"><a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索</a></li></ul></nav><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-icon"><i class="fa fa-search"></i></span><div class="search-input-container"></div><span class="popup-btn-close" role="button"><i class="fa fa-times-circle"></i></span></div><div class="search-result-container"><div class="algolia-stats"><hr></div><div class="algolia-hits"></div><div class="algolia-pagination"></div></div></div></div><script async src="/js/wobblewindow.js"></script><script async>window.addEventListener("load",function(){768<window.innerWidth&&($("body>main>header").wobbleWindow({radius:50,movementTop:!1,movementLeft:!1,movementRight:!1,debug:!1}),$("body>footer").wobbleWindow({radius:50,movementBottom:!1,movementLeft:!1,movementRight:!1,debug:!1}))})</script></div><div class="toggle sidebar-toggle" role="button"><span class="toggle-line"></span> <span class="toggle-line"></span> <span class="toggle-line"></span></div><aside class="sidebar"><div class="sidebar-inner sidebar-nav-active sidebar-toc-active"><ul class="sidebar-nav"><li class="sidebar-nav-toc">文章目录</li><li class="sidebar-nav-overview">站点概览</li></ul><div class="sidebar-panel-container"><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#zepto-%E5%85%A5%E9%97%A8"><span class="nav-text">Zepto 入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8Ejquery%E7%9B%B8%E5%90%8C%E7%9A%84api"><span class="nav-text">与jQuery相同的API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8Ejquery%E7%9B%B8%E5%90%8C%E7%9A%84api-1"><span class="nav-text">与jQuery相同的API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E9%A1%B5%E7%9A%84%E9%87%8D%E7%BB%98%E4%B8%8E%E9%87%8D%E6%8E%92"><span class="nav-text">网页的重绘与重排</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E6%9C%BA%E5%88%B6"><span class="nav-text">表单机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ajax"><span class="nav-text">ajax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%AE%9E%E4%BE%8B"><span class="nav-text">移动端实例</span></a></li></ol></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" alt="Liu Kairui" src="/images/avatar.jpg"><p class="site-author-name" itemprop="name">Liu Kairui</p><div class="site-description" itemprop="description">LiuKairui's Personal Website</div></div><div class="site-state-wrap site-overview-item animated"><nav class="site-state"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">48</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/"><span class="site-state-item-count">28</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/"><span class="site-state-item-count">61</span> <span class="site-state-item-name">标签</span></a></div></nav></div><div class="links-of-author site-overview-item animated"><span class="links-of-author-item"><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0thaXJ1aUxpdQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KairuiLiu"><i class="fab fa-github fa-fw"></i>GitHub</span> </span><span class="links-of-author-item"><span class="exturl" data-url="bWFpbHRvOm1lQGxpdWthaXJ1aS5tZQ==" title="E-Mail → mailto:me@liukairui.me"><i class="fa fa-envelope fa-fw"></i>E-Mail</span> </span><span class="links-of-author-item"><span class="exturl" data-url="aHR0cHM6Ly9xbS5xcS5jb20vY2dpLWJpbi9xbS9xcj9rPW9hZjNUb09sTjE3aHI1c0hWOThiVDhxeHNOWUdhdzVMJm5vdmVyaWZ5PTA=" title="QQ → https:&#x2F;&#x2F;qm.qq.com&#x2F;cgi-bin&#x2F;qm&#x2F;qr?k&#x3D;oaf3ToOlN17hr5sHV98bT8qxsNYGaw5L&amp;noverify&#x3D;0"><i class="fab fa-qq fa-fw"></i>QQ</span> </span><span class="links-of-author-item"><a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a> </span><span class="links-of-author-item"><span class="exturl" data-url="aHR0cHM6Ly9saXVrYWlydWkuYmxvZy5jc2RuLm5ldA==" title="CSDN → https:&#x2F;&#x2F;liukairui.blog.csdn.net"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</span> </span><span class="links-of-author-item"><span class="exturl" data-url="aHR0cDovL2xpdWthaXJ1aS5jYw==" title="国内站点 → http:&#x2F;&#x2F;liukairui.cc"><i class="fa fa-globe fa-fw"></i>国内站点</span></span></div><div class="cc-license site-overview-item animated" itemprop="license"><span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span></div></div></div></div></aside><div class="sidebar-dimmer"></div></header><div class="back-to-top" role="button" aria-label="返回顶部"><i class="fa fa-arrow-up"></i> <span>0%</span></div><div class="reading-progress-bar"></div><noscript><div class="noscript-warning">Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class="post-block"><article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://blog.liukairui.me/article/Zepto%E7%AC%94%E8%AE%B0/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Liu Kairui"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="LiuKairui's Blog"><meta itemprop="description" content="LiuKairui's Personal Website"></span><span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork"><meta itemprop="name" content="Zepto笔记 | LiuKairui's Blog"><meta itemprop="description" content="Zepto是一个轻量的js库，专为移动端定制，与jQuery有着类似的API,所以学前需要先jQuery.主讲:尚硅谷,视频来自B站:BV18s411E7b4"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Zepto笔记</h1><div class="post-meta-container"><div class="post-meta"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-calendar"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2020-11-26 13:37:50" itemprop="dateCreated datePublished" datetime="2020-11-26T13:37:50+08:00">2020-11-26</time> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-folder"></i> </span><span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a> </span>， <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E5%89%8D%E7%AB%AF/JS/" itemprop="url" rel="index"><span itemprop="name">JS</span></a> </span></span><span id="/article/Zepto%E7%AC%94%E8%AE%B0/" class="post-meta-item leancloud_visitors" data-flag-title="Zepto笔记" title="阅读次数"><span class="post-meta-item-icon"><i class="far fa-eye"></i> </span><span class="post-meta-item-text">阅读次数：</span> <span class="leancloud-visitors-count"></span> </span><span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv"><span class="post-meta-item-icon"><i class="far fa-eye"></i> </span><span class="post-meta-item-text">阅读次数：</span> <span id="busuanzi_value_page_pv"></span> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-comment"></i> </span><span class="post-meta-item-text">Valine：</span> <a title="valine" href="/article/Zepto%E7%AC%94%E8%AE%B0/#valine-comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/article/Zepto%E7%AC%94%E8%AE%B0/" itemprop="commentCount"></span> </a></span><span class="post-meta-item theme_switch_wapper hidden" id="theme_switch_wapper"><span class="post-meta-item-icon"><i class="fa-brands fa-markdown"></i></span> <span class="post-meta-item-text">主题： </span><select name="theme_switch" id="theme_switch"><option>sneh</option><option>mo</option><option>with</option><option>next</option></select> </span><span class="post-meta-item" title="本文字数"><span class="post-meta-item-icon"><i class="far fa-file-word"></i> </span><span class="post-meta-item-text">本文字数：</span> <span>12k</span></span></div><div class="post-description">Zepto是一个轻量的js库，专为移动端定制，与jQuery有着类似的API,所以学前需要先jQuery.主讲:尚硅谷,视频来自B站:BV18s411E7b4</div></div></header><div class="post-body" itemprop="articleBody"><h2 id="zepto-入门">Zepto 入门</h2><ul><li>什么是zepto: 一个轻量的js库，专为移动端定制，与jQuery有着类似的API</li><li>zepto的特点:<ul><li>针对移动端</li><li>轻量级</li><li>响应快</li><li>语法与jQuery类似</li></ul></li></ul><h2 id="与jquery相同的api">与jQuery相同的API</h2><ul><li><p>zepto与jQuery同样适用<code>$</code>,<code>$</code>对象的方法，<code>$</code>实例的方法</p></li><li><p>与jQuery相同的事件绑定函数==??==</p><ul><li>on() 绑定事件处理程序<ul><li>off() 方法移除用目标元素on绑定的事件处理程序。</li><li>bind() 为每个匹配元素的特定事件绑定事件处理函数，可同时绑定多个事件，也可以自定义事件。</li><li>one() 为每一个匹配元素的特定事件（像click）绑定一个一次性的事件处理函数。只执行一次。</li><li>trigger() 触发有bind定义的事件（通常是自定义事件）</li><li>unbind() bind的反向操作，删除匹配元素所绑定的bind事件。</li></ul></li></ul></li></ul><h2 id="与jquery相同的api-1">与jQuery相同的API</h2><ul><li><code>attr</code>与<code>prop</code><ul><li><code>prop</code> 多用于固定的属性(href,class...)，布尔属性</li><li><code>attr</code> 多用在自定义属性上</li><li><code>prop</code> 在读取属性的时候优先级高于<code>attr</code>所以读取bool的时候有限prop</li><li>在jQuery中使用prop获取bool属性并且bool属性在标签内没有定义会得到undefined，有定义(因为是bool)会返回属性值，例如<code>$obj.prop("selected")</code>会返回<code>undefined</code>/<code>selected</code></li><li>在zepto中会返回<code>false/selected</code></li><li>在zepto中1.2+才支持<code>removeProp()</code>,但是1.0就支持 <code>removeAttr()</code></li></ul></li><li>配置对象<ul><li>在jQuery中在文档加载之后通过js加入的元素是没有绑定事件的(eg:<code>$obj.append("&lt;p&gt;132&lt;/p&gt;")</code>)</li><li>在zepto中是支持这个操作的，我们希望对加入的元素加以修饰，加上例如id等(虽然可能还是不能绑定事件)<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">$obj<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"&lt;p>132&lt;/p>"</span><span class="token punctuation">,</span><span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">id</span><span class="token operator">:</span><span class="token string">"insert"</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li></ul></li><li>each<ul><li>在jQuery中each可以遍历数组(index-elemwnt)，对象(key-value)，不可以遍历字符串</li><li>zepto三者全部支持，字符串是按照字符数组遍历的，还可以以"纯字符串"的形式遍历json</li></ul></li><li>width()height()<ul><li>在jQuery中<ul><li>width()/height()获取的是元素content区的宽高，没有px</li><li>.css("width"),.css("height")是content区的宽高有px</li><li><code>innerHeight()</code>,<code>outerWidth()</code>一个不包含padding一个包含</li><li>可以获取隐藏元素的宽高，数值来自css设置</li></ul></li><li>在zepto中<ul><li>width()/height()根据compute的盒模型取值，没有px</li><li>没有<code>innerHeight()</code>,<code>outerWidth()</code></li><li>.css("width")可以获取内容区的宽高有px</li><li>zepto无法获取隐藏元素的宽高</li></ul></li></ul></li><li>事件委托<ul><li>将子元素的事件委托给父元素,利用的是冒泡的原理,实现了创建对象绑定事件</li><li>在jQuery中可以使用live/delegate/on函数实现事件委托,但是live在jQuery1.7+废除了<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#box"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"click"</span><span class="token punctuation">,</span><span class="token string">'.a'</span><span class="token punctuation">,</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+  <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"a类元素触发"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#box"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">delegate</span><span class="token punctuation">(</span><span class="token string">"click"</span><span class="token punctuation">,</span><span class="token string">'.a'</span><span class="token punctuation">,</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+  <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"a类元素触发"</span><span class="token punctuation">)</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>两个this都是子元素(".a")</li><li>在zepto中,准备废弃delegate,最好使用on</li><li><strong>zepto大坑</strong>:<ul><li>zepto执行的时候会将所有的委托放到一个队列里面(顺序是在代码中出现的顺序)</li><li>当一个委托事件被触发,这个元素会出队,执行完成后会<strong>向后看</strong>,后面符合以下条件的事件都会被执行</li><li>两个事件委托给了同一个元素,或者前面的委托是后面的子元素</li><li>委托事件是相同的</li><li>操作类进行关联(例如.a的回调函数中修改.a为.b,同时.b也有委托)</li><li>顺序在之后</li></ul>例如<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>width=device-width, initial-scale=1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
+        <span class="token selector">div>div</span><span class="token punctuation">&#123;</span>
+            <span class="token property">width</span><span class="token punctuation">:</span> 100px<span class="token punctuation">;</span>
+            <span class="token property">height</span><span class="token punctuation">:</span> 100px<span class="token punctuation">;</span>
+            <span class="token property">background-color</span><span class="token punctuation">:</span> #bfa<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token selector">.b</span><span class="token punctuation">&#123;</span>
+            <span class="token property">background-color</span><span class="token punctuation">:</span> #f00<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>OUT<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>a<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>A<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>b<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>B<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>a<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>C<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>./js/zepto.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#OUT"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"touchstart"</span><span class="token punctuation">,</span><span class="token string">".a"</span><span class="token punctuation">,</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"A on"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">$</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">removeClass</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addClass</span><span class="token punctuation">(</span><span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#OUT"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"touchstart"</span><span class="token punctuation">,</span><span class="token string">".b"</span><span class="token punctuation">,</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"B on"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">$</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">removeClass</span><span class="token punctuation">(</span><span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addClass</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>被委托元素是另一个的子元素<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>width=device-width, initial-scale=1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
+        <span class="token selector">div>div</span><span class="token punctuation">&#123;</span>
+            <span class="token property">width</span><span class="token punctuation">:</span> 100px<span class="token punctuation">;</span>
+            <span class="token property">height</span><span class="token punctuation">:</span> 100px<span class="token punctuation">;</span>
+            <span class="token property">background-color</span><span class="token punctuation">:</span> #bfa<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token selector">.b</span><span class="token punctuation">&#123;</span>
+            <span class="token property">background-color</span><span class="token punctuation">:</span> #f00<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>OUT<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>a<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>A<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>b<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>B<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>a<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>C<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>./js/zepto.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#OUT"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"touchstart"</span><span class="token punctuation">,</span><span class="token string">".a"</span><span class="token punctuation">,</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"A on"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">$</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">removeClass</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addClass</span><span class="token punctuation">(</span><span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"body"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"touchstart"</span><span class="token punctuation">,</span><span class="token string">".b"</span><span class="token punctuation">,</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"B on"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">$</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">removeClass</span><span class="token punctuation">(</span><span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addClass</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>但是如果我们点击第一个按钮会发现他虽然关联到了b,执行了b的委托,但是在两个alert之间并没有看到b样式,这涉及到了网页的<strong>重绘与重排</strong>,第一个alert执行结束,js准备开始重排,但是js是<strong>单线程</strong>,于是分线程开始重排,主线程继续查找委托,主线程更快,直接发现了b的alert,通过alert阻塞了分线程,之后有重新叫了分线程,让他重排成a</li></ul></li><li>touchstart与click<ul><li>jQuery是click</li><li>zepto是touchstart</li><li>click在移动端可用但是有300ms的延迟</li></ul></li><li>zepto touch方法<ul><li>tap() 点击事件 利用在document上绑定touch事件来模拟tap事件的，并且tap事件会冒泡到document上</li><li>singleTap() 点击事件</li><li>doubleTap() 双击事件</li><li>longTap() 当一个元素被按住超过750ms触发。</li><li>swipe, swipeLeft, swipeRight, swipeUp, swipeDown, 当元素被划过（同一个方向大于30px）时触发。(可选择给定的方向)在一个方向滑动大于30px即为滑动。否则算点击。</li><li>为了使用上面的函数可能需要禁止元素的默认行为,可以在<strong>css</strong>中写下<code>touch-action:none</code>禁止</li></ul></li></ul><h2 id="网页的重绘与重排">网页的重绘与重排</h2><ul><li>重绘是重新渲染(背景色,透明度...)</li><li>重排是文档结构进行变化</li></ul><h2 id="表单机制">表单机制</h2><ul><li><code>$obj.serialize()</code>可以将$obj表单编译成提交的时候的字符串,例如<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">$</span><span class="token punctuation">(</span>"form<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">serialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>其中不可选的元素会直接忽略,没有选中的checkbox,buttons会直接忽略</li><li><code>$obj.serializeArray()</code>将上述获得的内容转化为Array存储</li><li><code>$obj.submit()</code>,为submit事件绑定一个处理函数,或者触发元素的submit事件,当function没有给出的时候会触发submit,执行默认的提交行为<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"form"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>会持续不断的一直提交表单,因为()没有处理函数,没有取消默认行为,一般这么用<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"form"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+  e<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"我准备处理点别的东西"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token operator">...</span>
+  ajax函数<span class="token operator">...</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li></ul><h2 id="ajax">ajax</h2><p>没学过,先占坑</p><ul><li>如何取消一个ajax请求<ul><li>abort()方法</li><li>取消当前请求。</li><li>场景：点击获取验证码的按钮，用户十秒时候可以再次获取，当十秒过后第一次请求没有返回，用户再次点击获取</li><li>然后因为网速好或者其他原因，两次请求同时返回，该怎么解决 //需求用户可以再次点击的时候取消之前的请求。</li><li>disabled 禁止用户点击，操作按钮，表单项的时候只是针对click事件，并没有对touch事件作出处理。</li></ul></li></ul><h2 id="移动端实例">移动端实例</h2><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>尚硅谷_zepto实战_练习<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>css/reset.css<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>./css/style.css<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>container<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>page page-1-1<span class="token punctuation">"</span></span> <span class="token special-attr"><span class="token attr-name">style</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token value css language-css"><span class="token property">z-index</span><span class="token punctuation">:</span>1</span><span class="token punctuation">"</span></span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_1 pt-page-moveFromTop<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>./img/cover.png<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_2 pt-page-moveFromLeft<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>./img/wording_cover.png<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_3 icon-up arrow_img<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>./img/icon_up.png<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>page page-2-1 hide<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_1 pt-page-moveFromBottom<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img/wording.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_2 moveCircle<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img/circle.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_3 pt-page-moveFromLeft<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img/people.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_4 <span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img/dot1.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_5 textScale<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img/check_develop.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_6 icon-up arrow_img<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img/icon_up.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_7 <span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img/floating_develop.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>page page-2-2 hide<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_1 <span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img/introduction.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_2 <span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img/btn_develop.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_3 <span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img/dot2.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img_6 icon-up arrow_img<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>img/icon_up.png<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>./js/zepto.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>./js/touch.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>./js/script.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-less" data-language="less"><code class="language-less">*&#123;
+    touch-action: none;
+&#125;
+
+#container&#123;
+    &#x2F;&#x2F; 公共样式
+    width: 100%;
+    height: 100%;
+    .page&#123;
+        z-index: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        img[class^&#x3D;img]&#123;
+            height: auto;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        &#125;
+        .arrow_img&#123;
+            height: auto;
+            width: 25px;
+            top: 90%;
+        &#125;
+    &#125;  
+
+    .page-1-1&#123;background: #083846;&#125;
+    .page-2-1&#123;background: #9261BF;&#125;
+    .page-2-2&#123;background: #9261BF;&#125;
+
+    &#x2F;&#x2F; 局部样式
+    .page-1-1&#123;
+        .img_1&#123;
+            top: 1%;
+            width: 248px;
+        &#125;
+        .img_2&#123;
+            width: 185px;
+            top: 62%;
+        &#125;
+    &#125;
+
+    .page-2-1&#123;
+        .img_1&#123;
+            width: 158px;
+            top: 2%;
+            z-index:2;
+        &#125;
+        .img_2&#123;
+            width: 240px;
+            top: 28%;
+        &#125;
+        .img_3&#123;
+            width: 241px;
+            top: 36%;
+        &#125;
+        .img_4&#123;
+            width: 20px;
+            top: 87%;
+        &#125;
+        .img_5&#123;
+            width: 142px;
+            top: 82%;
+        &#125;
+        .img_7&#123;
+            width: 248px;
+            top: 8%;
+        &#125;
+    &#125;
+    
+    .page-2-2&#123; 
+        .img_1 &#123;
+            width:293px;
+            left:50%;
+        &#125;
+        .img_2 &#123;
+            width:260px;
+            top:75%;
+        &#125;
+        .img_3 &#123;
+            width:20px;
+            top:87%;
+        &#125;
+        .img_6 &#123;
+            width:25px;
+            top:92%;
+        &#125;
+    &#125;
+&#125;
+
+.hide&#123;
+    display: none;
+&#125;
+
+.currpage&#123;
+    z-index: 1;
+&#125;
+
+&#x2F;&#x2F; animation
+
+.pt-page-moveToTop&#123;
+    animation: moveToTop 0.6s ease both;
+&#125;
+
+.pt-page-moveFromBottom&#123;
+    animation: moveFromBottom 0.6s ease both;
+&#125;
+
+.pt-page-moveToBottom&#123;
+    animation: moveToBottom 0.6s ease both;
+&#125;
+
+.pt-page-moveFromTop&#123;
+    animation: moveFromTop 0.6s ease both;
+&#125;
+
+.pt-page-moveToLeft&#123;
+    animation: moveToLeft 0.6s ease both;
+&#125;
+
+.pt-page-moveFromRight&#123;
+    animation: moveFromRight 0.6s ease both;
+&#125;
+
+.pt-page-moveToRight&#123;
+    animation: moveToRight 0.6s ease both;
+&#125;
+
+.pt-page-moveFromLeft&#123;
+    animation: moveFromLeft 0.6s ease both;
+&#125;
+
+.moveCircle&#123;
+    animation: moveCircle 1s ease both;
+&#125;
+
+.textScale&#123;
+    animation: textScale 1s ease both;
+&#125;
+
+.page-2-2&gt;*&#123;
+    transform-origin: 0% 0%;
+    animation: fanzhuan 1s ease both;
+&#125;
+
+.icon-up&#123;
+    animation: iconUp 2s ease both infinite;
+&#125;
+
+.pt-page-pageMoveToTop&#123;
+    animation: pageMoveToTop  2s ease both;
+&#125;
+
+.pt-page-pageMoveFromBottom&#123;
+    animation: pageMoveFromBottom  2s ease both;
+&#125;
+
+.pt-page-pageMoveToBottom&#123;
+    animation: pageMoveToBottom  2s ease both;
+&#125;
+
+.pt-page-pageMoveFromTop&#123;
+    animation: pageMoveFromTop  2s ease both;
+&#125;
+
+.pt-page-pageMoveToLeft&#123;
+    animation: pageMoveToLeft  2s ease both;
+&#125;
+
+.pt-page-pageMoveFromRight&#123;
+    animation: pageMoveFromRight  2s ease both;
+&#125;
+
+.pt-page-pageMoveToRight&#123;
+    animation: pageMoveToRight  2s ease both;
+&#125;
+
+.pt-page-pageMoveFromLeft&#123;
+    animation: pageMoveFromLeft  2s ease both;
+&#125;
+
+@keyframes moveToTop&#123;
+    from&#123;&#125;
+    to&#123;transform: translate(-50%,-100%);&#125;
+&#125;
+
+@keyframes moveFromBottom&#123;
+    from&#123;transform: translate(-50%,100%);&#125;
+    to&#123;&#125;
+&#125;
+
+@keyframes moveToBottom&#123;
+    from&#123;&#125;
+    to&#123;transform: translate(-50%,100%);&#125;
+&#125;
+
+@keyframes moveFromTop&#123;         
+    from&#123;transform: translate(-50%,-100%);&#125;
+    to&#123;&#125;
+&#125;
+
+@keyframes moveToLeft&#123;
+    from&#123;&#125;
+    to&#123;transform: translateX(-100%);&#125;
+&#125;
+
+@keyframes moveFromRight&#123;
+    from&#123;transform: translateX(100%);&#125;
+    to&#123;&#125;
+&#125;
+
+@keyframes moveToRight&#123;
+    from&#123;&#125;
+    to&#123;transform: translateX(100%);&#125;
+&#125;
+
+@keyframes moveFromLeft&#123;
+    from&#123;left:0;transform: translateX(-100%);&#125;
+    to&#123;&#125;
+&#125;
+
+@keyframes iconUp&#123;
+    0%&#123;
+        transform: translate(-50%,100%);
+        opacity: 0;
+    &#125;
+    50%&#123;
+        opacity: 1;
+    &#125;
+    100%&#123;
+        transform: translate(-50%,-100%);
+        opacity: 0;
+    &#125;
+&#125;
+
+@keyframes moveCircle&#123;
+    0%&#123;
+        transform: translate(-50%,20%);
+        opacity: 0;
+    &#125;
+    20%&#123;
+        transform: translate(-50%,-16%);
+    &#125;
+    40%&#123;
+        transform: translate(-50%,12%);
+    &#125;
+    60%&#123;
+        transform: translate(-50%,-9%);
+    &#125;
+    80%&#123;
+        transform: translate(-50%,7.2%);
+    &#125;
+    100%&#123;&#125;
+&#125;
+
+@keyframes textScale&#123;
+    0%&#123;
+        transform: scale(0.4);
+        opacity: 0;
+    &#125;
+    100%&#123;&#125;
+&#125;
+
+@keyframes fanzhuan&#123;
+    from&#123;
+        transform: rotateY(-90deg);
+    &#125;
+    to&#123;&#125;
+&#125;
+
+@keyframes pageMoveToTop&#123;
+    from&#123;&#125;
+    to&#123;transform: translate(0,-100%);&#125;
+&#125;
+
+@keyframes pageMoveFromBottom&#123;
+    from&#123;transform: translate(0,100%);&#125;
+    to&#123;&#125;
+&#125;
+
+@keyframes pageMoveToBottom&#123;
+    from&#123;&#125;
+    to&#123;transform: translate(0,100%);&#125;
+&#125;
+
+@keyframes pageMoveFromTop&#123;         
+    from&#123;transform: translate(0,-100%);&#125;
+    to&#123;&#125;
+&#125;
+
+@keyframes pageMoveToLeft&#123;
+    from&#123;&#125;
+    to&#123;transform: translateX(-100%);&#125;
+&#125;
+
+@keyframes pageMoveFromRight&#123;
+    from&#123;transform: translateX(100%);&#125;
+    to&#123;&#125;
+&#125;
+
+@keyframes pageMoveToRight&#123;
+    from&#123;&#125;
+    to&#123;transform: translateX(100%);&#125;
+&#125;
+
+@keyframes pageMoveFromLeft&#123;
+    from&#123;left:0;transform: translateX(-100%);&#125;
+    to&#123;&#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">$</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> now<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token literal-property property">x</span><span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token literal-property property">y</span><span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> lst<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token literal-property property">x</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token literal-property property">y</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> tmp<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token literal-property property">x</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token literal-property property">y</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> direction<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token literal-property property">up</span><span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token literal-property property">right</span><span class="token operator">:</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token literal-property property">down</span><span class="token operator">:</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token literal-property property">left</span><span class="token operator">:</span><span class="token number">4</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">function</span> <span class="token function">movePage</span><span class="token punctuation">(</span><span class="token parameter">dir</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        tmp<span class="token punctuation">.</span>x<span class="token operator">=</span>lst<span class="token punctuation">.</span>x<span class="token punctuation">;</span>
+        tmp<span class="token punctuation">.</span>y<span class="token operator">=</span>lst<span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+        lst<span class="token punctuation">.</span>x<span class="token operator">=</span>now<span class="token punctuation">.</span>x<span class="token punctuation">;</span>
+        lst<span class="token punctuation">.</span>y<span class="token operator">=</span>now<span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+        <span class="token keyword">var</span> inClass<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">,</span>outClass<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">;</span>
+        <span class="token keyword">switch</span> <span class="token punctuation">(</span>dir<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">case</span> direction<span class="token punctuation">.</span>up<span class="token operator">:</span>
+                outClass<span class="token operator">=</span><span class="token string">"pt-page-pageMoveToTop"</span><span class="token punctuation">;</span>
+                inClass<span class="token operator">=</span><span class="token string">"pt-page-pageMoveFromBottom"</span><span class="token punctuation">;</span>
+                now<span class="token punctuation">.</span>x<span class="token operator">+=</span><span class="token number">1</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> direction<span class="token punctuation">.</span>right<span class="token operator">:</span>
+                outClass<span class="token operator">=</span><span class="token string">"pt-page-pageMoveToRight"</span><span class="token punctuation">;</span>
+                inClass<span class="token operator">=</span><span class="token string">"pt-page-pageMoveFromLeft"</span><span class="token punctuation">;</span>
+                now<span class="token punctuation">.</span>y<span class="token operator">-=</span><span class="token number">1</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> direction<span class="token punctuation">.</span>down<span class="token operator">:</span>
+                outClass<span class="token operator">=</span><span class="token string">"pt-page-pageMoveToBottom"</span><span class="token punctuation">;</span>
+                inClass<span class="token operator">=</span><span class="token string">"pt-page-pageMoveFromTop"</span><span class="token punctuation">;</span>
+                now<span class="token punctuation">.</span>x<span class="token operator">-=</span><span class="token number">1</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> direction<span class="token punctuation">.</span>left<span class="token operator">:</span>
+                outClass<span class="token operator">=</span><span class="token string">"pt-page-pageMoveToLeft"</span><span class="token punctuation">;</span>
+                inClass<span class="token operator">=</span><span class="token string">"pt-page-pageMoveFromRight"</span><span class="token punctuation">;</span>
+                now<span class="token punctuation">.</span>y<span class="token operator">+=</span><span class="token number">1</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">var</span> lastPage<span class="token operator">=</span><span class="token string">".page-"</span><span class="token operator">+</span>lst<span class="token punctuation">.</span>x<span class="token operator">+</span><span class="token string">"-"</span><span class="token operator">+</span>lst<span class="token punctuation">.</span>y<span class="token punctuation">,</span>nowPage<span class="token operator">=</span><span class="token string">".page-"</span><span class="token operator">+</span>now<span class="token punctuation">.</span>x<span class="token operator">+</span><span class="token string">"-"</span><span class="token operator">+</span>now<span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">$</span><span class="token punctuation">(</span>nowPage<span class="token punctuation">)</span><span class="token punctuation">.</span>length<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            now<span class="token punctuation">.</span>x<span class="token operator">=</span>lst<span class="token punctuation">.</span>x<span class="token punctuation">;</span>
+            now<span class="token punctuation">.</span>y<span class="token operator">=</span>lst<span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+            lst<span class="token punctuation">.</span>x<span class="token operator">=</span>tmp<span class="token punctuation">.</span>x<span class="token punctuation">;</span>
+            lst<span class="token punctuation">.</span>y<span class="token operator">=</span>tmp<span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token function">$</span><span class="token punctuation">(</span>nowPage<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">css</span><span class="token punctuation">(</span><span class="token string">"zIndex"</span><span class="token punctuation">,</span><span class="token function">$</span><span class="token punctuation">(</span>lastPage<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">css</span><span class="token punctuation">(</span><span class="token string">"zIndex"</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token function">$</span><span class="token punctuation">(</span>nowPage<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">removeClass</span><span class="token punctuation">(</span><span class="token string">"hide"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addClass</span><span class="token punctuation">(</span>inClass<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">$</span><span class="token punctuation">(</span>nowPage<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">children</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addClass</span><span class="token punctuation">(</span><span class="token string">"hide"</span><span class="token punctuation">)</span>
+        <span class="token function">$</span><span class="token punctuation">(</span>lastPage<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">removeClass</span><span class="token punctuation">(</span><span class="token string">"hide"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addClass</span><span class="token punctuation">(</span>outClass<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token function">$</span><span class="token punctuation">(</span>nowPage<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">removeClass</span><span class="token punctuation">(</span><span class="token string">"hide"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">removeClass</span><span class="token punctuation">(</span>inClass<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">$</span><span class="token punctuation">(</span>lastPage<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addClass</span><span class="token punctuation">(</span><span class="token string">"hide"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">removeClass</span><span class="token punctuation">(</span>outClass<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">$</span><span class="token punctuation">(</span>nowPage<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">children</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">removeClass</span><span class="token punctuation">(</span><span class="token string">"hide"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token number">2000</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".page"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">swipeUp</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token function">movePage</span><span class="token punctuation">(</span>direction<span class="token punctuation">.</span>up<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".page"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">swipeDown</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token function">movePage</span><span class="token punctuation">(</span>direction<span class="token punctuation">.</span>down<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".page"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">swipeRight</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token function">movePage</span><span class="token punctuation">(</span>direction<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".page"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">swipeLeft</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token function">movePage</span><span class="token punctuation">(</span>direction<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div><footer class="post-footer"><p class="post-end-coffee">-------- 本文结束 <i class="fa-solid fa-mug-hot"></i> 感谢阅读 --------</p><div class="popular-posts-header">相关文章</div><ul class="popular-posts"><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/Ajax与Axios的使用与关键源码笔记/" rel="bookmark">Ajax与Axios的使用与关键源码笔记</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/ES6-12与模块化笔记/" rel="bookmark">ES6-12与JS模块化笔记</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/JavaScript基础版笔记/" rel="bookmark">JavaScript基础版笔记</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/JavaScript进阶版笔记/" rel="bookmark">JavaScript进阶版笔记</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/Node.js起步笔记/" rel="bookmark">Node.js起步笔记</a></div></li></ul><script>let post_body = document.querySelector('.post-body');
+  let theme_switch = document.getElementById('theme_switch');
+  const theme = {};
+  Object.defineProperty(theme, 'value', {
+    set(v){
+      post_body.setAttribute('theme', v);
+      localStorage.setItem('md_theme', v);
+      theme_switch.value = v;
+    }
+  })
+  theme.value = localStorage.getItem('md_theme') || 'sneh';
+  theme_switch.addEventListener('change',e=>theme.value = e.target.value)
+  document.getElementById('theme_switch_wapper').classList.remove('hidden');</script><div class="reward-container"><div></div><button>赞赏</button><div class="post-reward"><div><img src="/images/wechatpay.png" alt="Liu Kairui 微信"> <span>微信</span></div><div><img src="/images/alipay.png" alt="Liu Kairui 支付宝"> <span>支付宝</span></div></div></div><div class="post-copyright"><ul><li class="post-copyright-author"><strong>本文作者： </strong>Liu Kairui</li><li class="post-copyright-link"><strong>本文链接：</strong> <a href="https://blog.liukairui.me/article/Zepto%E7%AC%94%E8%AE%B0/" title="Zepto笔记">https://blog.liukairui.me/article/Zepto笔记/</a></li><li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div><div class="post-tags"><a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"><i class="fa fa-tag"></i> 前端</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 笔记</a> <a href="/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a> <a href="/tags/Zepto/" rel="tag"><i class="fa fa-tag"></i> Zepto</a> <a href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BC%98%E5%8C%96/" rel="tag"><i class="fa fa-tag"></i> 移动端优化</a></div><div class="post-nav"><div class="post-nav-item"><a href="/article/jQuery%E7%AC%94%E8%AE%B0/" rel="prev" title="jQuery笔记"><i class="fa fa-chevron-left"></i> jQuery笔记</a></div><div class="post-nav-item"><a href="/article/Scss%E7%AC%94%E8%AE%B0/" rel="next" title="Scss笔记">Scss笔记 <i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div class="comments" id="valine-comments"></div></div></main><footer class="footer"><div class="footer-inner"><div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2022</span> <span class="with-love"><i class="fa fa-heart"></i> </span><span class="author" itemprop="copyrightHolder">Liu Kairui</span></div><div class="wordcount"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-chart-line"></i> </span><span>总字数：</span> <span title="总字数">1.3m</span></span></div><div class="busuanzi-count"><span class="post-meta-item" id="busuanzi_container_site_uv"><span class="post-meta-item-icon"><i class="fa fa-user"></i> </span><span class="site-uv" title="总访客量"><span id="busuanzi_value_site_uv"></span> </span></span><span class="post-meta-item" id="busuanzi_container_site_pv"><span class="post-meta-item-icon"><i class="fa fa-eye"></i> </span><span class="site-pv" title="总访问量"><span id="busuanzi_value_site_pv"></span></span></span></div><div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动</div><div class="addthis_inline_share_toolbox"><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-630c5bd30a606ba8" async></script></div><div id="time_and_count"></div><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script><script>function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20201101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span class="daysCnt" style="color: #1890ff">$&</span>');
+    div.innerHTML = `小站已悄悄运行了 ${ages}`;
+    div.className="workDays";
+  }
+  let div = document.createElement("div");
+  let time_and_count = document.getElementById("time_and_count");
+  time_and_count.appendChild(div);
+  timer();
+  setInterval("timer()",1000)</script><script>let footer = document.querySelector('.footer-inner')
+
+let wordCount = document.querySelector('.wordcount')
+wordCount.innerHTML = wordCount.innerText.replace('：',': ').replace('m','M')
+if(wordCount){
+  time_and_count.appendChild(wordCount);
+}
+
+let busaunzi = document.querySelector('.busuanzi-count')
+if(busaunzi){
+  footer.appendChild(busaunzi);
+}
+
+let powerby = document.querySelector('.powered-by')
+if(powerby){
+  footer.appendChild(powerby);
+}</script></div></footer><script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script><script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/algoliasearch/4.14.2/algoliasearch-lite.umd.js" integrity="sha256-dImjLPUsG/6p3+i7gVKBiDM8EemJAhQ0VvkRK2pVsQY=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/instantsearch.js/4.43.1/instantsearch.production.min.js" integrity="sha256-jLNoKrKRDKAOg8JBqkl8jSy2tpqCGQ1/++9QRYtWl8k=" crossorigin="anonymous"></script><script src="/js/third-party/search/algolia-search.js"></script><script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer"}</script><script src="/js/third-party/tags/pdf.js"></script><script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.1.3/mermaid.min.js","integrity":"sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg="}}</script><script src="/js/third-party/tags/mermaid.js"></script><script src="/js/third-party/fancybox.js"></script><script src="/js/third-party/pace.js"></script><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"ABKlVtS4cyaWYEwunPyK3sXt-9Nh9j0Va","app_key":"xxGXdTTEGEVifs2TLB35844I","server_url":"https://abklvts4.lc-cn-e1-shared.com","security":false}</script><script src="/js/third-party/statistics/lean-analytics.js"></script><script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script><script src="/js/third-party/math/mathjax.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script><script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.liukairui.me/article/Zepto%E7%AC%94%E8%AE%B0/"}</script><script src="/js/third-party/quicklink.js"></script><script src="https://unpkg.com/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script><script>var options = {
+  bottom: '71px',
+  right: 'unset',
+  left: '30px',
+  time: '0s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#222',
+  buttonColorLight: '#222',
+  saveInCookies: true,
+  label: '',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();</script><script>NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"ABKlVtS4cyaWYEwunPyK3sXt-9Nh9j0Va","appKey":"xxGXdTTEGEVifs2TLB35844I","serverURLs":"https://abklvts4.lc-cn-e1-shared.com","placeholder":"请开始你的表演","avatar":"identicon","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","visitor":false,"comment_count":true,"recordIP":true,"enableQQ":true,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/article/Zepto%E7%AC%94%E8%AE%B0/",
+      serverURLs: "https://abklvts4.lc-cn-e1-shared.com"
+    }));
+  }, window.Valine);
+});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/hijiki.model.json"},display:{position:"right",width:150,height:300},mobile:{show:!1},react:{opacity:.7}})</script></body></html>

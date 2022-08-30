@@ -1,0 +1,441 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0"><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="mask-icon" href="/images/logo.svg" color="#222"><link rel="manifest" href="/images/manifest.json"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CPT+Sans:300,300italic,400,400italic,700,700italic%7CFira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/greem/pace-theme-minimal.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script><script class="next-config" data-name="main" type="application/json">{"hostname":"blog.liukairui.me","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.12.3","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":320},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"GPJGYFJZH3","apiKey":"594eec10fca5caccffae82e82d066310","indexName":"hexo","hits":{"per_page":10}}}</script><script src="/js/config.js"></script><meta name="description" content="转了一篇数位DP的文章，数位DP主要是解决区间计数问题，将每一个位进行dp"><meta property="og:type" content="article"><meta property="og:title" content="动态规划-数位DP"><meta property="og:url" content="https://blog.liukairui.me/article/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E6%95%B0%E4%BD%8DDP/"><meta property="og:site_name" content="LiuKairui&#39;s Blog"><meta property="og:description" content="转了一篇数位DP的文章，数位DP主要是解决区间计数问题，将每一个位进行dp"><meta property="og:locale" content="zh_CN"><meta property="article:published_time" content="2020-10-30T16:00:10.000Z"><meta property="article:modified_time" content="2021-10-18T06:44:13.571Z"><meta property="article:author" content="Liu Kairui"><meta property="article:tag" content="算法"><meta property="article:tag" content="笔记"><meta property="article:tag" content="动态规划"><meta property="article:tag" content="数位DP"><meta name="twitter:card" content="summary"><link rel="canonical" href="https://blog.liukairui.me/article/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E6%95%B0%E4%BD%8DDP/"><script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.liukairui.me/article/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E6%95%B0%E4%BD%8DDP/","path":"article/动态规划-数位DP/","title":"动态规划-数位DP"}</script><script class="next-config" data-name="calendar" type="application/json">""</script><title>动态规划-数位DP | LiuKairui's Blog</title><script>var titleTime,OriginTitile=document.title;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="我们活着是为了什么? | "+OriginTitile,clearTimeout(titleTime)):(document.title="整点薯条 | "+OriginTitile,titleTime=setTimeout(function(){document.title=OriginTitile},2e3))})</script><noscript><link rel="stylesheet" href="/css/noscript.css"></noscript><link rel="alternate" href="/atom.xml" title="LiuKairui's Blog" type="application/atom+xml"><style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head><body itemscope itemtype="http://schema.org/WebPage" class="use-motion"><div class="headband"></div><main class="main"><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-container"><div class="site-nav-toggle"><div class="toggle" aria-label="切换导航栏" role="button"><span class="toggle-line"></span> <span class="toggle-line"></span> <span class="toggle-line"></span></div></div><div class="site-meta"><a href="/" class="brand" rel="start"><i class="logo-line"></i><p class="site-title">LiuKairui's Blog</p><i class="logo-line"></i></a><p class="site-subtitle" itemprop="description">整点薯条</p></div><div class="site-nav-right"><div class="toggle popup-trigger"><i class="fa fa-search fa-fw fa-lg"></i></div></div></div><nav class="site-nav"><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fas fa-hashtag fa-fw"></i>标签</a></li><li class="menu-item menu-item-收藏夹"><a href="/favorites/" rel="section"><i class="fab fa-gratipay fa-fw"></i>收藏夹</a></li><li class="menu-item menu-item-留言板"><a href="/messageBoard/" rel="section"><i class="fab fa-facebook-messenger fa-fw"></i>留言板</a></li><li class="menu-item menu-item-项目"><a href="/projects/" rel="section"><i class="fa fa-satellite fa-fw"></i>项目</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-search"><a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索</a></li></ul></nav><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-icon"><i class="fa fa-search"></i></span><div class="search-input-container"></div><span class="popup-btn-close" role="button"><i class="fa fa-times-circle"></i></span></div><div class="search-result-container"><div class="algolia-stats"><hr></div><div class="algolia-hits"></div><div class="algolia-pagination"></div></div></div></div><script async src="/js/wobblewindow.js"></script><script async>window.addEventListener("load",function(){768<window.innerWidth&&($("body>main>header").wobbleWindow({radius:50,movementTop:!1,movementLeft:!1,movementRight:!1,debug:!1}),$("body>footer").wobbleWindow({radius:50,movementBottom:!1,movementLeft:!1,movementRight:!1,debug:!1}))})</script></div><div class="toggle sidebar-toggle" role="button"><span class="toggle-line"></span> <span class="toggle-line"></span> <span class="toggle-line"></span></div><aside class="sidebar"><div class="sidebar-inner sidebar-nav-active sidebar-toc-active"><ul class="sidebar-nav"><li class="sidebar-nav-toc">文章目录</li><li class="sidebar-nav-overview">站点概览</li></ul><div class="sidebar-panel-container"><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%AF%87"><span class="nav-text">基础篇</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E6%88%98%E7%AF%87"><span class="nav-text">实战篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80memsetdp-1sizeof-dp%E6%94%BE%E5%9C%A8%E5%A4%9A%E7%BB%84%E6%95%B0%E6%8D%AE%E5%A4%96%E9%9D%A2"><span class="nav-text">第一:memset(dp,-1,sizeof dp);放在多组数据外面。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%9B%B8%E5%87%8F"><span class="nav-text">第二：相减。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B0%E7%9A%84%E9%A2%86%E5%9F%9F--%E8%AE%A1%E6%95%B0%E8%BD%AC%E6%B1%82%E5%92%8C"><span class="nav-text">新的领域--计数转求和</span></a></li></ol></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" alt="Liu Kairui" src="/images/avatar.jpg"><p class="site-author-name" itemprop="name">Liu Kairui</p><div class="site-description" itemprop="description">LiuKairui's Personal Website</div></div><div class="site-state-wrap site-overview-item animated"><nav class="site-state"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">48</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/"><span class="site-state-item-count">28</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/"><span class="site-state-item-count">61</span> <span class="site-state-item-name">标签</span></a></div></nav></div><div class="links-of-author site-overview-item animated"><span class="links-of-author-item"><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0thaXJ1aUxpdQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KairuiLiu"><i class="fab fa-github fa-fw"></i>GitHub</span> </span><span class="links-of-author-item"><span class="exturl" data-url="bWFpbHRvOm1lQGxpdWthaXJ1aS5tZQ==" title="E-Mail → mailto:me@liukairui.me"><i class="fa fa-envelope fa-fw"></i>E-Mail</span> </span><span class="links-of-author-item"><span class="exturl" data-url="aHR0cHM6Ly9xbS5xcS5jb20vY2dpLWJpbi9xbS9xcj9rPW9hZjNUb09sTjE3aHI1c0hWOThiVDhxeHNOWUdhdzVMJm5vdmVyaWZ5PTA=" title="QQ → https:&#x2F;&#x2F;qm.qq.com&#x2F;cgi-bin&#x2F;qm&#x2F;qr?k&#x3D;oaf3ToOlN17hr5sHV98bT8qxsNYGaw5L&amp;noverify&#x3D;0"><i class="fab fa-qq fa-fw"></i>QQ</span> </span><span class="links-of-author-item"><a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a> </span><span class="links-of-author-item"><span class="exturl" data-url="aHR0cHM6Ly9saXVrYWlydWkuYmxvZy5jc2RuLm5ldA==" title="CSDN → https:&#x2F;&#x2F;liukairui.blog.csdn.net"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</span> </span><span class="links-of-author-item"><span class="exturl" data-url="aHR0cDovL2xpdWthaXJ1aS5jYw==" title="国内站点 → http:&#x2F;&#x2F;liukairui.cc"><i class="fa fa-globe fa-fw"></i>国内站点</span></span></div><div class="cc-license site-overview-item animated" itemprop="license"><span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span></div></div></div></div></aside><div class="sidebar-dimmer"></div></header><div class="back-to-top" role="button" aria-label="返回顶部"><i class="fa fa-arrow-up"></i> <span>0%</span></div><div class="reading-progress-bar"></div><noscript><div class="noscript-warning">Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class="post-block"><article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://blog.liukairui.me/article/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E6%95%B0%E4%BD%8DDP/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Liu Kairui"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="LiuKairui's Blog"><meta itemprop="description" content="LiuKairui's Personal Website"></span><span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork"><meta itemprop="name" content="动态规划-数位DP | LiuKairui's Blog"><meta itemprop="description" content="转了一篇数位DP的文章，数位DP主要是解决区间计数问题，将每一个位进行dp"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">动态规划-数位DP</h1><div class="post-meta-container"><div class="post-meta"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-calendar"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2020-10-31 00:00:10" itemprop="dateCreated datePublished" datetime="2020-10-31T00:00:10+08:00">2020-10-31</time> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-folder"></i> </span><span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a> </span>， <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E7%AE%97%E6%B3%95/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a> </span></span><span id="/article/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E6%95%B0%E4%BD%8DDP/" class="post-meta-item leancloud_visitors" data-flag-title="动态规划-数位DP" title="阅读次数"><span class="post-meta-item-icon"><i class="far fa-eye"></i> </span><span class="post-meta-item-text">阅读次数：</span> <span class="leancloud-visitors-count"></span> </span><span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv"><span class="post-meta-item-icon"><i class="far fa-eye"></i> </span><span class="post-meta-item-text">阅读次数：</span> <span id="busuanzi_value_page_pv"></span> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-comment"></i> </span><span class="post-meta-item-text">Valine：</span> <a title="valine" href="/article/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E6%95%B0%E4%BD%8DDP/#valine-comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/article/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E6%95%B0%E4%BD%8DDP/" itemprop="commentCount"></span> </a></span><span class="post-meta-item theme_switch_wapper hidden" id="theme_switch_wapper"><span class="post-meta-item-icon"><i class="fa-brands fa-markdown"></i></span> <span class="post-meta-item-text">主题： </span><select name="theme_switch" id="theme_switch"><option>sneh</option><option>mo</option><option>with</option><option>next</option></select> </span><span class="post-meta-item" title="本文字数"><span class="post-meta-item-icon"><i class="far fa-file-word"></i> </span><span class="post-meta-item-text">本文字数：</span> <span>13k</span></span></div><div class="post-description">转了一篇数位DP的文章，数位DP主要是解决区间计数问题，将每一个位进行dp</div></div></header><div class="post-body" itemprop="articleBody"><p>转自：https://blog.csdn.net/wust_zzwh/article/details/52100392</p><h1 id="基础篇">基础篇</h1><p>数位dp是一种计数用的dp，一般就是要统计一个区间[le,ri]内满足一些条件数的个数。所谓数位dp，字面意思就是在数位上进行dp咯。数位还算是比较好听的名字，数位的含义：一个数有个位、十位、百位、千位......数的每一位就是数位啦！</p><p>之所以要引入数位的概念完全就是为了dp。数位dp的实质就是换一种暴力枚举的方式，使得新的枚举方式满足dp的性质，然后记忆化就可以了。</p><p>两种不同的枚举：对于一个求区间[le,ri]满足条件数的个数，最简单的暴力如下：</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">for(int i&#x3D;le;i&lt;&#x3D;ri;i++)
+    if(right(i)) ans++;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>然而这样枚举不方便记忆化，或者说根本无状态可言。</p><p>新的枚举：控制上界枚举，从最高位开始往下枚举，例如：ri=213，那么我们从百位开始枚举：百位可能的情况有0,1,2(觉得这里枚举0有问题的继续看)</p><p>然后每一位枚举都不能让枚举的这个数超过上界213（下界就是0或者1，这个次要），当百位枚举了1，那么十位枚举就是从0到9，因为百位1已经比上界2小了，后面数位枚举什么都不可能超过上界。所以问题就在于：当高位枚举刚好达到上界是，那么紧接着的一位枚举就有上界限制了。具体的这里如果百位枚举了2，那么十位的枚举情况就是0到1，如果前两位枚举了21，最后一位之是0到3(这一点正好对于代码模板里的一个变量limit 专门用来判断枚举范围)。最后一个问题：最高位枚举0：百位枚举0，相当于此时我枚举的这个数最多是两位数，如果十位继续枚举0，那么我枚举的就是以为数咯，因为我们要枚举的是小于等于ri的所以数，当然不能少了位数比ri小的咯！(这样枚举是为了无遗漏的枚举，不过可能会带来一个问题，就是前导零的问题，模板里用lead变量表示，不过这个不是每个题目都是会有影响的，可能前导零不会影响我们计数，具体要看题目)</p><p>由于这种新的枚举只控制了上界所以我们的Main函数总是这样：</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int main()
+&#123;
+    long long le,ri;
+    while(~scanf(&quot;%lld%lld&quot;,&amp;le,&amp;ri))
+        printf(&quot;%lld\n&quot;,solve(ri)-solve(le-1));
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>w_w 是吧！统计<span class="math inline">\([1,ri]\)</span>数量和<span class="math inline">\([1,le-1]\)</span>，然后相减就是区间<span class="math inline">\([le,ri]\)</span>的数量了，这里我写的下界是1，其实0也行，反正相减后就没了，注意题目中le的范围都是大于等于1的(不然le=0,再减一就G_G了)</p><p>在讲例题之前先讲个基本的动态模板(先看后面的例题也行)：dp思想，枚举到当前位置pos，状态为state(这个就是根据题目来的，可能很多，毕竟dp千变万化)的数量(既然是计数,dp值显然是保存满足条件数的个数)</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">typedef long long ll;
+int a[20];
+ll dp[20][state];&#x2F;&#x2F;不同题目状态不同
+ll dfs(int pos,&#x2F;*state变量*&#x2F;,bool lead&#x2F;*前导零*&#x2F;,bool limit&#x2F;*数位上界变量*&#x2F;)&#x2F;&#x2F;不是每个题都要判断前导零
+&#123;
+    &#x2F;&#x2F;递归边界，既然是按位枚举，最低位是0，那么pos&#x3D;&#x3D;-1说明这个数我枚举完了
+    if(pos&#x3D;&#x3D;-1) return 1;&#x2F;*这里一般返回1，表示你枚举的这个数是合法的，那么这里就需要你在枚举时必须每一位都要满足题目条件，也就是说当前枚举到pos位，一定要保证前面已经枚举的数位是合法的。不过具体题目不同或者写法不同的话不一定要返回1 *&#x2F;
+    &#x2F;&#x2F;第二个就是记忆化(在此前可能不同题目还能有一些剪枝)
+    if(!limit &amp;&amp; !lead &amp;&amp; dp[pos][state]!&#x3D;-1) return dp[pos][state];
+    &#x2F;*常规写法都是在没有限制的条件记忆化，这里与下面记录状态是对应，具体为什么是有条件的记忆化后面会讲*&#x2F;
+    int up&#x3D;limit?a[pos]:9;&#x2F;&#x2F;根据limit判断枚举的上界up;这个的例子前面用213讲过了
+    ll ans&#x3D;0;
+    &#x2F;&#x2F;开始计数
+    for(int i&#x3D;0;i&lt;&#x3D;up;i++)&#x2F;&#x2F;枚举，然后把不同情况的个数加到ans就可以了
+    &#123;
+        if() ...
+        else if()...
+        ans+&#x3D;dfs(pos-1,&#x2F;*状态转移*&#x2F;,lead &amp;&amp; i&#x3D;&#x3D;0,limit &amp;&amp; i&#x3D;&#x3D;a[pos]) &#x2F;&#x2F;最后两个变量传参都是这样写的
+        &#x2F;*这里还算比较灵活，不过做几个题就觉得这里也是套路了
+        大概就是说，我当前数位枚举的数是i，然后根据题目的约束条件分类讨论
+        去计算不同情况下的个数，还有要根据state变量来保证i的合法性，比如题目
+        要求数位上不能有62连续出现,那么就是state就是要保存前一位pre,然后分类，
+        前一位如果是6那么这意味就不能是2，这里一定要保存枚举的这个数是合法*&#x2F;
+    &#125;
+    &#x2F;&#x2F;计算完，记录状态
+    if(!limit &amp;&amp; !lead) dp[pos][state]&#x3D;ans;
+    &#x2F;*这里对应上面的记忆化，在一定条件下时记录，保证一致性，当然如果约束条件不需要考虑lead，这里就是lead就完全不用考虑了*&#x2F;
+    return ans;
+&#125;
+ll solve(ll x)
+&#123;
+    int pos&#x3D;0;
+    while(x)&#x2F;&#x2F;把数位都分解出来
+    &#123;
+        a[pos++]&#x3D;x%10;&#x2F;&#x2F;个人老是喜欢编号为[0,pos),看不惯的就按自己习惯来，反正注意数位边界就行
+        x&#x2F;&#x3D;10;
+    &#125;
+    return dfs(pos-1&#x2F;*从最高位开始枚举*&#x2F;,&#x2F;*一系列状态 *&#x2F;,true,true);&#x2F;&#x2F;刚开始最高位都是有限制并且有前导零的，显然比最高位还要高的一位视为0嘛
+&#125;
+int main()
+&#123;
+    ll le,ri;
+    while(~scanf(&quot;%lld%lld&quot;,&amp;le,&amp;ri))
+    &#123;
+        &#x2F;&#x2F;初始化dp数组为-1,这里还有更加优美的优化,后面讲
+        printf(&quot;%lld\n&quot;,solve(ri)-solve(le-1));
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>相信读者还对这个有不少疑问，笔者认为有必要讲一下记忆化为什么是if(!limit)才行，大致就是说有无limit会出现状态冲突，举例：</p><p>约束：数位上不能出现连续的两个1(11、112、211都是不合法的)</p><p>假设就是[1,210]这个区间的个数</p><p>状态:dp[pos][pre]:当前枚举到pos位，前面一位枚举的是pre(更加前面的位已经合法了)，的个数(我的pos从0开始)</p><p>先看错误的方法计数，就是不判limit就是直接记忆化</p><p>那么假设我们第一次枚举了百位是0，显然后面的枚举limit=false，也就是数位上0到9的枚举，然后当我十位枚举了1，此时考虑dp[0][1],就是枚举到个位，前一位是1的个数，显然dp[0][1]=9;(个位只有是1的时候是不满足的)，这个状态记录下来，继续dfs，一直到百位枚举了2，十位枚举了1，显然此时递归到了pos=0,pre=1的层，而dp[0][1]的状态已经有了即dp[pos][pre]!=-1；此时程序直接return dp[0][1]了，然而显然是错的，因为此时是有limit的个位只能枚举0，根本没有9个数，这就是状态冲突了。有lead的时候可能出现冲突，这只是两个最基本的不同的题目可能还要加限制，反正宗旨都是让dp状态唯一</p><p>对于这个错误说两点：一是limit为true的数并不多，一个个枚举不会很浪费时间，所以我们记录下! limit的状态解决了不少子问题重叠。第二，有人可能想到把dp状态改一下dp[pos][state][limit]就是分别记录不同limit下的个数，这种方法一般是对的，关于这个具体会讲，下面有题bzoj3209会用到这个。</p><p>数位的部分就是这些，然后就是难点，dp部分，dp大牛的艺术，弱鸡只能看看+...+</p><p>既然从高位往低位枚举，那么状态一般都是与前面已经枚举的数位有关并且通常是根据约束条件当前枚举的这一位能使得状态完整(比如一个状态涉及到连续k位，那么就保存前k-1的状态，当前枚举的第k个是个恰好凑成成一个完整的状态，不过像那种状态是数位的和就直接保存前缀和为状态了)，不过必然有一位最简单的一个状态dp[pos]当前枚举到了pos位。dp部分就要开始讲例题了，不过会介绍几种常用防tle的优化。</p><h1 id="实战篇">实战篇</h1><blockquote><p>例一：HDU 2089 不要62</p><p>入门题。就是数位上不能有4也不能有连续的62，没有4的话在枚举的时候判断一下，不枚举4就可以保证状态合法了，所以这个约束没有记忆化的必要，而对于62的话，涉及到两位，当前一位是6或者不是6这两种不同情况我计数是不相同的，所以要用状态来记录不同的方案数。</p></blockquote><p>dp[pos][sta]表示当前第pos位，前一位是否是6的状态，这里sta只需要去0和1两种状态就可以了，不是6的情况可视为同种，不会影响计数。</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;string&gt;
+using namespace std;
+typedef long long ll;
+int a[20];
+int dp[20][2];
+int dfs(int pos,int pre,int sta,bool limit)
+&#123;
+    if(pos&#x3D;&#x3D;-1) return 1;
+    if(!limit &amp;&amp; dp[pos][sta]!&#x3D;-1) return dp[pos][sta];
+    int up&#x3D;limit ? a[pos] : 9;
+    int tmp&#x3D;0;
+    for(int i&#x3D;0;i&lt;&#x3D;up;i++)
+    &#123;
+        if(pre&#x3D;&#x3D;6 &amp;&amp; i&#x3D;&#x3D;2)continue;
+        if(i&#x3D;&#x3D;4) continue;&#x2F;&#x2F;都是保证枚举合法性
+        tmp+&#x3D;dfs(pos-1,i,i&#x3D;&#x3D;6,limit &amp;&amp; i&#x3D;&#x3D;a[pos]);
+    &#125;
+    if(!limit) dp[pos][sta]&#x3D;tmp;
+    return tmp;
+&#125;
+int solve(int x)
+&#123;
+    int pos&#x3D;0;
+    while(x)
+    &#123;
+        a[pos++]&#x3D;x%10;
+        x&#x2F;&#x3D;10;
+    &#125;
+    return dfs(pos-1,-1,0,true);
+&#125;
+int main()
+&#123;
+    int le,ri;
+    &#x2F;&#x2F;memset(dp,-1,sizeof dp);可优化
+    while(~scanf(&quot;%d%d&quot;,&amp;le,&amp;ri) &amp;&amp; le+ri)
+    &#123;
+        memset(dp,-1,sizeof dp);
+        printf(&quot;%d\n&quot;,solve(ri)-solve(le-1));
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>入门就不多讲了，开始讲常用优化吧！</p><h2 id="第一memsetdp-1sizeof-dp放在多组数据外面">第一:memset(dp,-1,sizeof dp);放在多组数据外面。</h2><p>这一点是一个数位特点，使用的条件是：约束条件是每个数自身的属性，而与输入无关。</p><p>具体的：上一题不要62和4，这个约束对每一个数都是确定的，就是说任意一个数满不满足这个约束都是确定，比如444这个数，它不满足约束条件，不管你输入的区间是多少你都无法改变这个数不满足约束这个事实，这就是数自身的属性（我们每组数据只是在区间计数而已，只能说你输入的区间不包含444的话，我们就不把它统计在内，而无法改变任何事实）。</p><p>由此，我们保存的状态就可以一直用(注意还有要limit，不同区间是会影响数位在有限制条件下的上限的)</p><p>这点优化就不给具体题目了，这个还有进一步的扩展。不过说几个我遇到的简单的约束：</p><ol type="1"><li>求数位和是10的倍数的个数,这里简化为数位sum%10这个状态，即dp[pos][sum]这里10 是与多组无关的，所以可以memset优化，不过注意如果题目的模是输入的话那就不能这样了。</li><li>求二进制1的数量与0的数量相等的个数，这个也是数自身的属性。</li><li>。。。。。</li></ol><p>还是做题积累吧。搞懂思想！</p><p>下面介绍的方法就是要行memset优化，把不满足前提的通过修改，然后优化。</p><p>介绍之前,先说一种较为笨拙的修改，那就是增加状态，前面讲limit的地方说增加一维dp[pos][state][limit]，能把不同情况下状态分别记录(不过这个不能memset放外面)。基于这个思想，我们考虑：约束为数位是p的倍数的个数，其中p数输入的，这和上面sum%10类似，但是dp[pos][sum]显然已经不行了，每次p可能都不一样，为了强行把memset提到外面加状态dp[pos][sum][p]，对于每个不同p分别保存对应的状态。这里前提就比较简单了，你dp数组必须合法，p太大就G_G了。所以对于与输入有关的约束都可以强行增加状态(这并不代表能ac，如果题目数据少的话就随便你乱搞了)</p><h2 id="第二相减">第二：相减。</h2><p>例题：HDU 4734</p><p>题目给了个f(x)的定义：F(x) = An * 2n-1 + An-1 * 2n-2 + ... + A2 * 2 + A1 * 1，Ai是十进制数位，然后给出a,b求区间[0,b]内满足f(i)&lt;=f(a)的i的个数。</p><p>常规想：这个f(x)计算就和数位计算是一样的，就是加了权值，所以dp[pos][sum]，这状态是基本的。a是题目给定的，f(a)是变化的不过f(a)最大好像是4600的样子。如果要memset优化就要加一维存f(a)的不同取值，那就是dp[10][4600][4600]，这显然不合法。</p><p>这个时候就要用减法了，dp[pos][sum]，sum不是存当前枚举的数的前缀和(加权的)，而是枚举到当前pos位，后面还需要凑sum的权值和的个数，</p><p>也就是说初始的是时候sum是f(a),枚举一位就减去这一位在计算f(i)的权值，那么最后枚举完所有位 sum&gt;=0时就是满足的，后面的位数凑足sum位就可以了。</p><p>仔细想想这个状态是与f(a)无关的(新手似乎很难理解)，一个状态只有在sum&gt;=0时才满足，如果我们按常规的思想求f(i)的话，那么最后sum&gt;=f(a)才是满足的条件。</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;iostream&gt;
+#include&lt;string&gt;
+ 
+using namespace std;
+const int N&#x3D;1e4+5;
+int dp[12][N];
+int f(int x)
+&#123;
+    if(x&#x3D;&#x3D;0) return 0;
+    int ans&#x3D;f(x&#x2F;10);
+    return ans*2+(x%10);
+&#125;
+int all;
+int a[12];
+int dfs(int pos,int sum,bool limit)
+&#123;
+    if(pos&#x3D;&#x3D;-1) &#123;return sum&lt;&#x3D;all;&#125;
+    if(sum&gt;all) return 0;
+    if(!limit &amp;&amp; dp[pos][all-sum]!&#x3D;-1) return dp[pos][all-sum];
+    int up&#x3D;limit ? a[pos] : 9;
+    int ans&#x3D;0;
+    for(int i&#x3D;0;i&lt;&#x3D;up;i++)
+    &#123;
+        ans+&#x3D;dfs(pos-1,sum+i*(1&lt;&lt;pos),limit &amp;&amp; i&#x3D;&#x3D;a[pos]);
+    &#125;
+    if(!limit) dp[pos][all-sum]&#x3D;ans;
+    return ans;
+&#125;
+int solve(int x)
+&#123;
+    int pos&#x3D;0;
+    while(x)
+    &#123;
+        a[pos++]&#x3D;x%10;
+        x&#x2F;&#x3D;10;
+    &#125;
+    return dfs(pos-1,0,true);
+&#125;
+int main()
+&#123;
+    int a,ri;
+    int T_T;
+    int kase&#x3D;1;
+    scanf(&quot;%d&quot;,&amp;T_T);
+    memset(dp,-1,sizeof dp);
+    while(T_T--)
+    &#123;
+        scanf(&quot;%d%d&quot;,&amp;a,&amp;ri);
+        all&#x3D;f(a);
+        printf(&quot;Case #%d: %d\n&quot;,kase++,solve(ri));
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>减法的艺术！！！</p><p>例题 POJ 3252</p><p>这题的约束就是一个数的二进制中0的数量要不能少于1的数量，通过上一题，这题状态就很简单了，dp[pos][num],到当前数位pos,0的数量减去1的数量不少于num的方案数，一个简单的问题，中间某个pos位上num可能为负数(这不一定是非法的，因为我还没枚举完嘛，只要最终的num&gt;=0才能判合法，中途某个pos就不一定了)，这里比较好处理，Hash嘛，最小就-32吧(好像),直接加上32，把32当0用。这题主要是要想讲一下lead的用法，显然我要统计0的数量，前导零是有影响的。至于!lead&amp;&amp;!limit才能dp，都是类似的，自己慢慢体会吧。</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#pragma comment(linker, &quot;&#x2F;STACK:10240000,10240000&quot;)
+#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;string&gt;
+#include&lt;queue&gt;
+#include&lt;set&gt;
+#include&lt;vector&gt;
+#include&lt;map&gt;
+#include&lt;stack&gt;
+#include&lt;cmath&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+const double R&#x3D;0.5772156649015328606065120900;
+const int N&#x3D;1e5+5;
+const int mod&#x3D;1e9+7;
+const int INF&#x3D;0x3f3f3f3f;
+const double eps&#x3D;1e-8;
+const double pi&#x3D;acos(-1.0);
+typedef long long ll;
+int dp[35][66];
+int a[66];
+int dfs(int pos,int sta,bool lead,bool limit)
+&#123;
+    if(pos&#x3D;&#x3D;-1)
+        return sta&gt;&#x3D;32;
+    if(!limit &amp;&amp; !lead &amp;&amp; dp[pos][sta]!&#x3D;-1) return dp[pos][sta];
+    int up&#x3D;limit?a[pos]:1;
+    int ans&#x3D;0;
+    for(int i&#x3D;0;i&lt;&#x3D;up;i++)
+    &#123;
+        if(lead &amp;&amp; i&#x3D;&#x3D;0) ans+&#x3D;dfs(pos-1,sta,lead,limit &amp;&amp; i&#x3D;&#x3D;a[pos]);&#x2F;&#x2F;有前导零就不统计在内
+        else ans+&#x3D;dfs(pos-1,sta+(i&#x3D;&#x3D;0?1:-1),lead &amp;&amp; i&#x3D;&#x3D;0,limit &amp;&amp; i&#x3D;&#x3D;a[pos]);
+    &#125;
+    if(!limit &amp;&amp; !lead ) dp[pos][sta]&#x3D;ans;
+    return ans;
+&#125;
+int solve(int x)
+&#123;
+    int pos&#x3D;0;
+    while(x)
+    &#123;
+        a[pos++]&#x3D;x&amp;1;
+        x&gt;&gt;&#x3D;1;
+    &#125;
+    return dfs(pos-1,32,true,true);
+&#125;
+int main()
+&#123;
+    memset(dp,-1,sizeof dp);
+    int a,b;
+    while(~scanf(&quot;%d%d&quot;,&amp;a,&amp;b))
+    &#123;
+        printf(&quot;%d\n&quot;,solve(b)-solve(a-1));
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>然后就是一些需要自己yy的题：</p><p>HDU 3709 这题就是要枚举中轴，然后数位dp</p><p>UVA 1305 这题我二分然后数位dp搞(好像不是正解，我水过的)</p><p>Hbzoj 1799 这题讲一下：</p><p>（偷偷告诉你，这个oj是单组测试，然后memset什么的都是浮云了）</p><p>约束：一个数是它自己数位和的倍数，直接dp根本找不到状态，枚举数位和，因为总就162,然后问题就变成了一个数%mod=0，mod是枚举的，想想状态：dp[pos][sum][val]，当前pos位上数位和是sum,val就是在算这个数%mod,（从高位算 *10+i），因为我们枚举的数要保证数位和等于mod，还要保证这个数是mod的倍数，很自然就能找到这些状态，显然对于每一个mod，val不能保证状态唯一，这是你要是想加一维dp[pos][sum][val][mod],记录每一个mod的状态(这里sum可以用减法，然而val不行，就只能加一维)，那你就想太多了，这样是会超时的(因为状态太多，记忆化效果不好)。这里直接对每一个mod，memset一次就能ac。下面的代码还把limit的当做了状态，因为每次都要初始化，所以能这样，memset在多组外面是不能这样的，不过奇葩的，这代码，如果不把limit当状态，还是在!limit 条件下记录dp，提交一发，时间竟然更短了，可能是每次memset的关系！！！</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;iostream&gt;
+#include&lt;string&gt;
+ 
+using namespace std;
+ 
+typedef long long ll;
+ 
+ll dp[20][163][163][2];
+int a[20];
+ll dfs(int pos,int sum,int val,int mod,bool limit)
+&#123;
+    if(sum-9*pos-9&gt;0) return 0;&#x2F;&#x2F;最坏的情况，这一位及后面的全部为9都不能达到0那就直接GG，这个剪枝不会影响ac
+    if(pos&#x3D;&#x3D;-1) return sum&#x3D;&#x3D;0 &amp;&amp; val&#x3D;&#x3D;0;
+    if(dp[pos][sum][val][limit]!&#x3D;-1) return dp[pos][sum][val][limit];
+    int up&#x3D;limit?a[pos]:9;
+    ll ans&#x3D;0;
+    for(int i&#x3D;0;i&lt;&#x3D;up;i++)
+    &#123;
+        if(sum-i&lt;0) break;
+        ans+&#x3D;dfs(pos-1,sum-i,(val*10+i)%mod,mod,limit &amp;&amp; i&#x3D;&#x3D;a[pos]);
+    &#125;
+    dp[pos][sum][val][limit]&#x3D;ans;
+    return ans;
+&#125;
+ll solve(ll x)
+&#123;
+    int pos&#x3D;0;
+    while(x)
+    &#123;
+        a[pos++]&#x3D;x%10;
+        x&#x2F;&#x3D;10;
+    &#125;
+    ll ans&#x3D;0;
+    for(int i&#x3D;1;i&lt;&#x3D;pos*9;i++)&#x2F;&#x2F;上限就是每一位都是9
+    &#123;
+        memset(dp,-1,sizeof dp);
+        ll tmp&#x3D;dfs(pos-1,i,0,i,true);
+        ans+&#x3D;tmp;
+    &#125;
+    return ans;
+&#125;
+int main()
+&#123;
+&#x2F;&#x2F;    cout&lt;&lt;18*9&lt;&lt;endl;
+    ll le,ri;
+&#x2F;&#x2F;    memset(dp,-1,sizeof dp);
+    while(~scanf(&quot;%lld%lld&quot;,&amp;le,&amp;ri))
+        printf(&quot;%lld\n&quot;,solve(ri)-solve(le-1));
+    return 0;
+&#125;
+&#x2F;*
+1 1000000000000000000
+*&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>基本讲的差不多了。前段时间学了点新东西！！</p><h1 id="新的领域--计数转求和">新的领域--计数转求和</h1><p>HDU 4507</p><p>这题麻烦就是要求数的平方和。</p><p>我们先考虑求和的问题，一个区间，数位dp能在一些约束下计数，现在要这些数的和。其实组合数学搞搞就可以了：如 现在枚举的某一位pos,我统计了这一位枚举i的满足条件的个数cnt，其实只要算i对总和的贡献就可以了，对于一个数而言第pos位是i，那么对求和贡献就是i<em>10^ pos 就是十进制的权值，然后有cnt个数都满足第pos位是i，最后sum=cnt</em>i<em>10^ pos.原理就是这样平方和可以看做(a</em>10^ pos+b)^2,a是你当前pos位要枚举的，b其实是个子问题，就是pos之后的位的贡献值，把这个平方展开就可以了！</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#pragma comment(linker, &quot;&#x2F;STACK:10240000,10240000&quot;)
+#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;string&gt;
+#include&lt;queue&gt;
+#include&lt;set&gt;
+#include&lt;vector&gt;
+#include&lt;map&gt;
+#include&lt;stack&gt;
+#include&lt;cmath&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+const double R&#x3D;0.5772156649015328606065120900;
+const int N&#x3D;1e5+5;
+const int mod&#x3D;1e9+7;
+const int INF&#x3D;0x3f3f3f3f;
+const double eps&#x3D;1e-8;
+const double pi&#x3D;acos(-1.0);
+typedef long long ll;
+ll fact[20];
+void init()
+&#123;
+    fact[0]&#x3D;1;
+    for(int i&#x3D;1;i&lt;20;i++)
+        fact[i]&#x3D;fact[i-1]*10%mod;
+&#125;
+struct node
+&#123;
+    ll cnt,sum,sqr;
+    node(ll cnt&#x3D;-1,ll sum&#x3D;0,ll sqr&#x3D;0):cnt(cnt),sum(sum),sqr(sqr)&#123;&#125;
+&#125;dp[20][7][7];
+int a[20];
+ll fac(ll x)
+&#123;
+    return x*x%mod;
+&#125;
+ll dfs(int pos,ll num,ll val,ll&amp;cnt,ll&amp;sum,bool limit)
+&#123;
+    if(pos&#x3D;&#x3D;-1) &#123;
+        if(num&#x3D;&#x3D;0 || val&#x3D;&#x3D;0)
+            return 0;
+        cnt&#x3D;1;
+        return 0;
+    &#125;
+    if(!limit &amp;&amp; dp[pos][num][val].cnt!&#x3D;-1) &#123;
+            cnt&#x3D;dp[pos][num][val].cnt;
+            sum&#x3D;dp[pos][num][val].sum;
+            return dp[pos][num][val].sqr;
+    &#125;
+    int up&#x3D;limit?a[pos]:9;
+    ll sq&#x3D;0;
+    for(int i&#x3D;0;i&lt;&#x3D;up;i++)
+    if(i!&#x3D;7)
+    &#123;
+        ll cn&#x3D;0,su&#x3D;0;
+        ll tmp&#x3D;dfs(pos-1,(num+i)%7,(val*10+i)%7,cn,su,limit &amp;&amp; i&#x3D;&#x3D;a[pos]);
+        ll tm&#x3D;i*fact[pos]%mod;
+        tmp&#x3D;(tmp+fac(tm)*cn%mod+(tm*su%mod)*2%mod)%mod;&#x2F;&#x2F;计数之后要更新sum,sqr
+        sum&#x3D;(sum+su+(i*fact[pos]%mod)*cn%mod)%mod;
+        cnt&#x3D;(cnt+cn)%mod;
+        sq&#x3D;(sq+tmp)%mod;
+    &#125;
+    if(!limit) dp[pos][num][val]&#x3D;node(cnt,sum,sq);
+    return sq;
+&#125;
+ll solve(ll x)
+&#123;
+    int pos&#x3D;0;
+    while(x)
+    &#123;
+        a[pos++]&#x3D;x%10;
+        x&#x2F;&#x3D;10;
+    &#125;
+    ll t1&#x3D;0,t2&#x3D;0;
+    return dfs(pos-1,0,0,t1,t2,true);
+&#125;
+bool judge(ll x)
+&#123;
+    int sum&#x3D;0;
+    int pos&#x3D;0;
+    if(x%7&#x3D;&#x3D;0) return false;
+    while(x)
+    &#123;
+        if(x%10&#x3D;&#x3D;7) return false;
+        sum+&#x3D;x%10;
+        x&#x2F;&#x3D;10;
+    &#125;
+    sum%&#x3D;7;
+    return sum!&#x3D;0;
+&#125;
+int main()
+&#123;
+    init();
+    for(int i&#x3D;0;i&lt;20;i++)
+        for(int j&#x3D;0;j&lt;7;j++)
+        for(int k&#x3D;0;k&lt;7;k++)&#x2F;&#x2F;memset
+    &#123;
+        dp[i][j][k].cnt&#x3D;-1;
+        dp[i][j][k].sum&#x3D;0;
+        dp[i][j][k].sqr&#x3D;0;
+    &#125;
+    int T_T;
+    scanf(&quot;%d&quot;,&amp;T_T);
+    while(T_T--)
+    &#123;
+        ll le,ri;
+        scanf(&quot;%I64d%I64d&quot;,&amp;le,&amp;ri);
+        ll ans&#x3D;solve(ri)-solve(le-1);
+        ans&#x3D;(ans%mod+mod)%mod;
+        printf(&quot;%I64d\n&quot;,ans);
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div><footer class="post-footer"><p class="post-end-coffee">-------- 本文结束 <i class="fa-solid fa-mug-hot"></i> 感谢阅读 --------</p><div class="popular-posts-header">相关文章</div><ul class="popular-posts"><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/数据结构-双指针(尺取法)/" rel="bookmark">数据结构-双指针(尺取法)</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/数论-斐波那契数列的奇怪性质/" rel="bookmark">数论-斐波那契数列的奇怪性质</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/数论-矩阵快速幂/" rel="bookmark">数论-矩阵快速幂</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/计算几何-判断两线段是否相交/" rel="bookmark">计算几何-判断两线段是否相交</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/2020牛客寒假算法基础集训营1题解/" rel="bookmark">2020牛客寒假算法基础集训营1题解</a></div></li></ul><script>let post_body = document.querySelector('.post-body');
+  let theme_switch = document.getElementById('theme_switch');
+  const theme = {};
+  Object.defineProperty(theme, 'value', {
+    set(v){
+      post_body.setAttribute('theme', v);
+      localStorage.setItem('md_theme', v);
+      theme_switch.value = v;
+    }
+  })
+  theme.value = localStorage.getItem('md_theme') || 'sneh';
+  theme_switch.addEventListener('change',e=>theme.value = e.target.value)
+  document.getElementById('theme_switch_wapper').classList.remove('hidden');</script><div class="reward-container"><div></div><button>赞赏</button><div class="post-reward"><div><img src="/images/wechatpay.png" alt="Liu Kairui 微信"> <span>微信</span></div><div><img src="/images/alipay.png" alt="Liu Kairui 支付宝"> <span>支付宝</span></div></div></div><div class="post-copyright"><ul><li class="post-copyright-author"><strong>本文作者： </strong>Liu Kairui</li><li class="post-copyright-link"><strong>本文链接：</strong> <a href="https://blog.liukairui.me/article/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E6%95%B0%E4%BD%8DDP/" title="动态规划-数位DP">https://blog.liukairui.me/article/动态规划-数位DP/</a></li><li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div><div class="post-tags"><a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 笔记</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"><i class="fa fa-tag"></i> 动态规划</a> <a href="/tags/%E6%95%B0%E4%BD%8DDP/" rel="tag"><i class="fa fa-tag"></i> 数位DP</a></div><div class="post-nav"><div class="post-nav-item"><a href="/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A53%E9%A2%98%E8%A7%A3/" rel="prev" title="2020牛客寒假算法基础集训营3题解"><i class="fa fa-chevron-left"></i> 2020牛客寒假算法基础集训营3题解</a></div><div class="post-nav-item"><a href="/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A54%E9%A2%98%E8%A7%A3/" rel="next" title="2020牛客寒假算法基础集训营4题解">2020牛客寒假算法基础集训营4题解 <i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div class="comments" id="valine-comments"></div></div></main><footer class="footer"><div class="footer-inner"><div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2022</span> <span class="with-love"><i class="fa fa-heart"></i> </span><span class="author" itemprop="copyrightHolder">Liu Kairui</span></div><div class="wordcount"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-chart-line"></i> </span><span>总字数：</span> <span title="总字数">1.3m</span></span></div><div class="busuanzi-count"><span class="post-meta-item" id="busuanzi_container_site_uv"><span class="post-meta-item-icon"><i class="fa fa-user"></i> </span><span class="site-uv" title="总访客量"><span id="busuanzi_value_site_uv"></span> </span></span><span class="post-meta-item" id="busuanzi_container_site_pv"><span class="post-meta-item-icon"><i class="fa fa-eye"></i> </span><span class="site-pv" title="总访问量"><span id="busuanzi_value_site_pv"></span></span></span></div><div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动</div><div class="addthis_inline_share_toolbox"><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-630c5bd30a606ba8" async></script></div><div id="time_and_count"></div><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script><script>function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20201101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span class="daysCnt" style="color: #1890ff">$&</span>');
+    div.innerHTML = `小站已悄悄运行了 ${ages}`;
+    div.className="workDays";
+  }
+  let div = document.createElement("div");
+  let time_and_count = document.getElementById("time_and_count");
+  time_and_count.appendChild(div);
+  timer();
+  setInterval("timer()",1000)</script><script>let footer = document.querySelector('.footer-inner')
+
+let wordCount = document.querySelector('.wordcount')
+wordCount.innerHTML = wordCount.innerText.replace('：',': ').replace('m','M')
+if(wordCount){
+  time_and_count.appendChild(wordCount);
+}
+
+let busaunzi = document.querySelector('.busuanzi-count')
+if(busaunzi){
+  footer.appendChild(busaunzi);
+}
+
+let powerby = document.querySelector('.powered-by')
+if(powerby){
+  footer.appendChild(powerby);
+}</script></div></footer><script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script><script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/algoliasearch/4.14.2/algoliasearch-lite.umd.js" integrity="sha256-dImjLPUsG/6p3+i7gVKBiDM8EemJAhQ0VvkRK2pVsQY=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/instantsearch.js/4.43.1/instantsearch.production.min.js" integrity="sha256-jLNoKrKRDKAOg8JBqkl8jSy2tpqCGQ1/++9QRYtWl8k=" crossorigin="anonymous"></script><script src="/js/third-party/search/algolia-search.js"></script><script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer"}</script><script src="/js/third-party/tags/pdf.js"></script><script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.1.3/mermaid.min.js","integrity":"sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg="}}</script><script src="/js/third-party/tags/mermaid.js"></script><script src="/js/third-party/fancybox.js"></script><script src="/js/third-party/pace.js"></script><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"ABKlVtS4cyaWYEwunPyK3sXt-9Nh9j0Va","app_key":"xxGXdTTEGEVifs2TLB35844I","server_url":"https://abklvts4.lc-cn-e1-shared.com","security":false}</script><script src="/js/third-party/statistics/lean-analytics.js"></script><script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script><script src="/js/third-party/math/mathjax.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script><script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.liukairui.me/article/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E6%95%B0%E4%BD%8DDP/"}</script><script src="/js/third-party/quicklink.js"></script><script src="https://unpkg.com/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script><script>var options = {
+  bottom: '71px',
+  right: 'unset',
+  left: '30px',
+  time: '0s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#222',
+  buttonColorLight: '#222',
+  saveInCookies: true,
+  label: '',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();</script><script>NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"ABKlVtS4cyaWYEwunPyK3sXt-9Nh9j0Va","appKey":"xxGXdTTEGEVifs2TLB35844I","serverURLs":"https://abklvts4.lc-cn-e1-shared.com","placeholder":"请开始你的表演","avatar":"identicon","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","visitor":false,"comment_count":true,"recordIP":true,"enableQQ":true,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/article/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E6%95%B0%E4%BD%8DDP/",
+      serverURLs: "https://abklvts4.lc-cn-e1-shared.com"
+    }));
+  }, window.Valine);
+});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/hijiki.model.json"},display:{position:"right",width:150,height:300},mobile:{show:!1},react:{opacity:.7}})</script></body></html>

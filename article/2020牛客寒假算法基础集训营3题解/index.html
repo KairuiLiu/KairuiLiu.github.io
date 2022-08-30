@@ -1,0 +1,756 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0"><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="mask-icon" href="/images/logo.svg" color="#222"><link rel="manifest" href="/images/manifest.json"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CPT+Sans:300,300italic,400,400italic,700,700italic%7CFira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/greem/pace-theme-minimal.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script><script class="next-config" data-name="main" type="application/json">{"hostname":"blog.liukairui.me","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.12.3","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":320},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"GPJGYFJZH3","apiKey":"594eec10fca5caccffae82e82d066310","indexName":"hexo","hits":{"per_page":10}}}</script><script src="/js/config.js"></script><meta name="description" content="原题来自2020牛客寒假算法基础集训营3，作以存档备查"><meta property="og:type" content="article"><meta property="og:title" content="2020牛客寒假算法基础集训营3题解"><meta property="og:url" content="https://blog.liukairui.me/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A53%E9%A2%98%E8%A7%A3/"><meta property="og:site_name" content="LiuKairui&#39;s Blog"><meta property="og:description" content="原题来自2020牛客寒假算法基础集训营3，作以存档备查"><meta property="og:locale" content="zh_CN"><meta property="article:published_time" content="2020-10-30T16:00:09.000Z"><meta property="article:modified_time" content="2021-10-18T06:44:13.581Z"><meta property="article:author" content="Liu Kairui"><meta property="article:tag" content="算法"><meta property="article:tag" content="牛客"><meta property="article:tag" content="ACM"><meta name="twitter:card" content="summary"><link rel="canonical" href="https://blog.liukairui.me/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A53%E9%A2%98%E8%A7%A3/"><script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.liukairui.me/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A53%E9%A2%98%E8%A7%A3/","path":"article/2020牛客寒假算法基础集训营3题解/","title":"2020牛客寒假算法基础集训营3题解"}</script><script class="next-config" data-name="calendar" type="application/json">""</script><title>2020牛客寒假算法基础集训营3题解 | LiuKairui's Blog</title><script>var titleTime,OriginTitile=document.title;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="我们活着是为了什么? | "+OriginTitile,clearTimeout(titleTime)):(document.title="整点薯条 | "+OriginTitile,titleTime=setTimeout(function(){document.title=OriginTitile},2e3))})</script><noscript><link rel="stylesheet" href="/css/noscript.css"></noscript><link rel="alternate" href="/atom.xml" title="LiuKairui's Blog" type="application/atom+xml"><style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head><body itemscope itemtype="http://schema.org/WebPage" class="use-motion"><div class="headband"></div><main class="main"><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-container"><div class="site-nav-toggle"><div class="toggle" aria-label="切换导航栏" role="button"><span class="toggle-line"></span> <span class="toggle-line"></span> <span class="toggle-line"></span></div></div><div class="site-meta"><a href="/" class="brand" rel="start"><i class="logo-line"></i><p class="site-title">LiuKairui's Blog</p><i class="logo-line"></i></a><p class="site-subtitle" itemprop="description">整点薯条</p></div><div class="site-nav-right"><div class="toggle popup-trigger"><i class="fa fa-search fa-fw fa-lg"></i></div></div></div><nav class="site-nav"><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fas fa-hashtag fa-fw"></i>标签</a></li><li class="menu-item menu-item-收藏夹"><a href="/favorites/" rel="section"><i class="fab fa-gratipay fa-fw"></i>收藏夹</a></li><li class="menu-item menu-item-留言板"><a href="/messageBoard/" rel="section"><i class="fab fa-facebook-messenger fa-fw"></i>留言板</a></li><li class="menu-item menu-item-项目"><a href="/projects/" rel="section"><i class="fa fa-satellite fa-fw"></i>项目</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-search"><a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索</a></li></ul></nav><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-icon"><i class="fa fa-search"></i></span><div class="search-input-container"></div><span class="popup-btn-close" role="button"><i class="fa fa-times-circle"></i></span></div><div class="search-result-container"><div class="algolia-stats"><hr></div><div class="algolia-hits"></div><div class="algolia-pagination"></div></div></div></div><script async src="/js/wobblewindow.js"></script><script async>window.addEventListener("load",function(){768<window.innerWidth&&($("body>main>header").wobbleWindow({radius:50,movementTop:!1,movementLeft:!1,movementRight:!1,debug:!1}),$("body>footer").wobbleWindow({radius:50,movementBottom:!1,movementLeft:!1,movementRight:!1,debug:!1}))})</script></div><div class="toggle sidebar-toggle" role="button"><span class="toggle-line"></span> <span class="toggle-line"></span> <span class="toggle-line"></span></div><aside class="sidebar"><div class="sidebar-inner sidebar-nav-active sidebar-toc-active"><ul class="sidebar-nav"><li class="sidebar-nav-toc">文章目录</li><li class="sidebar-nav-overview">站点概览</li></ul><div class="sidebar-panel-container"><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#a%E7%89%9B%E7%89%9B%E7%9A%84drb%E8%BF%B7%E5%AE%ABi"><span class="nav-text">A：牛牛的DRB迷宫I</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#b%E7%89%9B%E7%89%9B%E7%9A%84drb%E8%BF%B7%E5%AE%ABii"><span class="nav-text">B：牛牛的DRB迷宫II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c%E7%89%9B%E7%89%9B%E7%9A%84%E6%95%B0%E7%BB%84%E8%B6%8A%E4%BD%8D"><span class="nav-text">C：牛牛的数组越位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#d%E7%89%9B%E7%89%9B%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%95%B0%E7%BB%84%E5%AD%98%E5%82%A8"><span class="nav-text">D：牛牛与二叉树的数组存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#e%E7%89%9B%E7%89%9B%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%95%B0"><span class="nav-text">E：牛牛的随机数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#f%E7%89%9B%E7%89%9B%E7%9A%84link-power-i"><span class="nav-text">F：牛牛的Link Power I</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#g%E7%89%9B%E7%89%9B%E7%9A%84link-power-ii"><span class="nav-text">G：牛牛的Link Power II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#h%E7%89%9B%E7%89%9B%E7%9A%84k%E5%90%88%E5%9B%A0%E5%AD%90%E6%95%B0"><span class="nav-text">H：牛牛的k合因子数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i%E7%89%9B%E7%89%9B%E7%9A%84%E6%B1%89%E8%AF%BA%E5%A1%94"><span class="nav-text">I：牛牛的汉诺塔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#j-%E7%89%9B%E7%89%9B%E7%9A%84%E5%AE%9D%E5%8F%AF%E6%A2%A6go"><span class="nav-text">J： 牛牛的宝可梦Go</span></a></li></ol></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" alt="Liu Kairui" src="/images/avatar.jpg"><p class="site-author-name" itemprop="name">Liu Kairui</p><div class="site-description" itemprop="description">LiuKairui's Personal Website</div></div><div class="site-state-wrap site-overview-item animated"><nav class="site-state"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">48</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/"><span class="site-state-item-count">28</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/"><span class="site-state-item-count">61</span> <span class="site-state-item-name">标签</span></a></div></nav></div><div class="links-of-author site-overview-item animated"><span class="links-of-author-item"><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0thaXJ1aUxpdQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KairuiLiu"><i class="fab fa-github fa-fw"></i>GitHub</span> </span><span class="links-of-author-item"><span class="exturl" data-url="bWFpbHRvOm1lQGxpdWthaXJ1aS5tZQ==" title="E-Mail → mailto:me@liukairui.me"><i class="fa fa-envelope fa-fw"></i>E-Mail</span> </span><span class="links-of-author-item"><span class="exturl" data-url="aHR0cHM6Ly9xbS5xcS5jb20vY2dpLWJpbi9xbS9xcj9rPW9hZjNUb09sTjE3aHI1c0hWOThiVDhxeHNOWUdhdzVMJm5vdmVyaWZ5PTA=" title="QQ → https:&#x2F;&#x2F;qm.qq.com&#x2F;cgi-bin&#x2F;qm&#x2F;qr?k&#x3D;oaf3ToOlN17hr5sHV98bT8qxsNYGaw5L&amp;noverify&#x3D;0"><i class="fab fa-qq fa-fw"></i>QQ</span> </span><span class="links-of-author-item"><a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a> </span><span class="links-of-author-item"><span class="exturl" data-url="aHR0cHM6Ly9saXVrYWlydWkuYmxvZy5jc2RuLm5ldA==" title="CSDN → https:&#x2F;&#x2F;liukairui.blog.csdn.net"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</span> </span><span class="links-of-author-item"><span class="exturl" data-url="aHR0cDovL2xpdWthaXJ1aS5jYw==" title="国内站点 → http:&#x2F;&#x2F;liukairui.cc"><i class="fa fa-globe fa-fw"></i>国内站点</span></span></div><div class="cc-license site-overview-item animated" itemprop="license"><span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span></div></div></div></div></aside><div class="sidebar-dimmer"></div></header><div class="back-to-top" role="button" aria-label="返回顶部"><i class="fa fa-arrow-up"></i> <span>0%</span></div><div class="reading-progress-bar"></div><noscript><div class="noscript-warning">Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class="post-block"><article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://blog.liukairui.me/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A53%E9%A2%98%E8%A7%A3/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Liu Kairui"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="LiuKairui's Blog"><meta itemprop="description" content="LiuKairui's Personal Website"></span><span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork"><meta itemprop="name" content="2020牛客寒假算法基础集训营3题解 | LiuKairui's Blog"><meta itemprop="description" content="原题来自2020牛客寒假算法基础集训营3，作以存档备查"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">2020牛客寒假算法基础集训营3题解</h1><div class="post-meta-container"><div class="post-meta"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-calendar"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2020-10-31 00:00:09" itemprop="dateCreated datePublished" datetime="2020-10-31T00:00:09+08:00">2020-10-31</time> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-folder"></i> </span><span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a> </span>， <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E7%AE%97%E6%B3%95/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">题解</span></a> </span></span><span id="/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A53%E9%A2%98%E8%A7%A3/" class="post-meta-item leancloud_visitors" data-flag-title="2020牛客寒假算法基础集训营3题解" title="阅读次数"><span class="post-meta-item-icon"><i class="far fa-eye"></i> </span><span class="post-meta-item-text">阅读次数：</span> <span class="leancloud-visitors-count"></span> </span><span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv"><span class="post-meta-item-icon"><i class="far fa-eye"></i> </span><span class="post-meta-item-text">阅读次数：</span> <span id="busuanzi_value_page_pv"></span> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-comment"></i> </span><span class="post-meta-item-text">Valine：</span> <a title="valine" href="/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A53%E9%A2%98%E8%A7%A3/#valine-comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A53%E9%A2%98%E8%A7%A3/" itemprop="commentCount"></span> </a></span><span class="post-meta-item theme_switch_wapper hidden" id="theme_switch_wapper"><span class="post-meta-item-icon"><i class="fa-brands fa-markdown"></i></span> <span class="post-meta-item-text">主题： </span><select name="theme_switch" id="theme_switch"><option>sneh</option><option>mo</option><option>with</option><option>next</option></select> </span><span class="post-meta-item" title="本文字数"><span class="post-meta-item-icon"><i class="far fa-file-word"></i> </span><span class="post-meta-item-text">本文字数：</span> <span>23k</span></span></div><div class="post-description">原题来自2020牛客寒假算法基础集训营3，作以存档备查</div></div></header><div class="post-body" itemprop="articleBody"><h2 id="a牛牛的drb迷宫i">A：牛牛的DRB迷宫I</h2><p><img src="https://img-blog.csdnimg.cn/20200320144021809.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">5 5
+RBBBR
+BBBBB
+BBBDB
+BDBBB
+RBBBB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">25<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><hr><p>可以看到就是一个简单的dp题，然后再dp某一个点的时候，特判他能不能从左边和上边刷下来</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+const int mod&#x3D;1000000007;
+int dp[75][75],n,m;
+char G[75][75];
+
+int main()&#123;
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+    for(int i&#x3D;1;i&lt;&#x3D;n;i++)scanf(&quot;%s&quot;,G[i]+1);
+    dp[1][1]&#x3D;1;
+    for(int i&#x3D;1;i&lt;&#x3D;n;i++)&#123;
+        for(int j&#x3D;1;j&lt;&#x3D;m;j++)&#123;
+            if(i&gt;1)dp[i][j]&#x3D;(dp[i][j]+(G[i-1][j]&#x3D;&#x3D;&#39;R&#39;?0:dp[i-1][j]))%mod;
+            if(j&gt;1)dp[i][j]&#x3D;(dp[i][j]+(G[i][j-1]&#x3D;&#x3D;&#39;D&#39;?0:dp[i][j-1]))%mod;
+        &#125;
+    &#125;
+    cout&lt;&lt;dp[n][m];
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h2 id="b牛牛的drb迷宫ii">B：牛牛的DRB迷宫II</h2><p><img src="https://img-blog.csdnimg.cn/20200320144558560.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">25<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">5 5
+RBBBR
+BBBBB
+BBBDB
+BDBBB
+RBBBB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>说明</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">样例为《牛牛的DRB迷宫I》中的样例反过来。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><hr><p>首先，不要被这个样例给虎了，这就是第一题的样例反过来，不是出题人标程序跑出来的结果， 我们考虑构造一个50x50的地图最多可能的结果，就是所有的位置全是B，那么构造的结果是<span class="math inline">\(C_{2n}^n \gg 10^9+7\)</span>，但是找不到规律qwq 于是构造一个二进制数，强制对角线为<span class="math inline">\(2^n\)</span>，如图 <img src="https://img-blog.csdnimg.cn/2020032015075871.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> 首先，证明他的可行性，这样最大可以构造数字为<span class="math inline">\(2^{50}&gt;2^{32}&gt;10^9+7\)</span>，说以这样构造是可行的 然后考虑如何构造这样的一个迷宫,由于数字只能从左上到右下流动，所以要想2倍，比较好的方法是 <img src="https://img-blog.csdnimg.cn/20200320151406890.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> 那么，我们的构造方法是 <img src="https://img-blog.csdnimg.cn/20200320151705500.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> 左上角的绿块一定要是<code>B</code>，右面那个可以是<code>B</code>也可以是<code>D</code>因为即使右边是B，向右流过去也不会影响下面的，但是有可能会影响64那个块，所以我们让右边一定是<code>D</code>，同理下面那个可以是<code>R</code>也可以是<code>B</code>，但是我们暂定为<code>R</code>,于是暂时构造迷宫如图 <img src="https://img-blog.csdnimg.cn/20200320152131130.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/20200320152221972.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> 错的思路： 这就好办了，我们把给的数分解为二进制，0就不选，1就选，例如25=11001(2进制) 蓝色是选，绿色是不选 <img src="https://img-blog.csdnimg.cn/20200320152614490.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> 于是写出代码</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main()&#123;
+    long long k,len;
+    scanf(&quot;%lld&quot;,&amp;k);
+    for(len&#x3D;0;(1&lt;&lt;len)&lt;&#x3D;k;len++);
+    printf(&quot;%d %d\n&quot;,len,len);
+    for(int i&#x3D;0;i&lt;len;i++)&#123;
+        for(int j&#x3D;0;j&lt;len;j++)&#123;
+            if(j-i&#x3D;&#x3D;1)printf(&quot;B&quot;);
+            else if(i-j&#x3D;&#x3D;1)&#123;
+                if(k)printf(&quot;B&quot;);
+                else printf(&quot;D&quot;);
+                k&gt;&gt;&#x3D;1;
+            &#125;
+            else if(i&#x3D;&#x3D;j)printf(&quot;B&quot;);
+            else if(i&lt;j)printf(&quot;R&quot;);
+            else printf(&quot;D&quot;);
+        &#125;
+        printf(&quot;\n&quot;);
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>这是错的，因为我们的二进制不选，下一个就会受影响，如图</strong> <img src="https://img-blog.csdnimg.cn/20200320152828710.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> 所以这个对角线上的数字必须保留！ 那如何优雅的表示选或者不选呢？？ 首先，右上方的数字这么填写呢？？ 一旦填写往下走到对角线上就会对对角线造成干扰，如图 <img src="https://img-blog.csdnimg.cn/20200320153151452.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> 所以，不要让他对对角线造成干扰，我们把右上方黄线全部设为<code>D</code>!!! 这样右上方白块全都是0了，右上全写<code>R</code> <img src="https://img-blog.csdnimg.cn/20200320153437410.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/20200320153608234.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> 我们想让右下角数字承担选择转运的作用 首先一个要选的数字不能向右走，我们构造如下，首先把最后一个128要删去了，为啥，最后一个要放ans，我们假设<code>77</code>是最后要的结果 <img src="https://img-blog.csdnimg.cn/20200320154313549.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> 让蓝色承担往下走的功能，红色是往右走 <img src="https://img-blog.csdnimg.cn/20200320154629276.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> 那如何让数据往下流呢？ <img src="https://img-blog.csdnimg.cn/20200320154715901.png" alt="在这里插入图片描述"> 比如现在他就流不下来 这么处理呢？ 把他改成红色 <img src="https://img-blog.csdnimg.cn/20200320154834148.png" alt="在这里插入图片描述"> 这就流下卡了 那么我们就让想让他流下来的写成B，不想流下来的写成R，就这样就做到了 <img src="https://img-blog.csdnimg.cn/20200320155101643.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> 所以，我们就做到了这一点，例如我们要处理一个<code>77</code>这样写 77= 1001101(二进制) <img src="https://img-blog.csdnimg.cn/20200320155609658.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/20200320155801471.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>错误思路！！！：</strong> 轻松写出代码</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main()&#123;
+    long long k,len&#x3D;0;
+    scanf(&quot;%lld&quot;,&amp;k);
+    for(len&#x3D;0;(1&lt;&lt;len)&lt;&#x3D;k;len++);
+    if((1&lt;&lt;len)&#x3D;&#x3D;k)len++;len++;
+    printf(&quot;%lld %lld\n&quot;,len,len);
+    for(int i&#x3D;0;i&lt;len;i++)&#123;
+        for(int j&#x3D;0;j&lt;len;j++)&#123;
+            if(i&#x3D;&#x3D;j)printf(&quot;B&quot;);
+            else if(j-i&#x3D;&#x3D;1)printf(&quot;D&quot;);
+            else if(j-i&gt;1)printf(&quot;R&quot;);
+            else if(i-j&gt;1)printf((i&#x3D;&#x3D;len-1?&quot;R&quot;:&quot;D&quot;));
+            else&#123;
+                if(k&amp;1)printf(&quot;B&quot;);
+                else printf(&quot;R&quot;);
+                k&gt;&gt;&#x3D;1;
+            &#125;
+        &#125;
+        printf(&quot;\n&quot;);
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>有问题！！ <img src="https://img-blog.csdnimg.cn/20200320155948404.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> 这个灰色的表格，他是构造的时候让他构造主对角线才写为<code>D</code>,但是我们不能让他往下走，现在最后一个表格不是<span class="math inline">\(2^n\)</span>了，写为<code>R</code> <img src="https://img-blog.csdnimg.cn/2020032016023510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> 所以再加一个特判</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main()&#123;
+    long long k,len&#x3D;0;
+    scanf(&quot;%lld&quot;,&amp;k);
+    for(len&#x3D;0;(1&lt;&lt;len)&lt;&#x3D;k;len++);
+    if((1&lt;&lt;len)&#x3D;&#x3D;k)len++;len++;
+    printf(&quot;%lld %lld\n&quot;,len,len);
+    for(int i&#x3D;0;i&lt;len;i++)&#123;
+        for(int j&#x3D;0;j&lt;len;j++)&#123;
+            if(i&#x3D;&#x3D;len-2&amp;&amp;j&#x3D;&#x3D;len-1)printf(&quot;R&quot;);
+            else if(i&#x3D;&#x3D;j)printf(&quot;B&quot;);
+            else if(j-i&#x3D;&#x3D;1)printf(&quot;D&quot;);
+            else if(j-i&gt;1)printf(&quot;R&quot;);
+            else if(i-j&gt;1)printf((i&#x3D;&#x3D;len-1?&quot;R&quot;:&quot;D&quot;));
+            else&#123;
+                if(k&amp;1)printf(&quot;B&quot;);
+                else printf(&quot;R&quot;);
+                k&gt;&gt;&#x3D;1;
+            &#125;
+        &#125;
+        printf(&quot;\n&quot;);
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>但只有case通过95% 有两个bug， 1. <span class="math inline">\(k&gt;10^9+7\)</span>要mod回来 2. k=0的时候的解，我试了三个方法，这个spj只支持最后一个</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">if(k&#x3D;&#x3D;0)&#123;printf(&quot;0 0&quot;);return 0;&#125;
+if(k&#x3D;&#x3D;0)&#123;printf(&quot;No solution&quot;);return 0;&#125;
+if(k&#x3D;&#x3D;0)&#123;printf(&quot;2 2\nBR\nDB&quot;);return 0;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>最后写出AC代码</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main()&#123;
+    long long k,len&#x3D;0;
+    scanf(&quot;%lld&quot;,&amp;k);
+    k&#x3D;k%1000000007;
+    &#x2F;&#x2F; if(k&#x3D;&#x3D;0)&#123;printf(&quot;0 0&quot;);return 0;&#125;
+    if(k&#x3D;&#x3D;0)&#123;printf(&quot;2 2\nBR\nDB&quot;);return 0;&#125;
+    &#x2F;&#x2F; if(k&#x3D;&#x3D;0)&#123;printf(&quot;No solution&quot;);return 0;&#125;
+    for(len&#x3D;0;(1&lt;&lt;len)&lt;&#x3D;k;len++);
+    if((1&lt;&lt;len)&#x3D;&#x3D;k)len++;len++;
+    printf(&quot;%lld %lld\n&quot;,len,len);
+    for(int i&#x3D;0;i&lt;len;i++)&#123;
+        for(int j&#x3D;0;j&lt;len;j++)&#123;
+            if(i&#x3D;&#x3D;len-2&amp;&amp;j&#x3D;&#x3D;len-1)printf(&quot;R&quot;);
+            else if(i&#x3D;&#x3D;j)printf(&quot;B&quot;);
+            else if(j-i&#x3D;&#x3D;1)printf(&quot;D&quot;);
+            else if(j-i&gt;1)printf(&quot;R&quot;);
+            else if(i-j&gt;1)printf((i&#x3D;&#x3D;len-1?&quot;R&quot;:&quot;D&quot;));
+            else&#123;
+                if(k&amp;1)printf(&quot;B&quot;);
+                else printf(&quot;R&quot;);
+                k&gt;&gt;&#x3D;1;
+            &#125;
+        &#125;
+        printf(&quot;\n&quot;);
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>真的是奇怪的构造qwq</p><hr><h2 id="c牛牛的数组越位">C：牛牛的数组越位</h2><p><img src="https://img-blog.csdnimg.cn/20200320162345326.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">4
+2 4 8
+-1 4 1
+1 -3 2
+2 -6 3
+0 3 4
+-1 8 5
+-2 13 6
+-100 406 7
+100 -393 8
+5 5 1
+-1 8 1234
+10 10 1
+5 -51 1
+1 1 1
+0 0 7<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">1 2 3 4
+5 6 7 8
+Undefined Behaviour
+0 0 0 1234 0
+0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0
+Undefined Behaviour
+Runtime error
+7
+Accepted<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>备注:</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">无论是否发生数组越位或者非法访问，输入数据都要完整读入。
+题目中的代码不符合C&#x2F;C++规范，在不同编译器中由于实现不同运行的结果也可能不同，请勿依赖特定编译器对于UB的实现。:)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><hr><p>签到题，二维数组用一维模拟即可，但是比较奇怪的是比赛写的一直是TLE AC代码</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+long long a[1103550];
+
+int main()&#123;
+    int t;
+    scanf(&quot;%d&quot;,&amp;t);
+    while(t--)&#123;
+        memset(a,0,sizeof(a));
+        int state&#x3D;0;
+        long long n,m,p,x,y,v;
+        scanf(&quot;%lld%lld%lld&quot;,&amp;n,&amp;m,&amp;p);
+        for(int i&#x3D;0;i&lt;p;i++)&#123;
+            scanf(&quot;%lld%lld%lld&quot;,&amp;x,&amp;y,&amp;v);
+            if(state&#x3D;&#x3D;2)continue;
+            long long pos&#x3D;m*x+y;
+            if(pos&lt;0||pos&gt;m*n-1)&#123;
+                state&#x3D;2;
+            &#125;
+            else&#123;
+                if(x&lt;0||y&lt;0||x&gt;&#x3D;n||y&gt;&#x3D;m)
+                    state&#x3D;1;
+                a[pos]&#x3D;v;
+            &#125;
+        &#125;
+        if(state&#x3D;&#x3D;2)cout&lt;&lt;&quot;Runtime error&quot;&lt;&lt;endl;
+        else&#123;
+            for(int i&#x3D;0;i&lt;n;i++)&#123;
+                for(int j&#x3D;0;j&lt;m;j++)cout&lt;&lt;a[i*m+j]&lt;&lt;(j&#x3D;&#x3D;m-1?&quot;&quot;:&quot; &quot;);
+                cout&lt;&lt;endl;
+            &#125;
+            cout&lt;&lt;(state&#x3D;&#x3D;1?&quot;Undefined Behaviour&quot;:&quot;Accepted&quot;)&lt;&lt;endl;
+        &#125;
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h2 id="d牛牛与二叉树的数组存储">D：牛牛与二叉树的数组存储</h2><p><img src="https://img-blog.csdnimg.cn/20200320165114655.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/20200320165130525.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/20200320165153451.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">7
+1 2 3 4 5 6 7<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">The size of the tree is 7
+Node 1 is the root node of the tree
+The father of node 1 is -1, the left child is 2, and the right child is 3
+The father of node 2 is 1, the left child is 4, and the right child is 5
+The father of node 3 is 1, the left child is 6, and the right child is 7
+The father of node 4 is 2, the left child is -1, and the right child is -1
+The father of node 5 is 2, the left child is -1, and the right child is -1
+The father of node 6 is 3, the left child is -1, and the right child is -1
+The father of node 7 is 3, the left child is -1, and the right child is -1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">7
+3 -1 2 -1 -1 1 4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">The size of the tree is 4
+Node 3 is the root node of the tree
+The father of node 1 is 2, the left child is -1, and the right child is -1
+The father of node 2 is 3, the left child is 1, and the right child is 4
+The father of node 3 is -1, the left child is -1, and the right child is 2
+The father of node 4 is 2, the left child is -1, and the right child is -1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><p>前几天刚学了重口味线段树，即线段树的堆式存储 AC代码</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+int ss[900050],n,cnt&#x3D;0,pos[900050];
+
+inline int read()&#123;
+    int k&#x3D;0;
+    char f&#x3D;1;
+    char c&#x3D;getchar();
+    while(c&gt;&#39;9&#39;||c&lt;&#39;0&#39;)
+        if(c&#x3D;&#x3D;&#39;-&#39;)&#123;
+            f&#x3D;-1;
+            c&#x3D;getchar();
+        &#125;
+    while(c&lt;&#x3D;&#39;9&#39;&amp;&amp;c&gt;&#x3D;&#39;0&#39;)&#123;
+        k&#x3D;k*10+c-&#39;0&#39;;
+        c&#x3D;getchar();
+    &#125;
+    return k*f;
+&#125;
+
+int main()&#123;
+    n&#x3D;read();
+    for(int i&#x3D;1;i&lt;&#x3D;n;i++)&#123;
+        int t&#x3D;read();
+        ss[i]&#x3D;t;
+        if(t&gt;0)&#123;cnt++;pos[t]&#x3D;i;&#125;
+    &#125;
+    int root;
+    for(root&#x3D;1;root&lt;&#x3D;n;root++)if(ss[root]!&#x3D;-1)break;
+    cout&lt;&lt;&quot;The size of the tree is &quot;&lt;&lt;cnt&lt;&lt;endl;
+    cout&lt;&lt;&quot;Node &quot;&lt;&lt;ss[root]&lt;&lt;&quot; is the root node of the tree&quot;&lt;&lt;endl;
+
+    for(int i&#x3D;1;i&lt;&#x3D;cnt;i++)&#123;
+        root&#x3D;pos[i];
+        cout&lt;&lt;&quot;The father of node &quot;&lt;&lt;ss[root]&lt;&lt;&quot; is &quot;&lt;&lt;(ss[root&gt;&gt;1]&#x3D;&#x3D;0?-1:ss[root&gt;&gt;1])&lt;&lt;&quot;, the left child is &quot;&lt;&lt;(ss[root&lt;&lt;1]&#x3D;&#x3D;0?-1:ss[root&lt;&lt;1])&lt;&lt;&quot;, and the right child is &quot;&lt;&lt;(ss[(root&lt;&lt;1)+1]&#x3D;&#x3D;0?-1:ss[(root&lt;&lt;1)+1])&lt;&lt;endl;
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h2 id="e牛牛的随机数">E：牛牛的随机数</h2><p><img src="https://img-blog.csdnimg.cn/20200407081233666.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">2
+3 5 7 8
+1 3 3 5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">500000011
+222222228<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p><strong>说明</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">a可取3,4,5，b可取7,8
+3⊕7&#x3D;4，4⊕7&#x3D;3，5⊕7&#x3D;2
+3⊕8&#x3D;11，4⊕8&#x3D;12，5⊕8&#x3D;13
+共6种情况，答案为(4+3+2+11+12+13)&#x2F;6&#x3D;45&#x2F;6&#x3D;15&#x2F;2&#x3D;15*2^(-1)mod(10 ^9+7)&#x3D;15*500000004%mod&#x3D;500000011<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><hr><p>因为是区间计数问题，所以使用数位dp<br>作者：四糸智乃<br>链接：https://ac.nowcoder.com/discuss/365306?type=101&amp;order=0&amp;pos=1&amp;page=2<br>来源：牛客网</p><p>有两种思路，第一种是拆位后直接数位DP。<br>首先考虑二进制的个位产生的贡献，那么二进制个位产生的贡献有两部分：<br><span class="math inline">\([l_1,r_1]\)</span>区间内个位为0的数字乘以#[l_2,r_2]$区间内个位为1的数字。<br><span class="math inline">\([l_1,r_1]\)</span>区间内个位为1的数字乘以<span class="math inline">\([l_2,r_2]\)</span>区间内个位为0的数字。<br>做一个二进制位的数位DP，用于统计该数位0与1的个数。<br>假设<span class="math inline">\(x \in [l_1,R_1]中二进制的个位产生0的数目为￥cntx_0cnt二进制的个位产生1的数目为\)</span>cntx_1$<br><span class="math inline">\(y \in [l_2,R_2]\)</span>中二进制的个位产生0的数目为<span class="math inline">\(cnty_0\)</span>二进制的个位产生1的数目为<span class="math inline">\(cnty_1\)</span><br>那么就产生了<span class="math inline">\(cnty_0*cntx_1+cntx_0*cnty_1\)</span>的贡献。<br>如果是二进制的十位呢，那么就是<span class="math inline">\((cnty_0*cntx_1+cntx_0*cnty_1)*2\)</span>。<br>那么二进制的第k位的贡献就为<span class="math inline">\((cnty_0*cntx_1+cntx_0*cnty_1)*2^k\)</span></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include&lt;bits&#x2F;stdc++.h&gt;
+using namespace std;
+const long long mod&#x3D;(int)1e9+7;
+int i,i0,T;
+long long cnta[70],cntb[70],dp[70][70][2],a[70];
+long long dfs(int len,bool maxi,int k,bool f)
+&#123;
+    if(dp[len][k][f]!&#x3D;-1&amp;&amp;maxi&#x3D;&#x3D;0)return dp[len][k][f];
+    long long cnt&#x3D;0;
+    if(!len)return f;
+    int maxn&#x3D;maxi?a[len]:1;
+    for(int i&#x3D;0;i&lt;&#x3D;maxn;i++)cnt+&#x3D;dfs(len-1,maxi&amp;&amp;i&#x3D;&#x3D;a[len],k,f||len&#x3D;&#x3D;k&amp;&amp;i);
+    return maxi?cnt:dp[len][k][f]&#x3D;cnt;
+&#125;
+long long div(long long tmp,int k)
+&#123;
+    memset(a,0,sizeof(a));
+    int p&#x3D;0;
+    while(tmp)a[++p]&#x3D;tmp%2,tmp&#x2F;&#x3D;2;
+    return dfs(p,1,k,0);
+&#125;
+long long inv(long long x,long long mod)
+&#123;
+    long long k&#x3D;mod-2,ans&#x3D;1;
+    while(k)
+    &#123;
+        if (k&amp;1) ans&#x3D;ans*x%mod;
+        x&#x3D;x*x%mod;
+        k&gt;&gt;&#x3D;1;
+    &#125;
+    return ans;
+&#125;
+int main()
+&#123;
+    memset(dp,-1,sizeof(dp));
+    scanf(&quot;%d&quot;,&amp;T);
+    while(T--)
+    &#123;
+        long long l1,r1,l2,r2,p&#x3D;1,ans&#x3D;0;
+        scanf(&quot;%lld %lld %lld %lld&quot;,&amp;l1,&amp;r1,&amp;l2,&amp;r2);
+        l1--,l2--;
+        for(i&#x3D;1;i&lt;&#x3D;60;i++,p*&#x3D;2)
+        &#123;
+            cnta[i]&#x3D;div(r1,i)-div(l1,i);
+            cntb[i]&#x3D;div(r2,i)-div(l2,i);
+            ans+&#x3D;(cnta[i]%mod*((r2-l2-cntb[i])%mod)%mod+cntb[i]%mod*((r1-l1-cnta[i])%mod)%mod)*(p%mod)%mod;
+            ans%&#x3D;mod;
+        &#125;
+        ans%&#x3D;mod,ans+&#x3D;mod,ans%&#x3D;mod;
+        ans&#x3D;ans*inv(((r1-l1)%mod)*((r2-l2)%mod)%mod,mod)%mod;
+        printf(&quot;%lld\n&quot;,ans);
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="f牛牛的link-power-i">F：牛牛的Link Power I</h2><p><img src="https://img-blog.csdnimg.cn/2020032016563852.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">3
+101<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">5
+00110<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">6
+000010<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><hr><p>记录每个1点的位置 对于第i个点，我们只要计算他以前的点即可 定义<span class="math inline">\(pos_i\)</span>是第i个节点的位置<span class="math inline">\(sum \_ pos_i\)</span>是前i个位置的<span class="math inline">\(pos\)</span>和，对于第i个位置 以前的节点和为 <span class="math display">\[ \sum \limits_{j=1}^{i}\left \{ pos_i-pos_j \right \} = \sum \limits_{j=1}^{i}pos_i-sum \_ pos_{i-1}=i \times pos_i - sum \_ pos_{i-1} \]</span> 写一个前缀和得到<span class="math inline">\(sum \_ pos_i\)</span> 代码<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+const int mod&#x3D;1000000007;
+int cnt&#x3D;0,n,pos[100050];
+char ss[100050];
+long long ans&#x3D;0;
+
+int main()&#123;
+    scanf(&quot;%d&quot;,&amp;n);
+    scanf(&quot;%s&quot;,ss);
+    for(int i&#x3D;0;i&lt;n;i++)&#123;
+        if(ss[i]&#x3D;&#x3D;&#39;1&#39;)pos[cnt++]&#x3D;i+1;
+    &#125;
+    int k&#x3D;-(cnt-1);
+    for(int i&#x3D;0;i&lt;cnt;i++,k+&#x3D;2)ans&#x3D;(ans+(k*pos[i]))%mod;
+    cout&lt;&lt;ans;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p><hr><h2 id="g牛牛的link-power-ii">G：牛牛的Link Power II</h2><p><img src="https://img-blog.csdnimg.cn/20200320171058726.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">5
+00001
+7
+1 1
+2 5
+2 1
+1 2
+1 4
+1 3
+1 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">0
+4
+0
+0
+0
+2
+4
+10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><p>修改由于要频繁修改我们使用线段树来处理对于第i的点，我们需要一个获得</p><ul><li>i前面所有1的pos和</li><li>i前面所有1的数目</li><li>i后面所有1的pos和</li><li>i后面所有1的数目</li></ul><p>对于查询一个区间我们需要两个数据作为返回值pair&lt;1的pos总和，1的数目&gt;, 所以线段树写成pair&lt;long long, long long&gt;数组的形式 注意pair合并的写法</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#define LC (p&lt;&lt;1)
+#define RC (LC|1)
+#define M ((l+r)&gt;&gt;1)
+#define mod 1000000007
+#define MAX_N 100050
+using namespace std;
+
+typedef pair&lt;long long,long long&gt; PII;      &#x2F;&#x2F;pos cnt
+int n,m;
+long long sumn&#x3D;0,cnt&#x3D;0,ans&#x3D;0;
+PII ss[MAX_N&lt;&lt;2];
+
+void up(int p)&#123;
+    ss[p].first&#x3D;(ss[LC].first+ss[RC].first)%mod;
+    ss[p].second&#x3D;(ss[LC].second+ss[RC].second)%mod;
+&#125;
+
+void modify(int p,int x,int v,int l,int r)&#123;
+    if(l&#x3D;&#x3D;r)&#123;
+        if(v&#x3D;&#x3D;1)ss[p]&#x3D;make_pair(l,1);
+        if(v&#x3D;&#x3D;-1)ss[p]&#x3D;make_pair(0,0);
+        return;
+    &#125;
+    if(x&lt;&#x3D;M)modify(LC,x,v,l,M);
+    if(x&gt;M)modify(RC,x,v,M+1,r);
+    up(p);
+&#125;
+PII quary(int p,int x,int y,int l,int r)&#123;
+    if(x&gt;y)return make_pair(0,0);
+    if(x&lt;&#x3D;l&amp;&amp;r&lt;&#x3D;y)return ss[p];
+    PII res&#x3D;make_pair(0,0);
+    if(x&lt;&#x3D;M)&#123;
+        PII tmp&#x3D;quary(LC,x,y,l,M);
+        res.first&#x3D;(res.first+tmp.first)%mod;
+        res.second&#x3D;(res.second+tmp.second)%mod;
+    &#125;
+    if(y&gt;M)&#123;
+        PII tmp&#x3D;quary(RC,x,y,M+1,r);
+        res.first&#x3D;(res.first+tmp.first)%mod;
+        res.second&#x3D;(res.second+tmp.second)%mod;
+    &#125;
+    return res;
+&#125;
+
+int main()&#123;
+    scanf(&quot;%d&quot;,&amp;n);
+    getchar();
+    for(int i&#x3D;1;i&lt;&#x3D;n;i++)&#123;
+        char tmp;
+        scanf(&quot;%c&quot;,&amp;tmp);
+        if(tmp&#x3D;&#x3D;&#39;1&#39;)&#123;
+            modify(1,i,1,1,n);
+            ans&#x3D;(ans+i*(cnt++)-sumn)%mod;
+            sumn+&#x3D;i;
+        &#125;
+    &#125;
+    scanf(&quot;%d&quot;,&amp;m);
+    printf(&quot;%lld\n&quot;,ans);
+    while(m--)&#123;
+        int op,pos;
+        scanf(&quot;%d%d&quot;,&amp;op,&amp;pos);
+        if(op&#x3D;&#x3D;1)&#123;
+            modify(1,pos,1,1,n);
+            PII l&#x3D;quary(1,1,pos-1,1,n),r&#x3D;quary(1,pos+1,n,1,n);
+            long long LA&#x3D;(l.second*pos-l.first+mod)%mod,RA&#x3D;(r.first-r.second*pos+mod)%mod;
+            ans&#x3D;(ans+LA+RA+mod)%mod;
+            printf(&quot;%lld\n&quot;,ans);
+        &#125;
+        else&#123;
+            modify(1,pos,-1,1,n);
+            PII l&#x3D;quary(1,1,pos-1,1,n),r&#x3D;quary(1,pos+1,n,1,n);
+            long long LA&#x3D;(l.second*pos-l.first+mod)%mod,RA&#x3D;(r.first-r.second*pos+mod)%mod;
+            ans&#x3D;(ans-LA-RA+mod*2)%mod;
+            printf(&quot;%lld\n&quot;,ans);
+        &#125;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h2 id="h牛牛的k合因子数">H：牛牛的k合因子数</h2><p><img src="https://img-blog.csdnimg.cn/20200320171701491.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">10 5
+1
+2
+3
+4
+5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">4
+1
+0
+0
+0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>说明</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">1~10的范围内
+1合因子数有：4,6,9,10，共4个
+2合因子数有：8，共1一个<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><hr><p>使用埃筛即可出解</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+bool is_prime[100050];
+int n,m,num_hy[100050];
+
+void es()&#123;
+    memset(is_prime,true,sizeof(is_prime));
+    is_prime[0]&#x3D;is_prime[1]&#x3D;false;
+    for(int i &#x3D; 2; i*i &lt;&#x3D; n; i ++)&#123;&#x2F;&#x2F;判断改成i*i&lt;N 
+        if(is_prime[i])&#123;
+            for(int j &#x3D; i*i; j &lt;&#x3D; n; j +&#x3D; i)&#123;&#x2F;&#x2F;从i*i开始就可以了 
+                is_prime[j] &#x3D; false;  
+            &#125;
+        &#125;
+    &#125;
+    is_prime[0]&#x3D;is_prime[1]&#x3D;true;
+&#125;
+
+void jduge()&#123;
+    for(int i&#x3D;1;i*i&lt;&#x3D;n;i++)&#123;
+        for(int j&#x3D;i;i*j&lt;&#x3D;n;j++)&#123;
+            if(!is_prime[i])&#123;num_hy[i*j]++;&#125;&#x2F;&#x2F;cout&lt;&lt;&quot;&gt;&gt;&gt; &quot;&lt;&lt;i*j&lt;&lt;&quot; have a hyz &quot;&lt;&lt;i&lt;&lt;endl;&#125;
+            if(!is_prime[j])&#123;num_hy[i*j]++;&#125;&#x2F;&#x2F;cout&lt;&lt;&quot;&gt;&gt;&gt; &quot;&lt;&lt;i*j&lt;&lt;&quot; have a hyz &quot;&lt;&lt;j&lt;&lt;endl;&#125;
+            if(i&#x3D;&#x3D;j&amp;&amp;!is_prime[j])&#123;num_hy[i*j]--;&#125;&#x2F;&#x2F;cout&lt;&lt;&quot;&gt;&gt;&gt; &quot;&lt;&lt;i*j&lt;&lt;&quot; -- &quot;&lt;&lt;j&lt;&lt;endl;&#125;
+        &#125;
+    &#125;
+&#125;
+
+int main()&#123;
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+    es();
+    jduge();
+    sort(num_hy+1,num_hy+n+1);
+    for(int i&#x3D;0;i&lt;m;i++)&#123;
+        int k;
+        scanf(&quot;%d&quot;,&amp;k);
+        printf(&quot;%d\n&quot;,upper_bound(num_hy+1,num_hy+1+n,k)-lower_bound(num_hy+1,num_hy+1+n,k));
+    &#125;
+    &#x2F;&#x2F; cout&lt;&lt;&quot;-------------------------------------------------&quot;&lt;&lt;endl;
+    &#x2F;&#x2F; for(int i&#x3D;1;i&lt;&#x3D;n;i++)cout&lt;&lt;num_hy[i]&lt;&lt;&quot; &quot;;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h2 id="i牛牛的汉诺塔">I：牛牛的汉诺塔</h2><p><img src="https://img-blog.csdnimg.cn/2020032017194149.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/20200320172031280.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">3<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">A-&gt;B:1
+A-&gt;C:3
+B-&gt;A:1
+B-&gt;C:1
+C-&gt;A:0
+C-&gt;B:1
+SUM:7<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>说明</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">A-&gt;C
+A-&gt;B
+C-&gt;B
+A-&gt;C
+B-&gt;A
+B-&gt;C
+A-&gt;C
+统计：
+A-&gt;B出现1次
+A-&gt;C出现3次
+B-&gt;C出现1次
+B-&gt;A出现1次
+C-&gt;B出现1次
+总计7次<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><p>首先要解决的是总数的问题<span class="math inline">\(2^{n-1}\)</span> <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Jlc3RhcnRlZF8vYXJ0aWNsZS9kZXRhaWxzLzkwMzc3Nzc3">解法见此<i class="fa fa-external-link-alt"></i></span></p><p>写下n=2-5的所有过程，可以发现规律<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">A-&gt;B&#x3D;（上一次）A-&gt;C-&gt;B
+B-&gt;C&#x3D;（上一次）B-&gt;A-&gt;C
+C-&gt;A&#x3D;（上一次）C-&gt;B-&gt;A<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>递归求解即可 递推代码丢了，上一个别人的 只留着打表的代码<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+#include &lt;cmath&gt;
+using namespace std;
+long long ans[70][10]&#x3D;&#123;
+    &#123;0 , 1 , 0 , 0 , 0 , 0 , 1 &#125; ,
+ &#123;1 , 1 , 0 , 1 , 0 , 0 , 3 &#125; ,        
+ &#123;1 , 3 , 1 , 1 , 0 , 1 , 7 &#125; ,        
+ &#123;4 , 3 , 1 , 4 , 2 , 1 , 15 &#125; ,       
+ &#123;4 , 9 , 6 , 4 , 2 , 6 , 31 &#125; ,       
+ &#123;15 , 9 , 6 , 15 , 12 , 6 , 63 &#125; ,    
+ &#123;15 , 31 , 27 , 15 , 12 , 27 , 127 &#125; ,
+ &#123;58 , 31 , 27 , 58 , 54 , 27 , 255 &#125; ,
+ &#123;58 , 117 , 112 , 58 , 54 , 112 , 511 &#125; ,
+ &#123;229 , 117 , 112 , 229 , 224 , 112 , 1023 &#125; ,
+ &#123;229 , 459 , 453 , 229 , 224 , 453 , 2047 &#125; ,
+ &#123;912 , 459 , 453 , 912 , 906 , 453 , 4095 &#125; ,
+ &#123;912 , 1825 , 1818 , 912 , 906 , 1818 , 8191 &#125; ,
+ &#123;3643 , 1825 , 1818 , 3643 , 3636 , 1818 , 16383 &#125; ,
+ &#123;3643 , 7287 , 7279 , 3643 , 3636 , 7279 , 32767 &#125; ,
+ &#123;14566 , 7287 , 7279 , 14566 , 14558 , 7279 , 65535 &#125; ,
+ &#123;14566 , 29133 , 29124 , 14566 , 14558 , 29124 , 131071 &#125; ,
+ &#123;58257 , 29133 , 29124 , 58257 , 58248 , 29124 , 262143 &#125; ,
+ &#123;58257 , 116515 , 116505 , 58257 , 58248 , 116505 , 524287 &#125; ,
+ &#123;233020 , 116515 , 116505 , 233020 , 233010 , 116505 , 1048575 &#125; ,
+ &#123;233020 , 466041 , 466030 , 233020 , 233010 , 466030 , 2097151 &#125; ,
+ &#123;932071 , 466041 , 466030 , 932071 , 932060 , 466030 , 4194303 &#125; ,
+ &#123;932071 , 1864143 , 1864131 , 932071 , 932060 , 1864131 , 8388607 &#125; ,
+ &#123;3728274 , 1864143 , 1864131 , 3728274 , 3728262 , 1864131 , 16777215 &#125; ,
+ &#123;3728274 , 7456549 , 7456536 , 3728274 , 3728262 , 7456536 , 33554431 &#125; ,
+ &#123;14913085 , 7456549 , 7456536 , 14913085 , 14913072 , 7456536 , 67108863 &#125; ,
+ &#123;14913085 , 29826171 , 29826157 , 14913085 , 14913072 , 29826157 , 134217727 &#125; ,
+ &#123;59652328 , 29826171 , 29826157 , 59652328 , 59652314 , 29826157 , 268435455 &#125; ,
+ &#123;59652328 , 119304657 , 119304642 , 59652328 , 59652314 , 119304642 , 536870911 &#125; ,
+ &#123;238609299 , 119304657 , 119304642 , 238609299 , 238609284 , 119304642 , 1073741823 &#125; ,
+ &#123;238609299 , 477218599 , 477218583 , 238609299 , 238609284 , 477218583 , 2147483647 &#125; ,
+ &#123;954437182 , 477218599 , 477218583 , 954437182 , 954437166 , 477218583 , 4294967295 &#125; ,
+ &#123;954437182 , 1908874365 , 1908874348 , 954437182 , 954437166 , 1908874348 , 8589934591 &#125; ,
+ &#123;3817748713 , 1908874365 , 1908874348 , 3817748713 , 3817748696 , 1908874348 , 17179869183 &#125; ,
+ &#123;3817748713 , 7635497427 , 7635497409 , 3817748713 , 3817748696 , 7635497409 , 34359738367 &#125; ,
+ &#123;15270994836 , 7635497427 , 7635497409 , 15270994836 , 15270994818 , 7635497409 , 68719476735 &#125; ,
+ &#123;15270994836 , 30541989673 , 30541989654 , 15270994836 , 15270994818 , 30541989654 , 137438953471 &#125; ,
+ &#123;61083979327 , 30541989673 , 30541989654 , 61083979327 , 61083979308 , 30541989654 , 274877906943 &#125; ,
+ &#123;61083979327 , 122167958655 , 122167958635 , 61083979327 , 61083979308 , 122167958635 , 549755813887 &#125; ,
+ &#123;244335917290 , 122167958655 , 122167958635 , 244335917290 , 244335917270 , 122167958635 , 1099511627775 &#125; ,
+ &#123;244335917290 , 488671834581 , 488671834560 , 244335917290 , 244335917270 , 488671834560 , 2199023255551 &#125; ,
+ &#123;977343669141 , 488671834581 , 488671834560 , 977343669141 , 977343669120 , 488671834560 , 4398046511103 &#125; ,
+ &#123;977343669141 , 1954687338283 , 1954687338261 , 977343669141 , 977343669120 , 1954687338261 , 8796093022207 &#125; ,
+ &#123;3909374676544 , 1954687338283 , 1954687338261 , 3909374676544 , 3909374676522 , 1954687338261 , 17592186044415 &#125; ,
+ &#123;3909374676544 , 7818749353089 , 7818749353066 , 3909374676544 , 3909374676522 , 7818749353066 , 35184372088831 &#125; ,
+ &#123;15637498706155 , 7818749353089 , 7818749353066 , 15637498706155 , 15637498706132 , 7818749353066 , 70368744177663 &#125; ,
+ &#123;15637498706155 , 31274997412311 , 31274997412287 , 15637498706155 , 15637498706132 , 31274997412287 , 140737488355327 &#125; ,
+ &#123;62549994824598 , 31274997412311 , 31274997412287 , 62549994824598 , 62549994824574 , 31274997412287 , 281474976710655 &#125; ,
+ &#123;62549994824598 , 125099989649197 , 125099989649172 , 62549994824598 , 62549994824574 , 125099989649172 , 562949953421311 &#125; ,
+ &#123;250199979298369 , 125099989649197 , 125099989649172 , 250199979298369 , 250199979298344 , 125099989649172 , 1125899906842623 &#125; ,
+ &#123;250199979298369 , 500399958596739 , 500399958596713 , 250199979298369 , 250199979298344 , 500399958596713 , 2251799813685247 &#125; ,
+ &#123;1000799917193452 , 500399958596739 , 500399958596713 , 1000799917193452 , 1000799917193426 , 500399958596713 , 4503599627370495 &#125; ,
+ &#123;1000799917193452 , 2001599834386905 , 2001599834386878 , 1000799917193452 , 1000799917193426 , 2001599834386878 , 9007199254740991 &#125; ,
+ &#123;4003199668773783 , 2001599834386905 , 2001599834386878 , 4003199668773783 , 4003199668773756 , 2001599834386878 , 18014398509481983 &#125; ,        
+ &#123;4003199668773783 , 8006399337547567 , 8006399337547539 , 4003199668773783 , 4003199668773756 , 8006399337547539 , 36028797018963967 &#125; ,        
+ &#123;16012798675095106 , 8006399337547567 , 8006399337547539 , 16012798675095106 , 16012798675095078 , 8006399337547539 , 72057594037927935 &#125; ,     
+ &#123;16012798675095106 , 32025597350190213 , 32025597350190184 , 16012798675095106 , 16012798675095078 , 32025597350190184 , 144115188075855871 &#125; , 
+ &#123;64051194700380397 , 32025597350190213 , 32025597350190184 , 64051194700380397 , 64051194700380368 , 32025597350190184 , 288230376151711743 &#125; , 
+ &#123;64051194700380397 , 128102389400760795 , 128102389400760765 , 64051194700380397 , 64051194700380368 , 128102389400760765 , 576460752303423487 &#125; ,
+ &#123;256204778801521560 , 128102389400760795 , 128102389400760765 , 256204778801521560 , 256204778801521530 , 128102389400760765 , 1152921504606846975 &#125; 
+&#125;;
+
+int main()&#123;
+    int n;
+    cin&gt;&gt;n;
+    cout&lt;&lt;&quot;A-&gt;B:&quot;&lt;&lt;ans[n-1][0]&lt;&lt;endl;
+    cout&lt;&lt;&quot;A-&gt;C:&quot;&lt;&lt;ans[n-1][1]&lt;&lt;endl;
+    cout&lt;&lt;&quot;B-&gt;A:&quot;&lt;&lt;ans[n-1][2]&lt;&lt;endl;
+    cout&lt;&lt;&quot;B-&gt;C:&quot;&lt;&lt;ans[n-1][3]&lt;&lt;endl;
+    cout&lt;&lt;&quot;C-&gt;A:&quot;&lt;&lt;ans[n-1][4]&lt;&lt;endl;
+    cout&lt;&lt;&quot;C-&gt;B:&quot;&lt;&lt;ans[n-1][5]&lt;&lt;endl;
+    cout&lt;&lt;&quot;SUM:&quot;&lt;&lt;ans[n-1][6];
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>这道题矩阵快速幂也可求解</p><h2 id="j-牛牛的宝可梦go">J： 牛牛的宝可梦Go</h2><p><img src="https://img-blog.csdnimg.cn/20200407080516808.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">3 2
+1 2
+2 3
+3
+1 1 5
+2 3 10
+3 2 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">11<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">1 0
+3
+1 1 100
+100 1 10000
+10000 1 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">10101<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">3 2
+1 2
+2 3
+1
+1 3 1000000000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">3 2
+1 2
+2 3
+1
+1 2 1000000000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">1000000000<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><hr><p>这个题首先先求一遍最短路，这个求最短路的过程可以用flord实现。<br>接下来类似最长上升子序列，但是显然这个好像不太好优化，考虑暴力<span class="math inline">\(k^2\)</span>转移，由于地图的大小只有200，所以200步以后可以转移到任意位置，用这个性质可以优化<span class="math inline">\(k^2\)</span>-&gt;200k。<br>也就是说每次转移只暴力往前for200个，多余200个以上的时候记录一个前缀max，直接从这个前缀中转移。<br>时间复杂度：<span class="math inline">\(O\left(200k\right)\)</span><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cctype&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+#define il inline
+#define ll long long
+il char gc() &#123;
+    static char buf[1&lt;&lt;24],*p1&#x3D;buf,*p2&#x3D;buf;
+    return p1&#x3D;&#x3D;p2&amp;&amp;(p2&#x3D;(p1&#x3D;buf)+fread(buf,1,1&lt;&lt;24,stdin),p1&#x3D;&#x3D;p2)? EOF:*p1++;
+&#125;
+#define gc getchar
+il int inn() &#123;
+    int x&#x3D;0,c&#x3D;gc();
+    bool f&#x3D;0;
+    for(; !isdigit(c); c&#x3D;gc()) if(c&#x3D;&#x3D;&#39;-&#39;) f&#x3D;1;
+    if(f) for(; isdigit(c); c&#x3D;gc()) x&#x3D;(x&lt;&lt;3)+(x&lt;&lt;1)-(c^48);
+    else for(; isdigit(c); c&#x3D;gc()) x&#x3D;(x&lt;&lt;3)+(x&lt;&lt;1)+(c^48);
+    return x;
+&#125;
+const int N&#x3D;205;
+const int K&#x3D;100005;
+const int inf&#x3D;0x3f3f3f3f;
+
+int n,m,k,l,mp[N][N];
+struct node &#123;
+    int t,p,v;
+&#125;a[K];
+ll f[K],ans,mx;
+
+void floyd() &#123;
+    for(int k&#x3D;1; k&lt;&#x3D;n; ++k) &#123;
+        for(int i&#x3D;1; i&lt;&#x3D;n; ++i) &#123;
+            for(int j&#x3D;1; j&lt;&#x3D;n; ++j) &#123;
+                mp[i][j]&#x3D;min(mp[i][j],mp[i][k]+mp[k][j]);
+            &#125;
+        &#125;
+    &#125;
+&#125;
+bool cmp(const node &amp;a,const node &amp;b) &#123;
+    return a.t&lt;b.t;
+&#125;
+int main() &#123;
+    n&#x3D;inn(),m&#x3D;inn();
+    memset(mp,0x3f,sizeof(mp));
+    for(int i&#x3D;1; i&lt;&#x3D;m; ++i) &#123;
+        int u&#x3D;inn(),v&#x3D;inn();
+        mp[u][v]&#x3D;mp[v][u]&#x3D;1;
+    &#125;
+    for(int i&#x3D;1; i&lt;&#x3D;n; ++i) mp[i][i]&#x3D;0;
+    floyd();
+    k&#x3D;inn();
+    for(int i&#x3D;1; i&lt;&#x3D;k; ++i) &#123;
+        a[i].t&#x3D;inn(),a[i].p&#x3D;inn(),a[i].v&#x3D;inn();
+        if(mp[1][a[i].p]&#x3D;&#x3D;inf) &#123; --i,--k,--n; &#125;
+    &#125;
+    sort(a+1,a+k+1,cmp);
+    a[0].p&#x3D;1;
+    for(int i&#x3D;1; i&lt;&#x3D;k; ++i) &#123;
+        if(mp[1][a[i].p]&gt;a[i].t) continue;
+        while(a[i].t-a[l].t&gt;&#x3D;n) &#123;
+            mx&#x3D;max(mx,f[l++]);
+        &#125;
+        f[i]&#x3D;mx;
+        for(int j&#x3D;l; j&lt;i; ++j) &#123;
+            if(mp[a[j].p][a[i].p]&lt;&#x3D;a[i].t-a[j].t) &#123;
+                f[i]&#x3D;max(f[i],f[j]);
+            &#125;
+        &#125;
+        f[i]+&#x3D;a[i].v;
+        ans&#x3D;max(ans,f[i]);
+    &#125;
+    printf(&quot;%lld\n&quot;,ans);
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p></div><footer class="post-footer"><p class="post-end-coffee">-------- 本文结束 <i class="fa-solid fa-mug-hot"></i> 感谢阅读 --------</p><div class="popular-posts-header">相关文章</div><ul class="popular-posts"><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/2020牛客寒假算法基础集训营1题解/" rel="bookmark">2020牛客寒假算法基础集训营1题解</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/2020牛客寒假算法基础集训营2题解/" rel="bookmark">2020牛客寒假算法基础集训营2题解</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/2020牛客寒假算法基础集训营4题解/" rel="bookmark">2020牛客寒假算法基础集训营4题解</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/2020牛客寒假算法基础集训营5题解/" rel="bookmark">2020牛客寒假算法基础集训营5题解</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/2020牛客寒假算法基础集训营6题解/" rel="bookmark">2020牛客寒假算法基础集训营6题解</a></div></li></ul><script>let post_body = document.querySelector('.post-body');
+  let theme_switch = document.getElementById('theme_switch');
+  const theme = {};
+  Object.defineProperty(theme, 'value', {
+    set(v){
+      post_body.setAttribute('theme', v);
+      localStorage.setItem('md_theme', v);
+      theme_switch.value = v;
+    }
+  })
+  theme.value = localStorage.getItem('md_theme') || 'sneh';
+  theme_switch.addEventListener('change',e=>theme.value = e.target.value)
+  document.getElementById('theme_switch_wapper').classList.remove('hidden');</script><div class="reward-container"><div></div><button>赞赏</button><div class="post-reward"><div><img src="/images/wechatpay.png" alt="Liu Kairui 微信"> <span>微信</span></div><div><img src="/images/alipay.png" alt="Liu Kairui 支付宝"> <span>支付宝</span></div></div></div><div class="post-copyright"><ul><li class="post-copyright-author"><strong>本文作者： </strong>Liu Kairui</li><li class="post-copyright-link"><strong>本文链接：</strong> <a href="https://blog.liukairui.me/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A53%E9%A2%98%E8%A7%A3/" title="2020牛客寒假算法基础集训营3题解">https://blog.liukairui.me/article/2020牛客寒假算法基础集训营3题解/</a></li><li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div><div class="post-tags"><a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a> <a href="/tags/%E7%89%9B%E5%AE%A2/" rel="tag"><i class="fa fa-tag"></i> 牛客</a> <a href="/tags/ACM/" rel="tag"><i class="fa fa-tag"></i> ACM</a></div><div class="post-nav"><div class="post-nav-item"><a href="/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A52%E9%A2%98%E8%A7%A3/" rel="prev" title="2020牛客寒假算法基础集训营2题解"><i class="fa fa-chevron-left"></i> 2020牛客寒假算法基础集训营2题解</a></div><div class="post-nav-item"><a href="/article/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E6%95%B0%E4%BD%8DDP/" rel="next" title="动态规划-数位DP">动态规划-数位DP <i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div class="comments" id="valine-comments"></div></div></main><footer class="footer"><div class="footer-inner"><div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2022</span> <span class="with-love"><i class="fa fa-heart"></i> </span><span class="author" itemprop="copyrightHolder">Liu Kairui</span></div><div class="wordcount"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-chart-line"></i> </span><span>总字数：</span> <span title="总字数">1.3m</span></span></div><div class="busuanzi-count"><span class="post-meta-item" id="busuanzi_container_site_uv"><span class="post-meta-item-icon"><i class="fa fa-user"></i> </span><span class="site-uv" title="总访客量"><span id="busuanzi_value_site_uv"></span> </span></span><span class="post-meta-item" id="busuanzi_container_site_pv"><span class="post-meta-item-icon"><i class="fa fa-eye"></i> </span><span class="site-pv" title="总访问量"><span id="busuanzi_value_site_pv"></span></span></span></div><div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动</div><div class="addthis_inline_share_toolbox"><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-630c5bd30a606ba8" async></script></div><div id="time_and_count"></div><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script><script>function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20201101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span class="daysCnt" style="color: #1890ff">$&</span>');
+    div.innerHTML = `小站已悄悄运行了 ${ages}`;
+    div.className="workDays";
+  }
+  let div = document.createElement("div");
+  let time_and_count = document.getElementById("time_and_count");
+  time_and_count.appendChild(div);
+  timer();
+  setInterval("timer()",1000)</script><script>let footer = document.querySelector('.footer-inner')
+
+let wordCount = document.querySelector('.wordcount')
+wordCount.innerHTML = wordCount.innerText.replace('：',': ').replace('m','M')
+if(wordCount){
+  time_and_count.appendChild(wordCount);
+}
+
+let busaunzi = document.querySelector('.busuanzi-count')
+if(busaunzi){
+  footer.appendChild(busaunzi);
+}
+
+let powerby = document.querySelector('.powered-by')
+if(powerby){
+  footer.appendChild(powerby);
+}</script></div></footer><script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script><script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/algoliasearch/4.14.2/algoliasearch-lite.umd.js" integrity="sha256-dImjLPUsG/6p3+i7gVKBiDM8EemJAhQ0VvkRK2pVsQY=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/instantsearch.js/4.43.1/instantsearch.production.min.js" integrity="sha256-jLNoKrKRDKAOg8JBqkl8jSy2tpqCGQ1/++9QRYtWl8k=" crossorigin="anonymous"></script><script src="/js/third-party/search/algolia-search.js"></script><script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer"}</script><script src="/js/third-party/tags/pdf.js"></script><script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.1.3/mermaid.min.js","integrity":"sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg="}}</script><script src="/js/third-party/tags/mermaid.js"></script><script src="/js/third-party/fancybox.js"></script><script src="/js/third-party/pace.js"></script><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"ABKlVtS4cyaWYEwunPyK3sXt-9Nh9j0Va","app_key":"xxGXdTTEGEVifs2TLB35844I","server_url":"https://abklvts4.lc-cn-e1-shared.com","security":false}</script><script src="/js/third-party/statistics/lean-analytics.js"></script><script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script><script src="/js/third-party/math/mathjax.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script><script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.liukairui.me/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A53%E9%A2%98%E8%A7%A3/"}</script><script src="/js/third-party/quicklink.js"></script><script src="https://unpkg.com/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script><script>var options = {
+  bottom: '71px',
+  right: 'unset',
+  left: '30px',
+  time: '0s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#222',
+  buttonColorLight: '#222',
+  saveInCookies: true,
+  label: '',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();</script><script>NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"ABKlVtS4cyaWYEwunPyK3sXt-9Nh9j0Va","appKey":"xxGXdTTEGEVifs2TLB35844I","serverURLs":"https://abklvts4.lc-cn-e1-shared.com","placeholder":"请开始你的表演","avatar":"identicon","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","visitor":false,"comment_count":true,"recordIP":true,"enableQQ":true,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A53%E9%A2%98%E8%A7%A3/",
+      serverURLs: "https://abklvts4.lc-cn-e1-shared.com"
+    }));
+  }, window.Valine);
+});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/hijiki.model.json"},display:{position:"right",width:150,height:300},mobile:{show:!1},react:{opacity:.7}})</script></body></html>
