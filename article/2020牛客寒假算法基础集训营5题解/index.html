@@ -1,0 +1,622 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0"><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="mask-icon" href="/images/logo.svg" color="#222"><link rel="manifest" href="/images/manifest.json"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CPT+Sans:300,300italic,400,400italic,700,700italic%7CFira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/greem/pace-theme-minimal.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script><script class="next-config" data-name="main" type="application/json">{"hostname":"blog.liukairui.me","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":320},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"GPJGYFJZH3","apiKey":"594eec10fca5caccffae82e82d066310","indexName":"hexo","hits":{"per_page":10}}}</script><script src="/js/config.js"></script><meta name="description" content="原题来自2020牛客寒假算法基础集训营5，作以存档备查"><meta property="og:type" content="article"><meta property="og:title" content="2020牛客寒假算法基础集训营5题解"><meta property="og:url" content="https://blog.liukairui.me/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A55%E9%A2%98%E8%A7%A3/"><meta property="og:site_name" content="LiuKairui&#39;s Blog"><meta property="og:description" content="原题来自2020牛客寒假算法基础集训营5，作以存档备查"><meta property="og:locale" content="zh_CN"><meta property="article:published_time" content="2020-10-30T16:00:12.000Z"><meta property="article:modified_time" content="2021-10-18T06:44:13.592Z"><meta property="article:author" content="Liu Kairui"><meta property="article:tag" content="算法"><meta property="article:tag" content="牛客"><meta property="article:tag" content="ACM"><meta name="twitter:card" content="summary"><link rel="canonical" href="https://blog.liukairui.me/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A55%E9%A2%98%E8%A7%A3/"><script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.liukairui.me/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A55%E9%A2%98%E8%A7%A3/","path":"article/2020牛客寒假算法基础集训营5题解/","title":"2020牛客寒假算法基础集训营5题解"}</script><script class="next-config" data-name="calendar" type="application/json">""</script><title>2020牛客寒假算法基础集训营5题解 | LiuKairui's Blog</title><script>var titleTime,OriginTitile=document.title;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="我们活着是为了什么? | "+OriginTitile,clearTimeout(titleTime)):(document.title="整点薯条 | "+OriginTitile,titleTime=setTimeout(function(){document.title=OriginTitile},2e3))})</script><noscript><link rel="stylesheet" href="/css/noscript.css"></noscript><link rel="alternate" href="/atom.xml" title="LiuKairui's Blog" type="application/atom+xml"><style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head><body itemscope itemtype="http://schema.org/WebPage" class="use-motion"><div class="headband"></div><main class="main"><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-container"><div class="site-nav-toggle"><div class="toggle" aria-label="切换导航栏" role="button"><span class="toggle-line"></span> <span class="toggle-line"></span> <span class="toggle-line"></span></div></div><div class="site-meta"><a href="/" class="brand" rel="start"><i class="logo-line"></i><p class="site-title">LiuKairui's Blog</p><i class="logo-line"></i></a><p class="site-subtitle" itemprop="description">整点薯条</p></div><div class="site-nav-right"><div class="toggle popup-trigger"><i class="fa fa-search fa-fw fa-lg"></i></div></div></div><nav class="site-nav"><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fas fa-hashtag fa-fw"></i>标签</a></li><li class="menu-item menu-item-收藏夹"><a href="/favorites/" rel="section"><i class="fab fa-gratipay fa-fw"></i>收藏夹</a></li><li class="menu-item menu-item-留言板"><a href="/messageBoard/" rel="section"><i class="fab fa-facebook-messenger fa-fw"></i>留言板</a></li><li class="menu-item menu-item-项目"><a href="/projects/" rel="section"><i class="fa fa-satellite fa-fw"></i>项目</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-search"><a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索</a></li></ul></nav><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-icon"><i class="fa fa-search"></i></span><div class="search-input-container"></div><span class="popup-btn-close" role="button"><i class="fa fa-times-circle"></i></span></div><div class="search-result-container"><div class="algolia-stats"><hr></div><div class="algolia-hits"></div><div class="algolia-pagination"></div></div></div></div><script async src="/js/wobblewindow.js"></script><script async>window.addEventListener("load",function(){768<window.innerWidth&&($("body>main>header").wobbleWindow({radius:50,movementTop:!1,movementLeft:!1,movementRight:!1,debug:!1}),$("body>footer").wobbleWindow({radius:50,movementBottom:!1,movementLeft:!1,movementRight:!1,debug:!1}))})</script></div><div class="toggle sidebar-toggle" role="button"><span class="toggle-line"></span> <span class="toggle-line"></span> <span class="toggle-line"></span></div><aside class="sidebar"><div class="sidebar-inner sidebar-nav-active sidebar-toc-active"><ul class="sidebar-nav"><li class="sidebar-nav-toc">文章目录</li><li class="sidebar-nav-overview">站点概览</li></ul><div class="sidebar-panel-container"><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#a-%E6%A8%A1%E6%9D%BF"><span class="nav-text">A: 模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#b-%E7%89%9B%E7%89%9B%E6%88%98%E9%98%9F%E7%9A%84%E6%AF%94%E8%B5%9B%E5%9C%B0"><span class="nav-text">B: 牛牛战队的比赛地</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#d-%E7%89%9B%E7%89%9B%E4%B8%8E%E7%89%9B%E5%A6%B9%E7%9A%84%E7%BA%A6%E4%BC%9A"><span class="nav-text">D: 牛牛与牛妹的约会</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#e-enjoy-the-game"><span class="nav-text">E: Enjoy the game</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#f-%E7%A2%8E%E7%A2%8E%E5%BF%B5"><span class="nav-text">F: 碎碎念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#g-%E8%A1%97%E6%9C%BA%E4%BA%89%E9%9C%B8"><span class="nav-text">G: 街机争霸</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#h-hash"><span class="nav-text">H: Hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-i%E9%A2%98%E6%98%AF%E4%B8%AA%E7%AD%BE%E5%88%B0%E9%A2%98"><span class="nav-text">I: I题是个签到题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#j-%E7%89%9B%E7%89%9B%E6%88%98%E9%98%9F%E7%9A%84%E7%A7%80%E5%9C%BA"><span class="nav-text">J: 牛牛战队的秀场</span></a></li></ol></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" alt="Liu Kairui" src="/images/avatar.jpg"><p class="site-author-name" itemprop="name">Liu Kairui</p><div class="site-description" itemprop="description">LiuKairui's Personal Website</div></div><div class="site-state-wrap site-overview-item animated"><nav class="site-state"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">50</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/"><span class="site-state-item-count">27</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/"><span class="site-state-item-count">61</span> <span class="site-state-item-name">标签</span></a></div></nav></div><div class="links-of-author site-overview-item animated"><span class="links-of-author-item"><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0thaXJ1aUxpdQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KairuiLiu"><i class="fab fa-github fa-fw"></i>GitHub</span> </span><span class="links-of-author-item"><span class="exturl" data-url="bWFpbHRvOm1lQGxpdWthaXJ1aS5tZQ==" title="E-Mail → mailto:me@liukairui.me"><i class="fa fa-envelope fa-fw"></i>E-Mail</span> </span><span class="links-of-author-item"><span class="exturl" data-url="aHR0cHM6Ly9xbS5xcS5jb20vY2dpLWJpbi9xbS9xcj9rPW9hZjNUb09sTjE3aHI1c0hWOThiVDhxeHNOWUdhdzVMJm5vdmVyaWZ5PTA=" title="QQ → https:&#x2F;&#x2F;qm.qq.com&#x2F;cgi-bin&#x2F;qm&#x2F;qr?k&#x3D;oaf3ToOlN17hr5sHV98bT8qxsNYGaw5L&amp;noverify&#x3D;0"><i class="fab fa-qq fa-fw"></i>QQ</span> </span><span class="links-of-author-item"><a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a> </span><span class="links-of-author-item"><span class="exturl" data-url="aHR0cHM6Ly9saXVrYWlydWkuYmxvZy5jc2RuLm5ldA==" title="CSDN → https:&#x2F;&#x2F;liukairui.blog.csdn.net"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</span> </span><span class="links-of-author-item"><span class="exturl" data-url="aHR0cDovL2xpdWthaXJ1aS5jYw==" title="国内站点 → http:&#x2F;&#x2F;liukairui.cc"><i class="fa fa-globe fa-fw"></i>国内站点</span></span></div><div class="cc-license site-overview-item animated" itemprop="license"><span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span></div></div></div></div></aside><div class="sidebar-dimmer"></div></header><div class="back-to-top" role="button" aria-label="返回顶部"><i class="fa fa-arrow-up"></i> <span>0%</span></div><div class="reading-progress-bar"></div><noscript><div class="noscript-warning">Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class="post-block"><article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://blog.liukairui.me/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A55%E9%A2%98%E8%A7%A3/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Liu Kairui"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="LiuKairui's Blog"><meta itemprop="description" content="LiuKairui's Personal Website"></span><span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork"><meta itemprop="name" content="2020牛客寒假算法基础集训营5题解 | LiuKairui's Blog"><meta itemprop="description" content="原题来自2020牛客寒假算法基础集训营5，作以存档备查"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">2020牛客寒假算法基础集训营5题解</h1><div class="post-meta-container"><div class="post-meta"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-calendar"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2020-10-31 00:00:12" itemprop="dateCreated datePublished" datetime="2020-10-31T00:00:12+08:00">2020-10-31</time> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-folder"></i> </span><span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a> </span>， <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E7%AE%97%E6%B3%95/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">题解</span></a> </span></span><span id="/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A55%E9%A2%98%E8%A7%A3/" class="post-meta-item leancloud_visitors" data-flag-title="2020牛客寒假算法基础集训营5题解" title="阅读次数"><span class="post-meta-item-icon"><i class="far fa-eye"></i> </span><span class="post-meta-item-text">阅读次数：</span> <span class="leancloud-visitors-count"></span> </span><span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv"><span class="post-meta-item-icon"><i class="far fa-eye"></i> </span><span class="post-meta-item-text">阅读次数：</span> <span id="busuanzi_value_page_pv"></span> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-comment"></i> </span><span class="post-meta-item-text">Valine：</span> <a title="valine" href="/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A55%E9%A2%98%E8%A7%A3/#valine-comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A55%E9%A2%98%E8%A7%A3/" itemprop="commentCount"></span> </a></span><span class="post-meta-item theme_switch_wapper hidden" id="theme_switch_wapper"><span class="post-meta-item-icon"><i class="fa-brands fa-markdown"></i></span> <span class="post-meta-item-text">主题： </span><select name="theme_switch" id="theme_switch"><option>sneh</option><option>mo</option><option>with</option><option>next</option></select> </span><span class="post-meta-item" title="本文字数"><span class="post-meta-item-icon"><i class="far fa-file-word"></i> </span><span class="post-meta-item-text">本文字数：</span> <span>15k</span></span></div><div class="post-description">原题来自2020牛客寒假算法基础集训营5，作以存档备查</div></div></header><div class="post-body" itemprop="articleBody"><h2 id="a-模板">A: 模板</h2><p><img src="https://img-blog.csdnimg.cn/2020040823073345.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">4 3
+WXYZ
+WXY<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><hr><p>只需找到两个字符串中不一样的字符替换，长度补齐即可</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int a,b,ans&#x3D;0;
+char s1[100050],s2[100050];
+
+int main()&#123;
+    scanf(&quot;%d%d%s%s&quot;,&amp;a,&amp;b,s1,s2);
+    ans+&#x3D;abs(a-b);
+    if(a&gt;b)&#123;swap(s1,s2);swap(a,b);&#125;
+    for(int i&#x3D;0;i&lt;a;i++)if(s1[i]!&#x3D;s2[i])ans++;
+    cout&lt;&lt;ans;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="b-牛牛战队的比赛地">B: 牛牛战队的比赛地</h2><p><img src="https://img-blog.csdnimg.cn/20200408230806767.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">3
+0 0
+2 0
+0 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><strong>说明</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">当在(0,0)(0,0)比赛时，到三个训练基地的最大距离是22。可以证明这是最小值。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><hr><p>我们设，从x坐标轴最左边向最右边移动的过程中最远点的距离为f(x),那么f(x)一定是一个先减后增的函数（仔细想一下，如果是先减后增后减后增那么一定第一次增加之前最远点就变了）所以可以直接使用三分<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aS9hcnRpY2xlL2RldGFpbHMvODEyOTUwODQ=">看这里<i class="fa fa-external-link-alt"></i></span><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+#define max(X,Y) (X&gt;Y?X:Y)
+#define min(X,Y) (X&lt;Y?X:Y)
+using namespace std;
+
+const int INF&#x3D;0x3f3f3f3f;
+const int MAX_N&#x3D;1e5+50;
+const double esp&#x3D;1e-5;
+
+int n,x[MAX_N],y[MAX_N],max_x&#x3D;-INF,min_x&#x3D;INF;
+
+double dis(double p)&#123;
+    double dis_max&#x3D;-INF;
+    for(int i&#x3D;0;i&lt;n;i++)&#123;
+        dis_max&#x3D;max(dis_max,y[i]*y[i]+(p-x[i])*(p-x[i]));
+    &#125;
+    return dis_max;
+&#125;
+
+int main()&#123;
+    scanf(&quot;%d&quot;,&amp;n);
+    for(int i&#x3D;0;i&lt;n;i++)&#123;
+        scanf(&quot;%d%d&quot;,&amp;x[i],&amp;y[i]);
+        max_x&#x3D;max(max_x,x[i]);
+        min_x&#x3D;min(min_x,x[i]);
+    &#125;
+    double l&#x3D;min_x,r&#x3D;max_x,ml&#x3D;l+(r-l)&#x2F;3,mr&#x3D;l+(r-l)&#x2F;3*2;
+    while(ml+esp&lt;mr)&#123;
+        if(dis(ml)&lt;dis(mr))r&#x3D;mr;
+        else l&#x3D;ml;
+        ml&#x3D;l+(r-l)&#x2F;3.0;
+        mr&#x3D;l+(r-l)&#x2F;3.0*2.0;
+    &#125;
+    printf(&quot;%lf&quot;,sqrt(dis((ml+mr)&#x2F;2)));
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>## C: C语言IDE <img src="https://img-blog.csdnimg.cn/20200408230828120.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/2020040823084595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;stdio.h&gt;
+
+int plus(int a, int b)
+&#123;
+ return a + b;
+&#125;
+int main()
+&#123;
+ int a,b;
+ scanf(&quot;%d%d&quot;, &amp;a, &amp;b);
+ printf(&quot;%d\n&quot;, plus(a, b)); 
+ return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int plus(int,int)
+int main()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><hr><p>匹配括号，模拟即可</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;bits&#x2F;stdc++.h&gt;
+using namespace std;
+ 
+string source;
+void replaceAll(string &amp;s, string oldstr, string newstr)
+&#123;
+    for (string::size_type pos &#x3D; 0; pos !&#x3D; string::npos; pos +&#x3D; newstr.length())
+        if ((pos &#x3D; s.find(oldstr, pos)) !&#x3D; string::npos)
+            s.replace(pos, oldstr.length(), newstr);
+        else
+            break;
+&#125;
+struct functions
+&#123;
+    string inClass, name, outputType;
+    vector&lt;string&gt; inputType;
+    functions(string inClass &#x3D; &quot;&quot;, string name &#x3D; &quot;&quot;, string outputType &#x3D; &quot;void&quot;, vector&lt;string&gt; inputType &#x3D; vector&lt;string&gt;(0))
+        : inClass(inClass), name(name), outputType(outputType), inputType(inputType) &#123;&#125;
+&#125;;
+vector&lt;functions&gt; funs;
+void solve(string &amp;s)
+&#123;
+    replaceAll(s, &quot;&#x2F;*&quot;, &quot; &#x2F;* &quot;);
+    replaceAll(s, &quot;*&#x2F;&quot;, &quot; *&#x2F; &quot;);
+    replaceAll(s, &quot;&#x2F;&#x2F;&quot;, &quot; &#x2F;&#x2F; &quot;);
+    replaceAll(s, &quot;(&quot;, &quot; ( &quot;);
+    replaceAll(s, &quot;)&quot;, &quot; ) &quot;);
+    replaceAll(s, &quot;&#123;&quot;, &quot; &#123; &quot;);
+    replaceAll(s, &quot;&#125;&quot;, &quot; &#125; &quot;);
+    replaceAll(s, &quot;&#x3D;&quot;, &quot; &#x3D; &quot;);
+    replaceAll(s, &quot;\&quot;&quot;, &quot; \&quot; &quot;);
+    replaceAll(s, &quot;&#39;&quot;, &quot; &#39; &quot;);
+    replaceAll(s, &quot;;&quot;, &quot; ; &quot;);
+    replaceAll(s, &quot;,&quot;, &quot; , &quot;);
+    replaceAll(s, &quot;+ &#x3D; &quot;, &quot;+&#x3D;&quot;);
+    replaceAll(s, &quot;- &#x3D; &quot;, &quot;-&#x3D;&quot;);
+    replaceAll(s, &quot;* &#x3D; &quot;, &quot;*&#x3D;&quot;);
+    replaceAll(s, &quot;&#x2F; &#x3D; &quot;, &quot;&#x2F;&#x3D;&quot;);
+    replaceAll(s, &quot;^ &#x3D; &quot;, &quot;^&#x3D;&quot;);
+    replaceAll(s, &quot;| &#x3D; &quot;, &quot;|&#x3D;&quot;);
+    replaceAll(s, &quot;&amp; &#x3D; &quot;, &quot;&amp;&#x3D;&quot;);
+    replaceAll(s, &quot;:&quot;, &quot; : &quot;);
+    replaceAll(s, &quot; :  : &quot;, &quot;::&quot;);
+    vector&lt;string&gt; tokens;
+    string now &#x3D; &quot;&quot;;
+    for (int i &#x3D; 0; s[i]; i++)
+    &#123;
+        if (s[i] &#x3D;&#x3D; &#39; &#39; || s[i] &#x3D;&#x3D; &#39;\t&#39; || s[i] &#x3D;&#x3D; &#39;\r&#39; || s[i] &#x3D;&#x3D; &#39;\n&#39; || s[i] &#x3D;&#x3D; &#39;\0&#39;)
+        &#123;
+            if (now !&#x3D; &quot;&quot;)
+            &#123;
+                if (now &#x3D;&#x3D; &quot;:&quot; &amp;&amp; tokens.back() &#x3D;&#x3D; &quot;)&quot;)
+                &#123;
+                    string tmpnow &#x3D; &quot;&quot;;
+                    for (int j &#x3D; i + 1; s[j]; j++)
+                    &#123;
+                        if (s[j] &#x3D;&#x3D; &#39; &#39; || s[j] &#x3D;&#x3D; &#39;\t&#39; || s[j] &#x3D;&#x3D; &#39;\r&#39; || s[j] &#x3D;&#x3D; &#39;\n&#39; || s[j] &#x3D;&#x3D; &#39;\0&#39;)
+                        &#123;
+                            if (tmpnow &#x3D;&#x3D; &quot;&#123;&quot;)
+                            &#123;
+                                now &#x3D; &quot;&#123;&quot;;
+                                i &#x3D; j - 1;
+                                break;
+                            &#125;
+                            tmpnow &#x3D; &quot;&quot;;
+                        &#125;
+                        else
+                            tmpnow +&#x3D; s[j];
+                    &#125;
+                    continue;
+                &#125;
+                if (now &#x3D;&#x3D; &quot;const&quot;)
+                &#123;
+                    now &#x3D; &quot;&quot;;
+                    continue;
+                &#125;
+                if (now &#x3D;&#x3D; &quot;&#x2F;&#x2F;&quot;)
+                &#123;
+                    for (int j &#x3D; i; s[j]; j++)
+                    &#123;
+                        if (s[j] &#x3D;&#x3D; &#39;\n&#39;)
+                        &#123;
+                            i &#x3D; j - 1;
+                            break;
+                        &#125;
+                    &#125;
+                    now &#x3D; &quot;&quot;;
+                    continue;
+                &#125;
+                if (now &#x3D;&#x3D; &quot;&#x2F;*&quot;)
+                &#123;
+                    int num &#x3D; 1;
+                    string tmpnow &#x3D; &quot;&quot;;
+                    for (int j &#x3D; i + 1; s[j]; j++)
+                    &#123;
+                        if (s[j] &#x3D;&#x3D; &#39; &#39; || s[j] &#x3D;&#x3D; &#39;\t&#39; || s[j] &#x3D;&#x3D; &#39;\r&#39; || s[j] &#x3D;&#x3D; &#39;\n&#39; || s[j] &#x3D;&#x3D; &#39;\0&#39;)
+                        &#123;
+                            if (tmpnow &#x3D;&#x3D; &quot;&#x2F;*&quot;)
+                                num++;
+                            if (tmpnow &#x3D;&#x3D; &quot;*&#x2F;&quot;)
+                            &#123;
+                                num--;
+                                if (num &#x3D;&#x3D; 0)
+                                &#123;
+                                    i &#x3D; j - 1;
+                                    break;
+                                &#125;
+                            &#125;
+                            tmpnow &#x3D; &quot;&quot;;
+                        &#125;
+                        else
+                            tmpnow +&#x3D; s[j];
+                    &#125;
+                    now &#x3D; &quot;&quot;;
+                    continue;
+                &#125;
+                tokens.push_back(now);
+                now &#x3D; &quot;&quot;;
+            &#125;
+        &#125;
+        else
+            now +&#x3D; s[i];
+    &#125;
+    int cnt &#x3D; 0;
+    string nowNamespace &#x3D; &quot;&quot;;
+    for (int i &#x3D; 1; i &lt; (int)tokens.size(); i++)
+    &#123;
+        if ((tokens[i] &#x3D;&#x3D; &quot;struct&quot; || tokens[i] &#x3D;&#x3D; &quot;class&quot;) &amp;&amp; tokens[i + 2] &#x3D;&#x3D; &quot;&#123;&quot;)
+        &#123;
+            cnt &#x3D; 0;
+            nowNamespace &#x3D; tokens[i + 1];
+            i +&#x3D; 2;
+        &#125;
+        functions tmp(nowNamespace);
+        if (tokens[i] &#x3D;&#x3D; &quot;&#123;&quot; &amp;&amp; tokens[i - 1] &#x3D;&#x3D; &quot;)&quot;)
+        &#123;
+            int num &#x3D; 1;
+            for (int j &#x3D; i - 2; j &gt;&#x3D; 0; j--)
+            &#123;
+                if (tokens[j] &#x3D;&#x3D; &quot;)&quot;)
+                    num++;
+                if (tokens[j] &#x3D;&#x3D; &quot;(&quot;)
+                &#123;
+                    num--;
+                    if (num &#x3D;&#x3D; 0)
+                    &#123;
+                        tmp.name &#x3D; tokens[j - 1];
+                        tmp.outputType &#x3D; &quot;&quot;;
+                        for (int k &#x3D; j - 2; k &gt;&#x3D; 0; k--)
+                            if (tokens[k] !&#x3D; &quot;&#125;&quot; &amp;&amp; tokens[k] !&#x3D; &quot;&#125;&quot; &amp;&amp; tokens[k] !&#x3D; &quot;;&quot; &amp;&amp;
+                                tokens[k].back() !&#x3D; &#39;:&#39; &amp;&amp; tokens[k] !&#x3D; &quot;inline&quot; &amp;&amp;
+                                tokens[k] !&#x3D; &quot;static&quot; &amp;&amp; tokens[k][0] !&#x3D; &#39;#&#39; &amp;&amp;
+                                tokens[k].back() !&#x3D; &#39;\&quot;&#39; &amp;&amp; tokens[k].back() !&#x3D; &#39;&gt;&#39;)
+                                tmp.outputType &#x3D; tmp.outputType &#x3D;&#x3D; &quot;&quot; ? tokens[k] : tokens[k] + &quot; &quot; + tmp.outputType;
+                            else
+                                break;
+                        int last &#x3D; i - 2;
+                        for (int k &#x3D; i - 2; k &gt;&#x3D; j; k--)
+                        &#123;
+                            if (tokens[k] &#x3D;&#x3D; &quot;(&quot; || tokens[k] &#x3D;&#x3D; &quot;,&quot;)
+                            &#123;
+                                string tt &#x3D; &quot;&quot;;
+                                for (int t &#x3D; k + 1; t &lt; last; t++)
+                                    tt &#x3D; tt &#x3D;&#x3D; &quot;&quot; ? tokens[t] : tt + &quot; &quot; + tokens[t];
+                                if (tt !&#x3D; &quot;&quot;)
+                                    tmp.inputType.push_back(tt);
+                                last &#x3D; k - 1;
+                            &#125;
+                            if (tokens[k] &#x3D;&#x3D; &quot;&#x3D;&quot; || tokens[k] &#x3D;&#x3D; &quot;)&quot;)
+                                last &#x3D; k - 1;
+                        &#125;
+                        reverse(tmp.inputType.begin(), tmp.inputType.end());
+                        break;
+                    &#125;
+                &#125;
+            &#125;
+            funs.push_back(tmp);
+            num &#x3D; 1;
+            for (int j &#x3D; i + 1; j &lt; (int)tokens.size(); j++)
+            &#123;
+                if (tokens[j] &#x3D;&#x3D; &quot;&#123;&quot;)
+                    num++;
+                if (tokens[j] &#x3D;&#x3D; &quot;&#125;&quot;)
+                &#123;
+                    num--;
+                    if (num &#x3D;&#x3D; 0)
+                    &#123;
+                        i &#x3D; j;
+                        break;
+                    &#125;
+                &#125;
+            &#125;
+            continue;
+        &#125;
+        if (nowNamespace !&#x3D; &quot;&quot;)
+        &#123;
+            if (tokens[i] &#x3D;&#x3D; &quot;&#123;&quot;)
+                cnt++;
+            if (tokens[i] &#x3D;&#x3D; &quot;&#125;&quot;)
+            &#123;
+                cnt--;
+                if (!cnt)
+                    nowNamespace &#x3D; &quot;&quot;;
+            &#125;
+        &#125;
+    &#125;
+&#125;
+int main()
+&#123;
+    char ch;
+    while ((ch &#x3D; getchar()) !&#x3D; EOF)
+        source +&#x3D; ch;
+    solve(source);
+    for (auto &amp;i : funs)
+    &#123;
+        if (i.outputType !&#x3D; &quot;&quot;)
+            cout &lt;&lt; i.outputType &lt;&lt; &quot; &quot;;
+        if (i.inClass !&#x3D; &quot;&quot;)
+            cout &lt;&lt; i.inClass &lt;&lt; &quot;::&quot;;
+        cout &lt;&lt; i.name &lt;&lt; &quot;(&quot;;
+        for (int j &#x3D; 0; j &lt; (int)i.inputType.size(); j++)
+            cout &lt;&lt; i.inputType[j] &lt;&lt; (j &#x3D;&#x3D; (int)i.inputType.size() - 1 ? &quot;)&quot; : &quot;,&quot;);
+        if ((int)i.inputType.size() &#x3D;&#x3D; 0)
+            cout &lt;&lt; &quot;)&quot;;
+        cout &lt;&lt; endl;
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="d-牛牛与牛妹的约会">D: 牛牛与牛妹的约会</h2><p><img src="https://img-blog.csdnimg.cn/20200408230908352.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">2
+3 -1
+1 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">3.442249570
+1.000000000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><hr><p>只需对于每一次枚举判断闪现是否比直接走值得就可以了，然后判断最后一次闪现过头后回头走是否比不闪现更快即可</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+using namespace std;
+ 
+int main()&#123;
+    int t;
+    scanf(&quot;%d&quot;,&amp;t);
+    while(t--)&#123;
+        double a,b;
+        scanf(&quot;%lf%lf&quot;,&amp;a,&amp;b);
+        if(a&lt;0)&#123;a&#x3D;-a;b&#x3D;-b;&#125;
+        if(a&lt;b)printf(&quot;%.9f\n&quot;,b-a);
+        else&#123;
+            double ans&#x3D;0,lstp&#x3D;a;
+            while(a&gt;b&amp;&amp;(a-cbrt(a)&gt;1))&#123;ans+&#x3D;1;lstp&#x3D;a;a&#x3D;cbrt(a);&#125;
+            ans&#x3D;min(ans-1+abs(b-lstp),ans+abs(b-a));
+            printf(&quot;%.9f\n&quot;,ans);
+        &#125;
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="e-enjoy-the-game">E: Enjoy the game</h2><p><img src="https://img-blog.csdnimg.cn/20200408230944439.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Alice<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><strong>说明</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">先手必须拿走一张牌，然后后手拿走了另一张牌，游戏结束。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><hr><p>找规律可以发现，当张数是<span class="math inline">\(2^n\)</span>的时候输出Alice，否则输出Bob。 如果不是<strong>2^n</strong> ，先手直接拿等同于其二进制最低位的数量的张数，后手将无力还击~</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main()&#123;
+    long long t;
+    cin&gt;&gt;t;
+    if((t&amp;(t-1))&#x3D;&#x3D;0)cout&lt;&lt;&quot;Alice&quot;;
+    else cout&lt;&lt;&quot;Bob&quot;;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="f-碎碎念">F: 碎碎念</h2><p><img src="https://img-blog.csdnimg.cn/20200408231002665.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">3
+3
+3 3
+1 4
+1 5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">2
+7
+11<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p><strong>说明</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">第一组询问：可以是三个AC，或者一个RJ。
+第二组询问：可以是1~4个AC，一个AC和一个RJ（共2种顺序），或者一个RJ。
+第三组询问：可以有1~5个AC，两个AC和一个RJ（共3种顺序），一个AC和一个RJ（共2种顺序），或者一个RJ。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p><strong>备注</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">AC RJ AC AC 和 AC AC AC RJ 虽然都是3个AC，1个RJ，但是因为提交顺序的不同，视为不同种类。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><hr><p>考虑动态规划，</p><ol type="1"><li>dp[i][0]表示一共说了i句话，最后的一次评测记录是AC,那么如果我说了i句话，最后一次是AC，那么说之前一定是说了i-1句话，但是因为这一次是AC，所以上一次(i-1句话时)不论是AC还是RJ都可以转移到i，即： dp[i][0]=dp[i-1][0]+dp[i-1][1]</li><li>dp[i][1]表示一共说了i句话，最后的一次评测记录是RJ,那么如果我说了i句话，最后一次是RJ，那么说之前一定是说了i-k句话，因为这一次是RJ所以上一次是AC dp[i][1]=dp[i-k][0]</li><li>边界条件是dp[0][0]=1,dp[0][1]=0 我们可以读入所有的<span class="math inline">\(l_i，r_i\)</span>然后预处理<span class="math inline">\(0 \to max(r_i)\)</span>的dp值，并计算前缀和s，我们需要输出<span class="math inline">\(l_i \to r_i\)</span>直接输出<span class="math inline">\(s[r_i]-s[l_i-1]\)</span>即可</li></ol><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;stdio.h&gt;
+const int N&#x3D;1e5+100;
+const int mod&#x3D;1e9+7;
+ 
+int dp[N][3];
+ 
+int main(void)&#123;
+    int x;
+    scanf(&quot;%d&quot;,&amp;x);
+    dp[0][0]&#x3D;1;
+    for(int i&#x3D;1;i&lt;100100;++i)&#123;
+        dp[i][0]&#x3D;(dp[i-1][0]+dp[i-1][1])%mod;
+        if(i&gt;&#x3D;x)&#123;
+            dp[i][1]&#x3D;dp[i-x][0];
+        &#125;
+    &#125;
+    dp[0][2]&#x3D;1;
+    for(int i&#x3D;1;i&lt;100100;++i)&#123;
+        dp[i][2]&#x3D;(dp[i][0]+dp[i][1])%mod;
+        dp[i][2]&#x3D;(dp[i][2]+dp[i-1][2])%mod;
+    &#125;
+    int q;
+    scanf(&quot;%d&quot;,&amp;q);
+    while(q--)&#123;
+        int l,r;
+        scanf(&quot;%d %d&quot;,&amp;l,&amp;r);
+        printf(&quot;%d\n&quot;,(dp[r][2]-dp[l-1][2]+mod)%mod);
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="g-街机争霸">G: 街机争霸</h2><p><img src="https://img-blog.csdnimg.cn/20200408231031893.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">3 3 1 3
+&amp;&amp;A
+###
+&amp;&amp;L
+2 1 RIGHT<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><strong>说明</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">如果用*代表僵尸的位置，则起始时状态为
+&amp;&amp;A
+*##
+&amp;&amp;L
+一个单位时间后，牛能上走，僵尸向右走，两者并没有碰上
+&amp;&amp;A
+#*L
+&amp;&amp;#
+再一个单位时间后，牛能向上走，追上牛牛，取得胜利。
+&amp;&amp;L
+##*
+&amp;&amp;#<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">4 4 1 2
+L#&amp;A
+##&amp;#
+#&amp;##
+####
+3 3 DOWN<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Oh no<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><strong>说明</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">初始状态
+L#&amp;A
+##&amp;#
+#&amp;*#
+####
+一单位时间后
+##&amp;A
+L#&amp;#
+#&amp;##
+##*#
+二单位时间后
+##&amp;A
+##&amp;#
+L&amp;*#
+####
+三单位时间后
+##&amp;A
+##&amp;#
+#&amp;##
+L#*#
+四单位时间后
+##&amp;A
+##&amp;#
+#&amp;*#
+#L##
+牛能如果再向左走的话就会跟僵尸碰个正着，而且不论牛能怎么往回走，在（4,3）总能遇见僵尸，所以他失败了。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>迷宫题，似乎用图论算法处理不了，于是想到bfs，但是最毒瘤的是他可以走到他以前走过的空格...那BFS是永远都走不完的!，但是我们发现这个题有一个特殊性质,<strong>僵尸的运动长度是固定的</strong>.<br>所以每隔<strong>2k-2个单位长度，僵尸的位置会重复一次</strong>，所以对于一个点，这个点在时间t的僵尸状态与t+2k-2的时候在这个点状态是重复的！！所以往回走的时候如果这个点在t-n(2k-2)访问过就算重复，所以不访问，否则访问。</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+int dx[10]&#x3D;&#123;-1,0,1,0&#125;,dy[10]&#x3D;&#123;0,1,0,-1&#125;;        &#x2F;&#x2F;上右下左
+int n,m,p,k,G[550][550],JS[100][3],sx,sy,ex,ey;
+bool vst[550][550][120];
+queue&lt;pair&lt;int,pair&lt;int,int&gt; &gt; &gt;q;
+
+inline bool ok(int x,int y,int t)&#123;
+    int tt&#x3D;t%(2*k-2);
+    &#x2F;&#x2F; cout&lt;&lt;&quot;&gt;&gt;&gt;&gt;&gt; Try &quot;&lt;&lt;x&lt;&lt;&quot; &quot;&lt;&lt;y&lt;&lt;&quot; &quot;&lt;&lt;t&lt;&lt;endl;
+    if(x&lt;0||x&gt;&#x3D;n||y&lt;0||y&gt;&#x3D;m||vst[x][y][tt]||G[x][y]&#x3D;&#x3D;&#39;&amp;&#39;)return false;
+    &#x2F;&#x2F; cout&lt;&lt;&quot;&gt;&gt;&gt;&gt;&gt; Pass 1 &quot;&lt;&lt;endl;
+    for(int i&#x3D;0;i&lt;p;i++)&#123;
+        int pos_jsx&#x3D;JS[i][0]+dx[JS[i][2]]*(tt&gt;k-1?2*k-2-tt:tt);
+        int pos_jsy&#x3D;JS[i][1]+dy[JS[i][2]]*(tt&gt;k-1?2*k-2-tt:tt);
+        &#x2F;&#x2F; cout&lt;&lt;&quot;@ JS &quot;&lt;&lt;i&lt;&lt;&quot; jsx&#x3D; &quot;&lt;&lt;pos_jsx&lt;&lt;&quot; jsy&#x3D; &quot;&lt;&lt;pos_jsy&lt;&lt;&quot; xx&#x3D; &quot;&lt;&lt;(tt&gt;k-1?2*k-2-tt:tt)&lt;&lt;endl;
+        if(x&#x3D;&#x3D;pos_jsx&amp;&amp;y&#x3D;&#x3D;pos_jsy)return false;
+
+    &#125;
+    &#x2F;&#x2F; cout&lt;&lt;&quot;&gt;&gt;&gt;&gt;&gt; Pass 2 &quot;&lt;&lt;endl;
+    vst[x][y][tt]&#x3D;true;
+    return true;
+&#125;
+
+int bfs(int sx,int sy)&#123;
+    q.push(make_pair(sx,make_pair(sy,0)));
+    vst[sx][sy][0]&#x3D;true;
+    while(!q.empty())&#123;
+        int nx&#x3D;q.front().first,ny&#x3D;q.front().second.first,time&#x3D;q.front().second.second;
+        q.pop();
+        &#x2F;&#x2F; cout&lt;&lt;&quot;&gt;&gt;&gt; &quot;&lt;&lt;nx&lt;&lt;&quot; &quot;&lt;&lt;ny&lt;&lt;&quot; &quot;&lt;&lt;time&lt;&lt;endl;
+        for(int i&#x3D;0;i&lt;4;i++)&#123;
+            int tx&#x3D;nx+dx[i],ty&#x3D;ny+dy[i];
+            if(tx&#x3D;&#x3D;ex&amp;&amp;ty&#x3D;&#x3D;ey)return time+1;
+            if(ok(tx,ty,time+1))
+                q.push(make_pair(tx,make_pair(ty,time+1)));
+        &#125;
+    &#125;
+    return -1;
+&#125;
+
+int main()&#123;
+    scanf(&quot;%d%d%d%d&quot;,&amp;n,&amp;m,&amp;p,&amp;k);
+    getchar();
+    for(int i&#x3D;0;i&lt;n;i++)&#123;
+        for(int j&#x3D;0;j&lt;m;j++)&#123;
+            scanf(&quot;%c&quot;,&amp;G[i][j]);
+            if(G[i][j]&#x3D;&#x3D;&#39;A&#39;)&#123;ex&#x3D;i;ey&#x3D;j;&#125;
+            if(G[i][j]&#x3D;&#x3D;&#39;L&#39;)&#123;sx&#x3D;i;sy&#x3D;j;&#125;
+        &#125;
+        getchar();
+    &#125;
+
+    &#x2F;&#x2F; for(int i&#x3D;0;i&lt;n;i++)&#123;
+    &#x2F;&#x2F;     for(int j&#x3D;0;j&lt;m;j++)
+    &#x2F;&#x2F;         cout&lt;&lt;G[i][j]&lt;&lt;&quot; &quot;;
+    &#x2F;&#x2F;     cout&lt;&lt;endl;
+    &#x2F;&#x2F; &#125;
+
+
+    for(int i&#x3D;0;i&lt;p;i++)&#123;
+        char d[10];
+        scanf(&quot;%d%d%s&quot;,&amp;JS[i][0],&amp;JS[i][1],d);
+        JS[i][0]--;JS[i][1]--;
+        if(d[0]&#x3D;&#x3D;&#39;U&#39;)JS[i][2]&#x3D;0;
+        else if(d[0]&#x3D;&#x3D;&#39;R&#39;)JS[i][2]&#x3D;1;
+        else if(d[0]&#x3D;&#x3D;&#39;D&#39;)JS[i][2]&#x3D;2;
+        else JS[i][2]&#x3D;3;
+    &#125;
+
+    &#x2F;&#x2F; cout&lt;&lt;JS[0][2]&lt;&lt;&quot;***********\n&quot;;
+
+    int ans&#x3D;bfs(sx,sy);
+    if(ans&#x3D;&#x3D;-1)cout&lt;&lt;&quot;Oh no&quot;;
+    else cout&lt;&lt;ans;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="h-hash">H: Hash</h2><p><img src="https://img-blog.csdnimg.cn/20200408231052786.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">abcdef 11<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">abcdeq<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><hr><p>实际上，可以看到这就是一个26进制数，但是，对于所有的排列 ，可以排满所有的数字吗？似乎不可以，于是<br>最开始的思路是dfs，但是T掉了<br>但是实际上，他是可以完全覆盖所有的数字，所以直接写一个函数26-&gt;10进制，然后+mod，转26进制</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+char s[10];
+long long mod,n&#x3D;0;
+
+int main()&#123;
+    while(scanf(&quot;%s%d&quot;,s,&amp;mod)&#x3D;&#x3D;2)&#123;
+        n&#x3D;0;
+        for(int i&#x3D;0;i&lt;&#x3D;5;i++)n&#x3D;n*26+s[i]-&#39;a&#39;;
+        n+&#x3D;mod;
+        for(int i&#x3D;5;i&gt;&#x3D;0;i--)&#123;
+            s[i]&#x3D;&#39;a&#39;+n%26;
+            n&#x2F;&#x3D;26;
+        &#125;
+        if(n)printf(&quot;-1\n&quot;);
+        else printf(&quot;%s\n&quot;,s);
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="i-i题是个签到题">I: I题是个签到题</h2><p><img src="https://img-blog.csdnimg.cn/20200408231105101.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">9 100
+100 100 100 100 100 100 100 100 100<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Yes<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><hr><p>签到题，直接判定</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+int n,m,num_i,a[50];
+
+bool cmp(int a,int b)&#123;
+    return a&gt;b;
+&#125;
+
+int main()&#123;
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+    for(int i&#x3D;1;i&lt;&#x3D;n;i++)&#123;scanf(&quot;%d&quot;,&amp;a[i]);&#125;
+    num_i&#x3D;a[9];
+    if(num_i&gt;&#x3D;0.8*m)&#123;cout&lt;&lt;&quot;Yes&quot;;return 0;&#125;
+    sort(a+1,a+1+n,cmp);
+    if(num_i&gt;&#x3D;a[3])&#123;cout&lt;&lt;&quot;Yes&quot;;return 0;&#125;
+    cout&lt;&lt;&quot;No&quot;;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="j-牛牛战队的秀场">J: 牛牛战队的秀场</h2><p><img src="https://img-blog.csdnimg.cn/20200408231118654.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdWthaXJ1aQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <strong>输入</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">4 1
+1 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p><strong>输出</strong></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">1.414214<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><hr><p>用弧度的定义<span class="math inline">\(\alpha=\frac{l}{r}\)</span></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cmath&gt;
+using namespace std;
+
+int r,n,i,j;
+double pi&#x3D;atan(1)*4;
+
+int main()&#123;
+    scanf(&quot;%d%d%d%d&quot;,&amp;n,&amp;r,&amp;i,&amp;j);
+    double l&#x3D;2*sin(pi&#x2F;n)*r;
+    printf(&quot;%.6f&quot;,l*min(abs(i-j),n-abs(i-j)));
+    return 0;
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div><footer class="post-footer"><p class="post-end-coffee">-------- 本文结束 <i class="fa-solid fa-mug-hot"></i> 感谢阅读 --------</p><div class="popular-posts-header">相关文章</div><ul class="popular-posts"><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/2020牛客寒假算法基础集训营1题解/" rel="bookmark">2020牛客寒假算法基础集训营1题解</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/2020牛客寒假算法基础集训营2题解/" rel="bookmark">2020牛客寒假算法基础集训营2题解</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/2020牛客寒假算法基础集训营3题解/" rel="bookmark">2020牛客寒假算法基础集训营3题解</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/2020牛客寒假算法基础集训营4题解/" rel="bookmark">2020牛客寒假算法基础集训营4题解</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/2020牛客寒假算法基础集训营6题解/" rel="bookmark">2020牛客寒假算法基础集训营6题解</a></div></li></ul><script>let post_body = document.querySelector('.post-body');
+  let theme_switch = document.getElementById('theme_switch');
+  const theme = {};
+  Object.defineProperty(theme, 'value', {
+    set(v){
+      post_body.setAttribute('theme', v);
+      localStorage.setItem('md_theme', v);
+      theme_switch.value = v;
+    }
+  })
+  theme.value = localStorage.getItem('md_theme') || 'sneh';
+  theme_switch.addEventListener('change',e=>theme.value = e.target.value)
+  document.getElementById('theme_switch_wapper').classList.remove('hidden');</script><div class="reward-container"><div></div><button>赞赏</button><div class="post-reward"><div><img src="/images/wechatpay.png" alt="Liu Kairui 微信"> <span>微信</span></div><div><img src="/images/alipay.png" alt="Liu Kairui 支付宝"> <span>支付宝</span></div></div></div><div class="post-copyright"><ul><li class="post-copyright-author"><strong>本文作者： </strong>Liu Kairui</li><li class="post-copyright-link"><strong>本文链接：</strong> <a href="https://blog.liukairui.me/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A55%E9%A2%98%E8%A7%A3/" title="2020牛客寒假算法基础集训营5题解">https://blog.liukairui.me/article/2020牛客寒假算法基础集训营5题解/</a></li><li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div><div class="post-tags"><a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a> <a href="/tags/%E7%89%9B%E5%AE%A2/" rel="tag"><i class="fa fa-tag"></i> 牛客</a> <a href="/tags/ACM/" rel="tag"><i class="fa fa-tag"></i> ACM</a></div><div class="post-nav"><div class="post-nav-item"><a href="/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A54%E9%A2%98%E8%A7%A3/" rel="prev" title="2020牛客寒假算法基础集训营4题解"><i class="fa fa-chevron-left"></i> 2020牛客寒假算法基础集训营4题解</a></div><div class="post-nav-item"><a href="/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A56%E9%A2%98%E8%A7%A3/" rel="next" title="2020牛客寒假算法基础集训营6题解">2020牛客寒假算法基础集训营6题解 <i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div class="comments" id="valine-comments"></div></div></main><footer class="footer"><div class="footer-inner"><div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2022</span> <span class="with-love"><i class="fa fa-heart"></i> </span><span class="author" itemprop="copyrightHolder">Liu Kairui</span></div><div class="wordcount"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-chart-line"></i> </span><span>总字数：</span> <span title="总字数">1.7m</span></span></div><div class="busuanzi-count"><span class="post-meta-item" id="busuanzi_container_site_uv"><span class="post-meta-item-icon"><i class="fa fa-user"></i> </span><span class="site-uv" title="总访客量"><span id="busuanzi_value_site_uv"></span> </span></span><span class="post-meta-item" id="busuanzi_container_site_pv"><span class="post-meta-item-icon"><i class="fa fa-eye"></i> </span><span class="site-pv" title="总访问量"><span id="busuanzi_value_site_pv"></span></span></span></div><div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动</div><div class="addthis_inline_share_toolbox"><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-630c5bd30a606ba8" async></script></div><div id="time_and_count"></div><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script><script>function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20201101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span class="daysCnt" style="color: #1890ff">$&</span>');
+    div.innerHTML = `小站已悄悄运行了 ${ages}`;
+    div.className="workDays";
+  }
+  let div = document.createElement("div");
+  let time_and_count = document.getElementById("time_and_count");
+  time_and_count.appendChild(div);
+  timer();
+  setInterval("timer()",1000)</script><script>let footer = document.querySelector('.footer-inner')
+
+let wordCount = document.querySelector('.wordcount')
+wordCount.innerHTML = wordCount.innerText.replace('：',': ').replace('m','M')
+if(wordCount){
+  time_and_count.appendChild(wordCount);
+}
+
+let busaunzi = document.querySelector('.busuanzi-count')
+if(busaunzi){
+  footer.appendChild(busaunzi);
+}
+
+let powerby = document.querySelector('.powered-by')
+if(powerby){
+  footer.appendChild(powerby);
+}</script></div></footer><script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script><script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/algoliasearch/4.14.2/algoliasearch-lite.umd.js" integrity="sha256-dImjLPUsG/6p3+i7gVKBiDM8EemJAhQ0VvkRK2pVsQY=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/instantsearch.js/4.46.3/instantsearch.production.min.js" integrity="sha256-TDBtvQ4sIGgJS5bk8VOKto+yvrblCB/JxE/9odR5u+M=" crossorigin="anonymous"></script><script src="/js/third-party/search/algolia-search.js"></script><script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer"}</script><script src="/js/third-party/tags/pdf.js"></script><script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.1.7/mermaid.min.js","integrity":"sha256-G58AID1YoX5YaEtWfXSI0VLrZ6N4kvNvwg0BI8zUFxE="}}</script><script src="/js/third-party/tags/mermaid.js"></script><script src="/js/third-party/fancybox.js"></script><script src="/js/third-party/pace.js"></script><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"ABKlVtS4cyaWYEwunPyK3sXt-9Nh9j0Va","app_key":"xxGXdTTEGEVifs2TLB35844I","server_url":"https://abklvts4.lc-cn-e1-shared.com","security":false}</script><script src="/js/third-party/statistics/lean-analytics.js"></script><script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script><script src="/js/third-party/math/mathjax.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script><script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.liukairui.me/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A55%E9%A2%98%E8%A7%A3/"}</script><script src="/js/third-party/quicklink.js"></script><script src="https://unpkg.com/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script><script>var options = {
+  bottom: '71px',
+  right: 'unset',
+  left: '30px',
+  time: '0s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#222',
+  buttonColorLight: '#222',
+  saveInCookies: true,
+  label: '',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();</script><script>NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"ABKlVtS4cyaWYEwunPyK3sXt-9Nh9j0Va","appKey":"xxGXdTTEGEVifs2TLB35844I","serverURLs":"https://abklvts4.lc-cn-e1-shared.com","placeholder":"请开始你的表演","avatar":"identicon","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","visitor":false,"comment_count":true,"recordIP":true,"enableQQ":true,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/article/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A55%E9%A2%98%E8%A7%A3/",
+      serverURLs: "https://abklvts4.lc-cn-e1-shared.com"
+    }));
+  }, window.Valine);
+});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/hijiki.model.json"},display:{position:"right",width:150,height:300},mobile:{show:!1},react:{opacity:.7}})</script></body></html>

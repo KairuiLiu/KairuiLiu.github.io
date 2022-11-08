@@ -1,0 +1,407 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0"><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="mask-icon" href="/images/logo.svg" color="#222"><link rel="manifest" href="/images/manifest.json"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CPT+Sans:300,300italic,400,400italic,700,700italic%7CFira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/greem/pace-theme-minimal.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script><script class="next-config" data-name="main" type="application/json">{"hostname":"blog.liukairui.me","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":320},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"GPJGYFJZH3","apiKey":"594eec10fca5caccffae82e82d066310","indexName":"hexo","hits":{"per_page":10}}}</script><script src="/js/config.js"></script><meta name="description" content="尚硅谷Linux运维集群部分, 包括多个阶段, 集群化阶段，讲解LVS与keepalived结合构建企业级负载调度集群;缓存阶段，由生产环境案例组成;存储阶段，糅合讲解 NFS、MFS、ISCSI 三类企业级存储技术; 监控阶段，包括Cacti、Nagios、Zabbix; 装机阶段，包括PXE、Cobbler,主讲:尚硅谷沈超与王洋,视频来自B站:BV1Db411G7pf"><meta property="og:type" content="article"><meta property="og:title" content="Linux集群教程笔记"><meta property="og:url" content="https://blog.liukairui.me/article/Linux%E9%9B%86%E7%BE%A4%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/"><meta property="og:site_name" content="LiuKairui&#39;s Blog"><meta property="og:description" content="尚硅谷Linux运维集群部分, 包括多个阶段, 集群化阶段，讲解LVS与keepalived结合构建企业级负载调度集群;缓存阶段，由生产环境案例组成;存储阶段，糅合讲解 NFS、MFS、ISCSI 三类企业级存储技术; 监控阶段，包括Cacti、Nagios、Zabbix; 装机阶段，包括PXE、Cobbler,主讲:尚硅谷沈超与王洋,视频来自B站:BV1Db411G7pf"><meta property="og:locale" content="zh_CN"><meta property="article:published_time" content="2021-10-31T16:00:01.000Z"><meta property="article:modified_time" content="2021-10-31T19:02:19.348Z"><meta property="article:author" content="Liu Kairui"><meta property="article:tag" content="运维"><meta property="article:tag" content="Linux"><meta name="twitter:card" content="summary"><link rel="canonical" href="https://blog.liukairui.me/article/Linux%E9%9B%86%E7%BE%A4%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/"><script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.liukairui.me/article/Linux%E9%9B%86%E7%BE%A4%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/","path":"article/Linux集群教程笔记/","title":"Linux集群教程笔记"}</script><script class="next-config" data-name="calendar" type="application/json">""</script><title>Linux集群教程笔记 | LiuKairui's Blog</title><script>var titleTime,OriginTitile=document.title;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="我们活着是为了什么? | "+OriginTitile,clearTimeout(titleTime)):(document.title="整点薯条 | "+OriginTitile,titleTime=setTimeout(function(){document.title=OriginTitile},2e3))})</script><noscript><link rel="stylesheet" href="/css/noscript.css"></noscript><link rel="alternate" href="/atom.xml" title="LiuKairui's Blog" type="application/atom+xml"><style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head><body itemscope itemtype="http://schema.org/WebPage" class="use-motion"><div class="headband"></div><main class="main"><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-container"><div class="site-nav-toggle"><div class="toggle" aria-label="切换导航栏" role="button"><span class="toggle-line"></span> <span class="toggle-line"></span> <span class="toggle-line"></span></div></div><div class="site-meta"><a href="/" class="brand" rel="start"><i class="logo-line"></i><p class="site-title">LiuKairui's Blog</p><i class="logo-line"></i></a><p class="site-subtitle" itemprop="description">整点薯条</p></div><div class="site-nav-right"><div class="toggle popup-trigger"><i class="fa fa-search fa-fw fa-lg"></i></div></div></div><nav class="site-nav"><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fas fa-hashtag fa-fw"></i>标签</a></li><li class="menu-item menu-item-收藏夹"><a href="/favorites/" rel="section"><i class="fab fa-gratipay fa-fw"></i>收藏夹</a></li><li class="menu-item menu-item-留言板"><a href="/messageBoard/" rel="section"><i class="fab fa-facebook-messenger fa-fw"></i>留言板</a></li><li class="menu-item menu-item-项目"><a href="/projects/" rel="section"><i class="fa fa-satellite fa-fw"></i>项目</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-search"><a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索</a></li></ul></nav><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-icon"><i class="fa fa-search"></i></span><div class="search-input-container"></div><span class="popup-btn-close" role="button"><i class="fa fa-times-circle"></i></span></div><div class="search-result-container"><div class="algolia-stats"><hr></div><div class="algolia-hits"></div><div class="algolia-pagination"></div></div></div></div><script async src="/js/wobblewindow.js"></script><script async>window.addEventListener("load",function(){768<window.innerWidth&&($("body>main>header").wobbleWindow({radius:50,movementTop:!1,movementLeft:!1,movementRight:!1,debug:!1}),$("body>footer").wobbleWindow({radius:50,movementBottom:!1,movementLeft:!1,movementRight:!1,debug:!1}))})</script></div><div class="toggle sidebar-toggle" role="button"><span class="toggle-line"></span> <span class="toggle-line"></span> <span class="toggle-line"></span></div><aside class="sidebar"><div class="sidebar-inner sidebar-nav-active sidebar-toc-active"><ul class="sidebar-nav"><li class="sidebar-nav-toc">文章目录</li><li class="sidebar-nav-overview">站点概览</li></ul><div class="sidebar-panel-container"><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux%E9%9B%86%E7%BE%A4"><span class="nav-text">Linux集群</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E6%A6%82%E8%BF%B0"><span class="nav-text">集群概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E5%88%86%E7%B1%BB"><span class="nav-text">集群分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E9%9B%86%E7%BE%A4"><span class="nav-text">负载均衡集群</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="nav-text">负载均衡工作模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">实验环境配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lvs-dr%E6%A8%A1%E5%BC%8F%E6%9E%84%E5%BB%BA"><span class="nav-text">LVS-DR模式构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lvs-nat%E6%A8%A1%E5%BC%8F%E6%9E%84%E5%BB%BA"><span class="nav-text">LVS-NAT模式构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="nav-text">负载均衡调度算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4"><span class="nav-text">高可用集群</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#keepalived"><span class="nav-text">KeepAlived</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lvs-nat%E8%84%9A%E6%9C%AC%E9%AB%98%E5%8F%AF%E7%94%A8%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="nav-text">LVS-NAT+脚本高可用负载均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lvs-drkeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="nav-text">LVS-DR+KeepAlived高可用负载均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nginxheartbeat%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%8F%AF%E7%94%A8"><span class="nav-text">Nginx+HeartBeat实现高可用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A7%E8%B4%9F%E8%BD%BD"><span class="nav-text">多级负载</span></a></li></ol></li></ol></li></ol></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" alt="Liu Kairui" src="/images/avatar.jpg"><p class="site-author-name" itemprop="name">Liu Kairui</p><div class="site-description" itemprop="description">LiuKairui's Personal Website</div></div><div class="site-state-wrap site-overview-item animated"><nav class="site-state"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">50</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/"><span class="site-state-item-count">27</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/"><span class="site-state-item-count">61</span> <span class="site-state-item-name">标签</span></a></div></nav></div><div class="links-of-author site-overview-item animated"><span class="links-of-author-item"><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0thaXJ1aUxpdQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KairuiLiu"><i class="fab fa-github fa-fw"></i>GitHub</span> </span><span class="links-of-author-item"><span class="exturl" data-url="bWFpbHRvOm1lQGxpdWthaXJ1aS5tZQ==" title="E-Mail → mailto:me@liukairui.me"><i class="fa fa-envelope fa-fw"></i>E-Mail</span> </span><span class="links-of-author-item"><span class="exturl" data-url="aHR0cHM6Ly9xbS5xcS5jb20vY2dpLWJpbi9xbS9xcj9rPW9hZjNUb09sTjE3aHI1c0hWOThiVDhxeHNOWUdhdzVMJm5vdmVyaWZ5PTA=" title="QQ → https:&#x2F;&#x2F;qm.qq.com&#x2F;cgi-bin&#x2F;qm&#x2F;qr?k&#x3D;oaf3ToOlN17hr5sHV98bT8qxsNYGaw5L&amp;noverify&#x3D;0"><i class="fab fa-qq fa-fw"></i>QQ</span> </span><span class="links-of-author-item"><a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a> </span><span class="links-of-author-item"><span class="exturl" data-url="aHR0cHM6Ly9saXVrYWlydWkuYmxvZy5jc2RuLm5ldA==" title="CSDN → https:&#x2F;&#x2F;liukairui.blog.csdn.net"><i class="fab fa-cuttlefish fa-fw"></i>CSDN</span> </span><span class="links-of-author-item"><span class="exturl" data-url="aHR0cDovL2xpdWthaXJ1aS5jYw==" title="国内站点 → http:&#x2F;&#x2F;liukairui.cc"><i class="fa fa-globe fa-fw"></i>国内站点</span></span></div><div class="cc-license site-overview-item animated" itemprop="license"><span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span></div></div></div></div></aside><div class="sidebar-dimmer"></div></header><div class="back-to-top" role="button" aria-label="返回顶部"><i class="fa fa-arrow-up"></i> <span>0%</span></div><div class="reading-progress-bar"></div><noscript><div class="noscript-warning">Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class="post-block"><article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://blog.liukairui.me/article/Linux%E9%9B%86%E7%BE%A4%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Liu Kairui"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="LiuKairui's Blog"><meta itemprop="description" content="LiuKairui's Personal Website"></span><span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork"><meta itemprop="name" content="Linux集群教程笔记 | LiuKairui's Blog"><meta itemprop="description" content="尚硅谷Linux运维集群部分, 包括多个阶段, 集群化阶段，讲解LVS与keepalived结合构建企业级负载调度集群;缓存阶段，由生产环境案例组成;存储阶段，糅合讲解 NFS、MFS、ISCSI 三类企业级存储技术; 监控阶段，包括Cacti、Nagios、Zabbix; 装机阶段，包括PXE、Cobbler,主讲:尚硅谷沈超与王洋,视频来自B站:BV1Db411G7pf"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Linux集群教程笔记</h1><div class="post-meta-container"><div class="post-meta"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-calendar"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2021-11-01 00:00:01" itemprop="dateCreated datePublished" datetime="2021-11-01T00:00:01+08:00">2021-11-01</time> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-folder"></i> </span><span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">运维</span></a> </span></span><span id="/article/Linux%E9%9B%86%E7%BE%A4%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="post-meta-item leancloud_visitors" data-flag-title="Linux集群教程笔记" title="阅读次数"><span class="post-meta-item-icon"><i class="far fa-eye"></i> </span><span class="post-meta-item-text">阅读次数：</span> <span class="leancloud-visitors-count"></span> </span><span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv"><span class="post-meta-item-icon"><i class="far fa-eye"></i> </span><span class="post-meta-item-text">阅读次数：</span> <span id="busuanzi_value_page_pv"></span> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-comment"></i> </span><span class="post-meta-item-text">Valine：</span> <a title="valine" href="/article/Linux%E9%9B%86%E7%BE%A4%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/#valine-comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/article/Linux%E9%9B%86%E7%BE%A4%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="commentCount"></span> </a></span><span class="post-meta-item theme_switch_wapper hidden" id="theme_switch_wapper"><span class="post-meta-item-icon"><i class="fa-brands fa-markdown"></i></span> <span class="post-meta-item-text">主题： </span><select name="theme_switch" id="theme_switch"><option>sneh</option><option>mo</option><option>with</option><option>next</option></select> </span><span class="post-meta-item" title="本文字数"><span class="post-meta-item-icon"><i class="far fa-file-word"></i> </span><span class="post-meta-item-text">本文字数：</span> <span>20k</span></span></div><div class="post-description">尚硅谷Linux运维集群部分, 包括多个阶段, 集群化阶段，讲解LVS与keepalived结合构建企业级负载调度集群;缓存阶段，由生产环境案例组成;存储阶段，糅合讲解 NFS、MFS、ISCSI 三类企业级存储技术; 监控阶段，包括Cacti、Nagios、Zabbix; 装机阶段，包括PXE、Cobbler,主讲:尚硅谷沈超与王洋,视频来自B站:BV1Db411G7pf</div></div></header><div class="post-body" itemprop="articleBody"><h1 id="linux集群">Linux集群</h1><h2 id="集群概述">集群概述</h2><p>集群是一组<strong>协同工作</strong>的服务器，<strong>各有分工</strong>，但是对外表现为<strong>一个整体</strong></p><p>单机模式成本低，时间长，效率低下，稳定性低，有性能极限，无法突破</p><p>集群模式成本高，效率高(1+1&gt;2)，适合大型业务，单机器宕机业务不中断</p><p>普通的单台服务器一般可以承受10万PV(点击量)的并发访问</p><h3 id="集群分类">集群分类</h3><ul><li>负载均衡集群LBC：有人负责指挥分配任务，有人负责工作，典型的是Web服务器。负责管理的是负载均衡服务器，可以是一个服务器实体，也可以是一个LVS软件模拟</li><li>高可用(故障转移)集群HAC：主服务器挂了后，备用服务器会自动切换过来继续承担主服务器的服务。主备服务器会通过keepalive模块进行检测(心跳线)，主挂掉后备自动启动。当备份服务器启动后，如果有自动断电机，会自动切断主服务器电源，防止备份服务器误判，主备同时开启。</li><li>高性能科学计算集群HPC：整合网络上有空闲资源的计算机，进行科学计算</li></ul><h3 id="负载均衡集群">负载均衡集群</h3><h4 id="负载均衡工作模式">负载均衡工作模式</h4><p>用户访问负载均衡服务器，负载均衡服务器将请求转发到业务服务器</p><ul><li><p>常见的负载均衡服务器软件有：LVS(工作在7层模型的传输层),Nginx(工作在7层模型的应用层),Haproxy</p></li><li><p>常见的负载均衡服务器硬件叫：F5(工作在7层模型的数据链路层)</p></li></ul><p><strong>LVS在网络传输层工作原理</strong></p><p>LVS工作在7层模型的传输层，也就是在五层模型传输而后数据网络层之间</p><p>用户与LVS服务器都工作在公网上，Apache服务器工作在内网上</p><p>用户发送请求到LVS服务器，LVS收到socket,上面有双方IP，LVS收到请求后使用规则库，将<strong>目标IP</strong>从自己的公网IP改为某个服务器的内网IP进行链接</p><p>精度低，负载大，可用于B/S与C/S架构</p><p><strong>Nginx网络应用层工作原理</strong></p><p>用户发起请求到Nginx，Nginx根据用户请求类型，<strong>重新</strong>与服务器建立TCP链接发送请求</p><p>相当于LVS是收到一个包裹，直接根据规则修改目的地，继续发送，但是Nginx是收到包裹，拆开，然后重新打单，做一个全新的链接，这是因为Nginx是工作在应用层的，所以LVS的负载均衡能力可能达到Nginx的几百倍，但是得益于此，Nginx可以对不同请求智能判断类型，转发到不同服务器</p><p>精度高，负载小，只能应用于B/S服务</p><p><strong>LVS在系统中工作方式</strong></p><p>操作系统可以分为内核空间和用户空间，用户空间安装了用户需要的程序，内核空间只有内核，LVS需要两个部分的程序：IPVS和IPVSadmin，其中IPVS工作在内核空间实现了OSI模型的部分功能，IPVSadmin工作在用户空间，实现了对IPVS的修改，LVS目前在用的有三种模式：NAT,TUN,DR模式，第四种模式目前正在开发</p><ul><li><p>NAT模式：</p><p>负载均衡服务器和用户在公网，服务器在内网</p><p>用户访问网站时访问到了负载均衡服务器的外网卡，LVS分配服务器，使用DNAT目标地址端口转换，通过内网网卡链接到服务器</p><p>服务器发送对象的时候发<strong>送到负载均衡服务器(否则用户看到源地址不对不收)</strong>，LVS使用SNAT源地址端口转换，修改socket的源地址为自己的外网IP,转发回去</p><p>特点是</p><ul><li>来回都要负载均衡服务器</li><li>负载均衡服务器一定程度扮演了网关的作用</li><li>支持端口映射</li></ul></li><li><p>TUN模式：</p><p>服务器，负载均衡服务器，用户都在外网，但是负载均衡服务器和工作服务器不在一个广播域</p><p>用户发送请求到负载均衡服务器，负载均衡服务器不修改目标IP，而是在数据包外面重封装了一个数据包，源IP是用户的，目标IP是真实服务器的</p><p>真实服务器去掉包装，处理数据，使用内层的目标IP(负载均衡服务器IP)作为源IP，使用内层的源IP(用户IP)作为目标IP，发送回应对象</p><p>特定是：</p><ul><li>两次借用公网IP，速度慢</li><li>压力大</li></ul></li><li><p>DR模式[负载能力最高]：</p><p>服务器，负载均衡服务器，用户都在外网，但是负载均衡服务器和工作服务器<strong>在一个广播域</strong>，也就是负载均衡服务器和工作服务器是同级别的</p><p>用户发起请求到负载均衡服务器，负载服务器转发到真实服务器，这次转发与NAT不同的是这次转发没有修改请求的目标IP,而是修改了请求的目标mac,由于负载均衡服务器和工作服务器是字啊一个广播域的，交换机可以通过MAC对请求进行转发，<strong>正常情况下，服务器收到了这个包，发现mac是自己的，但是IP不是自己的，不会收，但是我们在服务器上多设置了一个IP，IP地址与负载均衡服务器是一样的，于是服务器就会收下，但是这个IP是不能暴露的，只能用于通过MAC收到数据包验证用，否则就IP冲突了，于是我们需要把IP隐藏起来</strong>，</p><p>返回文件的时候，服务器<strong>不经过负</strong>载均衡服务器，直接用隐藏的IP发送数据包，客户机看到双方IP与端口都是对的，于是接受。</p><p>特点是：</p><ul><li><p>由于负载均衡服务器转发使用的是MAC,所以必须在一个广播域</p></li><li><p>真实服务器回应无需负载均衡服务器(高并发原因)</p></li><li><p>不支持端口映射(根本就没有触碰到传输层)</p></li></ul></li><li><p>TUN和DR的区别就是DR的机器都在一个广播域，可以通过修改MAC的方式实现数据包的转发，但是TUN不再一个广播域，就必须改IP，最后两者返回数据的方式都是将IP改为负载服务器IP返回的</p></li></ul><h4 id="实验环境配置">实验环境配置</h4><ul><li><p>物理机安装<strong>Chrome</strong>，由于浏览器缓存，可能无法明显感知服务器的切换，安装后使用无痕模式可以解决这个问题</p></li><li><p>6台CentOS7 BaseServer 服务器</p></li><li><p>1台CentOS7 GUI 桌面服务器</p></li><li><p>关闭防火墙 SELinux</p></li><li><p>网络选择仅主机(Host-Only)</p><p>配置网卡地址10.10.10.01/24</p><p>关闭DHCP服务器</p><p>虚拟机IP从10.10.10.11开始命名</p></li><li><p>虚拟机配置双网卡 全部是HostOnly==?==</p></li><li><p>1G内存</p></li><li><p>配置6台机器为静态IP</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">vim &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s3
+    # 修改
+    BOOTPROTO&#x3D;&quot;static&quot;
+    IPADDR&#x3D;10.10.10.11
+    NETMASK&#x3D;255.255.255.0
+systemctl restart network.service <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>使用物理机ssh尝试连接</p></li><li><p>配置本地yum源</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mkdir &#x2F;mnt&#x2F;cdrom
+mount -t iso9660 &#x2F;dev&#x2F;cdrom &#x2F;mnt&#x2F;cdrom&#x2F;
+cd &#x2F;etc&#x2F;yum.repos.d&#x2F;
+mkdir .&#x2F;CentBak
+mv *.repo CentBak&#x2F;
+cp .&#x2F;CentBak&#x2F;CentOS-Media.repo .&#x2F;
+vim CentOS-Media.repo
+    baseurl&#x3D;file:&#x2F;&#x2F;&#x2F;media&#x2F;CentOS&#x2F;
+            file:&#x2F;&#x2F;&#x2F;media&#x2F;cdrom&#x2F;
+            file:&#x2F;&#x2F;&#x2F;media&#x2F;cdrecorder&#x2F;
+    gpgcheck&#x3D;1
+    enabled&#x3D;0
+    # 改为
+    baseurl&#x3D;file:&#x2F;&#x2F;&#x2F;mnt&#x2F;cdrom	# 改路径
+    gpgcheck&#x3D;0					# 不检查gpg
+    enabled&#x3D;1					# 启动
+yum clean all &amp;&amp; yum makecache
+yum install gcc gcc-c++ lrzsz	# 安装编译器 文件上传工具(如果是xshell)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li></ul><h4 id="lvs-dr模式构建">LVS-DR模式构建</h4><p>需要三台虚拟机：</p><ul><li>机器C：客户机 物理机 192.168.177.162</li><li>机器D：负载均衡服务器 虚拟机1 网卡1(enpxxx)：10.10.10.11 网卡1(enpxxx)浮动：10.10.10.100</li><li>机器RS1：服务器1 虚拟机2 网卡1(enpxxx)：10.10.10.12 网卡0(lo)浮动：10.10.10.100</li><li>机器RS2：服务器2 虚拟机3 网卡1(enpxxx)10.10.10.13 网卡0(lo)浮动：10.10.10.100</li></ul><p><strong>原理</strong></p><ul><li><p>物理机C访问负载均衡服务器D网卡2 10.10.10.100</p></li><li><p>负载均衡服务器D进行负载均衡计算，修改DMAC，用网卡1 10.10.10.11 发到广播域</p></li><li><p>其他服务器修改lo卡 为10.10.10.100，接受数据报文</p></li></ul><p><strong>ARP 通讯行为</strong></p><p>ARP响应级别(arp-ignore)：数据报文到达网口后是否响应</p><ul><li><p>0级别(默认)：只要收到了本机配置的IP就响应</p></li><li><p>1级别：只有发送到了接受网卡的IP上才响应</p><p>例如负载均衡服务器D有10.10.10.11 和 10.10.10.100 两张卡，10.10.10.11卡收到了一个发给10.10.10.100卡的报文，如果是0级别，发现本机有10.10.10.100 于是会手下，如果是1级别，发现不是本卡IP10.10.10.11就不接受</p></li></ul><p>ARP通告级别：</p><ul><li>0级别：将本机上的<strong>所有</strong>的网络接口地址都进行通告(例如网卡上电后会向网络中中广播自己的地址)</li><li>1级别：尽可能避免0的情况，倾向于2,但是不保证，尽量仅向该网卡回应与该网段匹配的ARP报文</li><li>2级别：只向网络中通告自己的IP，MAC</li></ul><p>这样，我们将配置修改为1,2，这样实际服务器的网卡2lo 不会主动接受发给10.10.10.12的消息，也不往外说</p><p><strong>负载均衡服务器操作</strong></p><ul><li><p>关闭所有虚拟机的<code>NetworkManager</code></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@C7B1 ~]# systemctl stop NetworkManager
+[root@C7B1 ~]# systemctl disable NetworkManager<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>这个服务主要是负责Linux的无线网络服务和危险网络策略的关闭，我们需要关闭这个服务，注意：服务名区分大小写</p></li><li><p>开启网卡的子接口：也就是一块网卡两个IP地址</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@C7B1 network-scripts]# cp ifcfg-enp0s3 ifcfg-enp0s3:0
+[root@C7B1 network-scripts]# vim !$						# !$ 上一条命令最后一个参数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>修改复制过去的配置文件</p><pre class="line-numbers language-diff" data-language="diff"><code class="language-diff">- IPADDR&#x3D;10.10.10.11
++ IPADDR&#x3D;10.10.10.100
+- DEVICE&#x3D;&quot;enp0s3&quot;
++ DEVICE&#x3D;&quot;enp0s3:0&quot;
+- NAME&#x3D;&quot;enp0s3&quot;
+- UUID&#x3D;&quot;9b24b2da-f8e2-45c9-81dd-e3b364066858&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>重启网络服务</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@C7B1 network-scripts]# systemctl restart network<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>这里复制的接口IP相当于是浮动IP,可以认为原来的IP是绝对IP,浮动IP通常是一个公开的、可以路由到的IP地址，并且不会自动分配给实体设备。项目管理者临时分配动态IP到一个或者多个实体设备。这个实体设备有自动分配的静态IP用于内部网间设备的通讯。这个内部网使用私有地址，这些私有地址不能被路由到。通过浮动IP内网实体的服务才能被外网识别和访问。在一个配置好浮点IP的切换场景是，IP地址飘到网络中的另一台设备。新设备无延迟的接替当掉的设备，并对外提供服务。</p></li><li><p>修改内核文件<code>/etc/sysctl.conf</code>设置ARP关闭网卡的广播，这是一个优化功能，不强制要求，追加</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">net.ipv4.conf.all.send_redirects &#x3D; 0 
+net.ipv4.conf.default.send_redirects &#x3D; 0 
+net.ipv4.conf.enp0s3.send_redirects &#x3D; 0 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p><code>sysctl -p</code>刷新内核</p></li><li><p>安装ipvsadm</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum install ipvsadm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li><li><p>将ipvs加入到系统内核</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">modprobe ip_vs<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li><li><p>配置IPVS</p><p><code>ipvsadm</code>命令用来添加LVS规则</p><ul><li><code>-A</code>添加一个集群</li><li><code>-a</code>添加集群的节点</li><li><code>-t</code> tcp协议</li><li><code>-s</code>算法</li></ul><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ipvsadm -A -t 10.10.10.100:80 -s rr			# 轮询
+ipvsadm -a -t 10.10.10.100:80 -r 10.10.10.12:80 -g
+ipvsadm -a -t 10.10.10.100:80 -r 10.10.10.13:80 -g<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>保存配置的规则</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ipvsadm -S &gt; &#x2F;etc&#x2F;sysconfig&#x2F;ipvsadm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li></ul><p><strong>真实服务器的操作</strong></p><ul><li><p>启动Apache用于测试，写一个网页用来标识</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@C7B2 ~]# systemctl start httpd
+[root@C7B2 ~]# echo &quot;S1&quot; &gt; &#x2F;var&#x2F;www&#x2F;html&#x2F;index.html<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li><li><p>设置浮动IP，对lo卡复制接口，因为LVS服务器在广播自己是 10.10.10.100，你不能在一个内网中广播地址中设置同IP了(当然可以通过后面修改启动文件解决)，于是使用了广播地址不同的lo卡</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">DEVICE&#x3D;lo:0
+IPADDR&#x3D;10.10.10.100
+NETMASK&#x3D;255.255.255.255			# 修改子网掩码防止和真实IP冲突
+NETWORK&#x3D;127.0.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li><li><p>设置ARP,<code>/etc/sysctl.conf</code></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">net.ipv4.conf.all.arp_ignore &#x3D; 1
+net.ipv4.conf.all.arp_announce &#x3D; 2
+net.ipv4.conf.default.arp_ignore &#x3D; 1
+net.ipv4.conf.default.arp_announce &#x3D; 2
+net.ipv4.conf.lo.arp_ignore &#x3D; 1
+net.ipv4.conf.lo.arp_announce &#x3D; 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>重启网络服务</p></li><li><p>当负载均衡服务器转发请求到lo:0的时候需要有网关进行转交</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@C7B2 network-scripts]# route add -host 10.10.10.100 dev lo:0
+[root@C7B2 network-scripts]# echo &quot;route add -host 10.10.10.100 dev lo:0&quot; &gt;&gt; &#x2F;etc&#x2F;rc.local 		# 添加到自启动<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li></ul><p><strong>在物理机上访问10.10.10.100</strong></p><p>使用<code>ipvsadm -Ln --stats</code>查看状态</p><p><strong>关闭DR模式</strong>：</p><ul><li>LVS服务器：移除<code>/etc/sysctl.conf</code></li><li>LVS服务器：关闭LVS<code>ipvsadm -D -t 10.10.10.100:80</code></li><li>LVS服务器：删除LVS服务器配置文件<code>/etc/sysconfig/ipvsadm</code></li><li>LVS服务器：删除浮动IP配置</li><li>真实服务器：删除浮动IP配置文件</li><li>真实服务器：删除ARP配置<code>/etc/sysctl.conf</code></li><li>真实服务器：关闭网关自启<code>/etc/rc.local</code></li></ul><h4 id="lvs-nat模式构建">LVS-NAT模式构建</h4><p>需要三台虚拟机：</p><ul><li>机器C：客户机 物理机 192.168.177.162</li><li>机器D：负载均衡服务器 虚拟机1 内网卡1(enpxxx)：10.10.10.11 公网卡2(enpxxx)：20.20.20.11</li><li>机器RS1：服务器1 虚拟机2 内网卡1(enpxxx)：10.10.10.12</li><li>机器RS2：服务器2 虚拟机3 内网卡1(enpxxx)10.10.10.13</li></ul><p><strong>负载均衡服务器</strong></p><ul><li><p>关闭NetworkMangaer</p></li><li><p>安装ipvsadm</p></li><li><p>编辑文件 开启路由转发<code>/etc/sysctl.conf</code></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">et.ipv4.ip_forward &#x3D; 1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><code>sysctl -p</code>启用</p></li><li><p>开启防火墙SNAT转发(服务器到客户端)</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl start firewalld
+firewall-cmd --zone&#x3D;trusted --change-interface&#x3D;enp0s3
+firewall-cmd --zone&#x3D;trusted --change-interface&#x3D;enp0s8
+firewall-cmd --permanent --direct --passthrough ipv4 -t nat -A POSTROUTING -s 10.10.10.0&#x2F;24 -j SNAT --to-source 20.20.20.11
+# 将所有10.10.10.0网段的数据(真实服务器的)使用外网网卡转发<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li><li><p>配置ipvs(客户端到服务器)</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ipvsadm -D -t 10.10.10.100:80				# 清除DR模式的规则
+ipvsadm -A -t 20.20.20.11:80 -s rr
+ipvsadm -a -t 20.20.20.11:80 -r 10.10.10.12:80 -m
+ipvsadm -a -t 20.20.20.11:80 -r 10.10.10.13:80 -m
+ipvsadm -S &gt; &#x2F;etc&#x2F;sysconfig&#x2F;ipvsadm
+ipvsadm -Ln<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li><li><p>配置网关,就是服务器什么要发的都先发给负载均衡，追加网卡配置文件(服务器到客户端)</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">GATEWAY&#x3D;10.10.10.11<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li></ul><p><strong>关闭NAT模式</strong>：</p><ul><li><p>LVS服务器：关闭路由转发路由转发<code>/etc/sysctl.conf</code></p></li><li><p>LVS服务器：关闭SNAT</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">firewall-cmd --permanent --direct --remove-passthrough ipv4 -t nat -A POSTROUTING -s 10.10.10.0&#x2F;24 -j SNAT --to-source 20.20.20.11<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li><li><p>客户服务器：修改网卡网关配置</p></li></ul><h4 id="负载均衡调度算法">负载均衡调度算法</h4><p>有通用算法和LVS持久链接算法，后者是仅对LVS有效</p><p><strong>通用固定算法</strong>：固定算法指的是不考虑服务器的实际状况，直接使用算法产生调度策略</p><ul><li>RR轮询算法：将请求按顺序循环分配给后端服务器</li><li>WRR加权轮询算法：按照一定的权重进行轮询，例如给配置好的服务器大权重，访问次数多一点</li><li>SH源地址散列算法：将来源IP做hash，选定服务器，一个IP每次都链接到了一个服务器，优点就是对cookie优化良好(对不使用分布式存储服务器)</li><li>DH目标地址散列算法：方便用户高概率命中特定类型的缓存</li></ul><p><strong>通用动态算法</strong>：</p><ul><li><p>LC最少连接算法：将新连接分配给连接数最少的服务器，计算方式是**活动连接数*256+非活动连接**</p><p>活动连接指的是正在传输数据的连接</p><p>非活动连接指的是刚刚握手或者握手结束的连接</p></li><li><p>WLC加权最少连接：将新连接分配给加权后连接数最少的服务器，也就是**(活动连接数*256+非活动连接)/权重**</p></li><li><p>SED最短期望延时：WLC存在一个问题，当计算结果相同的时候会将连接按照服务器列表顺序分配，可能大权重服务器在后面，我们想将请求分配到大权服务器，但是按照WLC的原理可能会分配给小权服务器，于是有了SED**(活动数+1)*256/权重**，他保证了第二关键字为权重</p></li><li><p>NQ永不排队算法：特殊的SED，如果有连接数为0的空闲服务器就直接分配</p></li><li><p>LBLC算法：特殊的DH算法，当负载均衡服务器发现某个特定的缓存服务器压力过大的时候会自动再开一个缓存服务器轮询提供缓存服务</p></li><li><p>LBRCR算法：支持多缓存服务器数据交互</p></li></ul><p><strong>LVS持久化连接</strong></p><ul><li>SSL等协议需要建立消耗资源的握手，但是非SH算法会造成重复多次消耗资源的握手</li><li>LVS引入了持久化连接实现了类似SH和RR的融合使用</li><li>负载均衡服务器记录了客户端与服务器的连接对应关系，当持久化倒计时结束后会进行轮询</li></ul><p>分类：</p><ul><li><p>PCC持久客户端连接：客户端访问LVS集群的时候，同一个客户端IP会重定向到一个服务器</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ipvsadm -A -t 20.20.20.11:80 -s wlc -p 120<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li><li><p>PPC持久端口连接：客户端访问LVS集群的时候，同一个客户端的同一个端口会重定向到一个服务器</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ipvsadm -A -t 20.20.20.11:80 -s rr -p 120<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li><li><p>PFMC持久防火墙标记连接：根据客户端的源地址，端口，数据端属性等对客户进行标记，根据标记分配到不同客户</p></li><li><p>使用<code>ipvsadm -Ln --persistent-conn</code>看到处于可持久化连接</p></li></ul><h3 id="高可用集群">高可用集群</h3><p>通过心跳检测将不可用集群踢出ipvs</p><h4 id="keepalived">KeepAlived</h4><p>KeepAlived是专门为LVS/HA设置的健康检查工具，支持鼓掌自动切换与节点状态检查</p><p>KeepAlived使用VRRP虚拟路由冗余协议，这个协议是一个浮动IP的竞争协议，一个节点挂掉之后，其他的节点会竞争浮动IP，选出的服务器会继续使用这个浮动IP</p><h4 id="lvs-nat脚本高可用负载均衡">LVS-NAT+脚本高可用负载均衡</h4><p>LVS默认是不支持高可用KeepAlive的，可以用户脚本实现</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mkdir &#x2F;usr&#x2F;local&#x2F;script
+cd &#x2F;usr&#x2F;local&#x2F;script
+vim kav.sh
+chmod 755 kav.sh <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>写入脚本</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">#!&#x2F;bin&#x2F;bash
+#检测lvs集群节点是否正常，不正常则踢出集群
+
+VIP&#x3D;20.20.20.11	#集群虚拟IP
+CPORT&#x3D;80	#定义集群端口
+FAIL_BACK&#x3D;127.0.0.1	#本机回环地址
+RS&#x3D;(&quot;10.10.10.12&quot; &quot;10.10.10.13&quot;)	#编写集群地址
+declare -a RSSTATUS  #变量RSSTATUS定义为数组态
+RW&#x3D;(&quot;2&quot; &quot;1&quot;)
+RPORT&#x3D;80	#定义集群端口
+TYPE&#x3D;g	  #制定LVS工作模式：g&#x3D;DR m&#x3D;NAT
+CHKLOOP&#x3D;3
+LOG&#x3D;&#x2F;var&#x2F;log&#x2F;ipvsmonitor.log
+
+#添加RS，添加成功返回0，否则返回1
+addrs() &#123;
+  ipvsadm -a -t $VIP:$CPORT -r $1:$RPORT -$TYPE -w $2
+  [ $? -eq 0 ] &amp;&amp; return 0 || return 1
+&#125;
+
+#删除RS，删除成功返回0，否则返回1
+delrs() &#123;
+  ipvsadm -d -t $VIP:$CPORT -r $1:$RPORT
+  [ $? -eq 0 ] &amp;&amp; return 0 || return 1
+&#125;
+
+#检测RS服务是否在线，注意一下这里面指的RS的服务，如果连续三次都监测不通，则返回1，否则返回0
+checkrs() &#123;
+  local I&#x3D;1
+  while [ $I -le $CHKLOOP ]; do
+ if curl --connect-timeout 1 http:&#x2F;&#x2F;$1 &amp;&gt; &#x2F;dev&#x2F;null; then
+   return 0
+ fi
+ let I++
+  done
+  return 1
+&#125;
+
+#初始化RS在线状态，如果在线，设置节点初始化状态为1，否则为0
+initstatus() &#123;
+  local I
+  local COUNT&#x3D;0;
+  for I in $&#123;RS[*]&#125;; do
+ if ipvsadm -L -n | grep &quot;$I:$RPORT&quot; &amp;&amp; &gt; &#x2F;dev&#x2F;null ; then
+   RSSTATUS[$COUNT]&#x3D;1
+ else
+   RSSTATUS[$COUNT]&#x3D;0
+ fi
+  let COUNT++
+  done
+&#125;
+
+#进行初始化
+initstatus
+
+#监测rs是否加入到ipvs
+   if [ $&#123;RSSTATUS[$COUNT]&#125; -eq 1 ]; then
+   delrs $I
+   [ $? -eq 0 ] &amp;&amp; RSSTATUS[$COUNT]&#x3D;0 &amp;&amp; echo &quot;&#96;date +&#39;%F %H:%M:%S&#39;&#96;, $I is gone.&quot; &gt;&gt; $LOG
+   fi
+ fi
+ let COUNT++
+  done
+  sleep 5
+done<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>运行即可，关闭20.20.20.12的httpd后，查看<code>ipvsadm -Ln</code>服务器少了一个</p><p><strong>LVS高可用配置</strong>：在这样的高可用中，如果LVS挂掉，整个服务就挂掉了，所以，还需要配置多个LVS以实现高可用</p><h4 id="lvs-drkeepalived高可用负载均衡">LVS-DR+KeepAlived高可用负载均衡</h4><p>需要四台虚拟机：</p><ul><li>机器C：客户机 物理机 192.168.177.162</li><li>机器LVS-M：主高可用负载均衡服务器1 虚拟机1 网卡1(enpxxx)：10.10.10.11 网卡1(enpxxx)浮动：10.10.10.100</li><li>机器LVS-S：备份高可用负载均衡服务器2 虚拟机<strong>4</strong> 网卡1(enpxxx)：10.10.10.14 网卡1(enpxxx)浮动：10.10.10.100</li><li>机器RS1：服务器1 虚拟机2 网卡1(enpxxx)：10.10.10.12 网卡0(lo)浮动：10.10.10.100</li><li>机器RS2：服务器2 虚拟机3 网卡1(enpxxx)10.10.10.13 网卡0(lo)浮动：10.10.10.100</li></ul><p>首先是LVS-M作为主负载均衡服务器运行，心跳检测RS1与RS2，宕机就踢出去，同时LVS-S作为从负载均衡服务器心跳检测LVS-M，如果主负载均衡服务器宕机就立马接替</p><p><strong>LVS-M,RS1,RS2配置</strong></p><ul><li>按照普通LVS-DR构建集群，使用虚拟机1,2,3</li></ul><p><strong>主负载均衡心跳检测服务器LVS-M</strong></p><ul><li><p>安装keeplived(光盘源有)</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum install -y keepalived<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li><li><p>启动并设置自启动</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl start keepalived
+systemctl enable keepalived<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li><li><p>配置文件：<code>/etc/keepalived/keepalived.conf</code></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">! Configuration File for keepalived
+
+global_defs &#123;
+   notification_email 
+     ...
+   smtp_connect_timeout 30		# 挂掉后邮件通知配置 我们不使用
+   router_id LVS_DEVEL			# 当前机器在keepalive的别名
+   vrrp_skip_check_adv_addr
+   vrrp_strict
+   vrrp_garp_interval 0
+   vrrp_gna_interval 0
+&#125;
+
+vrrp_instance VI_1 &#123;
+    state MASTER				# 这是什么服务器
+    interface eth0				# 用哪个网卡检测
+    virtual_router_id 51		# 当前高可用ID
+    priority 80		 		    # 权重设置 建议主比一级从高50 
+    advert_int 1				# 心跳时间
+    authentication &#123;			# 身份认证模式
+        auth_type PASS			# 密码认证
+        auth_pass 1111			# 密码
+    &#125;
+    virtual_ipaddress &#123;
+        192.168.200.16			# 集群LVS的IP地址
+        192.168.200.17
+        192.168.200.18
+    &#125;
+&#125;
+
+virtual_server 192.168.200.100 443 &#123;	# LVS服务器IP 端口
+    delay_loop 6				# 检测间隔
+    lb_algo rr					# 轮询设置
+    lb_kind NAT					# LVS模式
+    persistence_timeout 50		# 检测时间
+    protocol TCP
+
+    real_server 192.168.201.100 443 &#123;	# 真实服务器信息
+        weight 1						# 权重
+        SSL_GET &#123;
+            url &#123;
+              path &#x2F;
+              digest ff20ad2481f97b1754ef3e12ecd3a9cc
+            &#125;
+            url &#123;
+              path &#x2F;mrtg&#x2F;
+              digest 9b3a0c85a887a256d6939da88aabd8cd
+            &#125;
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+        &#125;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>进行配置</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">global_defs &#123;
+   router_id KPA01
+&#125;
+
+vrrp_instance VI_1 &#123;
+    state MASTER
+    interface enp0s3
+    virtual_router_id 66
+    priority 80
+    advert_int 1
+    authentication &#123;
+        auth_type PASS
+        auth_pass 1111
+    &#125;
+    virtual_ipaddress &#123;
+  10.10.10.100
+    &#125;
+&#125;
+
+virtual_server 10.10.10.100 80 &#123;
+    delay_loop 2					# 监测频率
+    lb_algo rr
+    lb_kind DR
+    protocol TCP
+
+    real_server 10.10.10.12 80 &#123;	# 管理的网站节点以及使用端口 
+        weight 1
+ TCP_CHECK &#123;
+     connect_port 80 			# 检查的目标端口 
+     connect_timeout 3 			# 连接超时（秒） 
+     nb_get_retry 3 				# 重试次数 
+     delay_before_retry 4		# 重试间隔（秒）
+ &#125; 
+    &#125;
+    real_server 10.10.10.13 80 &#123;
+        weight 1
+        TCP_CHECK &#123;                
+            connect_port 80                   
+            connect_timeout 3                 
+           nb_get_retry 3           
+            delay_before_retry 4
+        &#125; 
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li></ul><p>查看状态</p><p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cat &#x2F;var&#x2F;log&#x2F;messages <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></p><p>看到有： <code>Sending gratuitous ARP on enp0s3 for xxx.xxx.xxx.xxx</code></p><p>看到负载均衡允许正常，真实服务器关闭后，<code>ipvsadm -Ln</code>自动踢走</p><p><strong>备份负载均衡心跳检测服务器LVS-S</strong></p><p>我们也需要和LVS-M一样复制网络端口，设置10.10.10.100的浮动IP，但是与真实服务器不同的是：这个浮动IP没有设置ARP响应级别，所以会出现一个广播地址中有冲突IP的问题，这个服务器不能和真实服务器一样，说要用浮动IP就用，需要等LVS-M宕机后才可以使用浮动IP，KeepAlived实现了ARP的管理功能解决了这个问题。</p><ul><li><p>按照LVS-DR模式的负载均衡服务器配置机器</p></li><li><p>重启网络看到，查看网络状态看到网卡启动失败</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@C7B4 network-scripts]# systemctl restart network
+[root@C7B4 network-scripts]# systemctl status network
+...
+4月 16 09:37:09 C7B4 network[3026]: ERROR     : 4月 16 09:37:09 C7B4 network[3026]: ERROR     : [&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifup-aliases] Error, some other host () already uses address 10.10.10.100.
+...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li><li><p>修改网卡启动脚本</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">vim &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifup-eth <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>我们需要搜索报错信息，有空格，要这样搜索：<code>/already\ uses\ address</code></p><p>找到如下代码片</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">if [ &quot;$&#123;REALDEVICE&#125;&quot; !&#x3D; &quot;lo&quot; ] &amp;&amp; [ &quot;$&#123;arpcheck[$idx]&#125;&quot; !&#x3D; &quot;no&quot; ] ; then
+    ARPING&#x3D;$(&#x2F;sbin&#x2F;arping -c 2 -w $&#123;ARPING_WAIT:-3&#125; -D -I $&#123;REALDEVICE&#125; $&#123;ipaddr[$idx]&#125;)
+    if [ $? &#x3D; 1 ]; then
+        ARPINGMAC&#x3D;$(echo $ARPING |  sed -ne &#39;s&#x2F;.*\[\(.*\)\].*&#x2F;\1&#x2F;p&#39;)
+        net_log $&quot;Error, some other host ($ARPINGMAC) already uses address $&#123;ipaddr[$idx]&#125;.&quot;
+        exit 1
+    fi
+fi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>意思是通过ARP检查是否冲突，冲突就报错终止，解决方法很简单，直接注释掉</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">if ! LC_ALL&#x3D;C ip addr ls $&#123;REALDEVICE&#125; | LC_ALL&#x3D;C grep -q &quot;$&#123;ipaddr[$idx]&#125;&#x2F;$&#123;prefix[$idx]&#125;&quot; ; then
+#    if [ &quot;$&#123;REALDEVICE&#125;&quot; !&#x3D; &quot;lo&quot; ] &amp;&amp; [ &quot;$&#123;arpcheck[$idx]&#125;&quot; !&#x3D; &quot;no&quot; ] ; then
+#    ARPING&#x3D;$(&#x2F;sbin&#x2F;arping -c 2 -w $&#123;ARPING_WAIT:-3&#125; -D -I $&#123;REALDEVICE&#125; $&#123;ipaddr[$idx]&#125;)
+#        if [ $? &#x3D; 1 ]; then
+#            ARPINGMAC&#x3D;$(echo $ARPING |  sed -ne &#39;s&#x2F;.*\[\(.*\)\].*&#x2F;\1&#x2F;p&#39;)
+#            net_log $&quot;Error, some other host ($ARPINGMAC) already uses address $&#123;ipaddr[$idx]&#125;.&quot;
+#            exit 1
+#    fi
+#fi
+...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>重启网络服务开启网卡</p><p>复制配置文件，修改state为SLAVE，修改权重为80-50=30</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">scp root@10.10.10.11:&#x2F;etc&#x2F;keepalived&#x2F;keepalived.conf &#x2F;etc&#x2F;keepalived&#x2F;keepalived.conf <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><strong>实际上，KeepAlived配置文件里面已经写有集群配置文件，可以不配置ipvsadm</strong></p><p><strong>测试</strong></p><p>ipvs是一个内核服务，不可用的唯一原因是系统崩了，我们关闭主服务器，网页正常负载均衡</p></li></ul><h4 id="nginxheartbeat实现高可用">Nginx+HeartBeat实现高可用</h4><p>HeartBeat是Linux-HA(HighAvailability)的一个组件</p><p>需要两台虚拟机：</p><ul><li>机器C：客户机 物理机 192.168.177.162</li><li>机器SR1：Nginx服务器1 虚拟机1 网卡1(enpxxx)：10.10.10.11 网卡1(enpxxx)浮动：10.10.10.100 主机名C7B1</li><li>机器SR2：Nginx服务器2 虚拟机2 网卡1(enpxxx)：10.10.10.12 网卡1(enpxxx)浮动：10.10.10.100 主机名C7B2</li></ul><p>没有负载均衡服务器，两台服务器全跑在公网上，浮动一个10.10.10.100，互相心跳检测，不必担心公网IP上能否浮动IP，修改网卡配置文件后出现冲突IP相当于是进行了一次ARP攻击</p><p><strong>双虚拟机配置</strong></p><ul><li><p>配置yum 163-Base与epel源<code>yum -y install epel-release</code></p></li><li><p>双机器 联网 安装Nginx 修改index页面</p></li><li><p>在HeartBeat3中，一个项目被拆解成三个子项目了，要去<span class="exturl" data-url="aHR0cDovL3d3dy5saW51eC1oYS5vcmcvd2lraS9Eb3dubG9hZA==">官网<i class="fa fa-external-link-alt"></i></span>下载三个包：Heartbeat，Cluster Glue，Resource Agents</p><p>安装Cluster Glue</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum install -y libxml2-devel.i686 docbook-style-xsl asciidoc gcc gcc-c++ autoconf automake libnet  libtool glib2-devel libxml2-devel bzip2-devel e2fsprogs-devel libxslt-devel libtool-ltdl-devel docbook-dtds docboot-style-xsl libtool-ltdl-devel
+tar -xf 0a7add1d9996.tar.bz2 
+cd Reusable-Cluster-Components-glue--0a7add1d9996&#x2F;
+.&#x2F;autogen.sh
+.&#x2F;configure \
+--prefix&#x3D;&#x2F;opt&#x2F;heartbeat&#x2F; \
+--sysconfdir&#x3D;&#x2F;etc&#x2F;heartbeat \
+libdir&#x3D;&#x2F;opt&#x2F;heartbeat&#x2F;lib64 \
+LIBS&#x3D;&#39;&#x2F;usr&#x2F;lib64&#x2F;libuuid.so.1&#39;
+make
+make install<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>安装resource-agents</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum -y install libnet* glib2-devel libtool-ltdl-devel net-snmp-devel bzip2-devel ncurses-devel openssl-devel libtool libxml2-devel gettext gettext-devel bison flex zlib-devel mailx which libxslt-devel docbook-dtds docbook-style-xsl PyXML shadow-utils opensp e2fsprogs-devel autoconf automake libuuid-devel instltool libaio-devel libxslt-devel gcc make pkgconfig libxml2 libuuid-devel
+tar -xf resource-agents-3.9.6.tar.gz 
+cd resource-agents-3.9.6&#x2F;
+.&#x2F;autogen.sh 
+.&#x2F;configure \
+--prefix&#x3D;&#x2F;opt&#x2F;heartbeat&#x2F; \
+--sysconfdir&#x3D;&#x2F;etc&#x2F;heartbeat \
+libdir&#x3D;&#x2F;opt&#x2F;heartbeat&#x2F;lib64 \
+CFLAGS&#x3D;-I&#x2F;opt&#x2F;heartbeat&#x2F;include \
+LDFLAGS&#x3D;-I&#x2F;opt&#x2F;heartbeat&#x2F;lib64 \
+LIBS&#x3D;&#39;&#x2F;usr&#x2F;lib64&#x2F;libuuid.so.1&#39;
+ln -s &#x2F;opt&#x2F;heartbeat&#x2F;lib64&#x2F;* &#x2F;usr&#x2F;lib64 
+make
+make install<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>安装Heartbeat</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">tar -xvf 958e11be8686.tar.bz2 
+cd Heartbeat-3-0-958e11be8686&#x2F;
+.&#x2F;bootstrap
+.&#x2F;configure \
+--prefix&#x3D;&#x2F;opt&#x2F;heartbeat \
+--sysconfdir&#x3D;&#x2F;etc&#x2F;heartbeat \
+CFLAGS&#x3D;-I&#x2F;opt&#x2F;heartbeat&#x2F;include \
+LDFLAGS&#x3D;-L&#x2F;opt&#x2F;heartbeat&#x2F;lib64 \
+LIBS&#x3D;&#39;&#x2F;usr&#x2F;lib64&#x2F;libuuid.so.1&#39;
+#修改源码文件，否则会make报错
+vim &#x2F;opt&#x2F;heartbeat&#x2F;include&#x2F;heartbeat&#x2F;glue_config.h # 注释或者删除最后一行内容
+vim lib&#x2F;hbclient&#x2F;Makefile #删掉-Werror字段
+make
+make install<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li><li><p>开启时间同步服务：一台服务器安装ntp服务</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum install -y ntp<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>配置<code>/etc/ntp.conf</code></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">restrict 10.10.10.0 mask 255.255.255.0 nomodify notrap
+# 上面修改为当前网段 掩码
+restrict ::1
+
+# Hosts on local network are less restricted.
+#restrict 192.168.1.0 mask 255.255.255.0 nomodify notrap
+
+# Use public servers from the pool.ntp.org project.
+# Please consider joining the pool (http:&#x2F;&#x2F;www.pool.ntp.org&#x2F;join.html).
+# server 0.centos.pool.ntp.org iburst	# 注释掉预设的时间服务器
+# server 1.centos.pool.ntp.org iburst
+# server 2.centos.pool.ntp.org iburst
+# server 3.centos.pool.ntp.org iburst
+server 127.127.1.0						
+# 设置时间服务器为本机(本地回环地址:127.0.0.1-&gt;127.255.255.254) 必须这样写 
+fudge 127.127.1.0 stratum 10
+# 时间服务器的层次 配置为局域网级别10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>启动服务<code>systemctl start ntpd</code></p></li><li><p>开启时间同步服务：另一台机器安装时间同步客户端</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum install -y ntpdate
+ntpdate -u 10.10.10.11		# 进行同步<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li><li><p>双机器 配置主机名，节点之间是通过主机名heartbeat检测的，不能相同</p></li><li><p>双机器 开启主机名解析(正常使用DNS，直接改<code>/etc/hosts</code>也可以)</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">10.10.10.11 C7B1
+10.10.10.12 C7B2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li><li><p>拷贝配置文件</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cd &#x2F;opt&#x2F;heartbeat&#x2F;share&#x2F;doc&#x2F;heartbeat&#x2F;
+cp ha.cf authkeys haresources &#x2F;etc&#x2F;heartbeat&#x2F;		# 配置文件目录默认是&#x2F;etc&#x2F;ha.d 我在编译的时候指定了，所以变了<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li><li><p>配置认证文件<code>authkeys</code></p><p><code>dd if=/dev/random bs=512 count=1 | openssl md5</code>配置文件需要一个md5码作为密钥，我们可以使用dd随机生成一个，将文件修改为</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">auth 3				# 选择第三个认证方式
+1 crc
+2 sha1 HI!
+3 md5  3a987d0f396bb9e29606148a8c1eb99f		# 使用md5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>修改配置文件权限600，否则和vsftp一样会报错安全性</p></li><li><p>配置主配置文件<code>ha.cf</code></p><pre class="line-numbers language-diff" data-language="diff"><code class="language-diff">- #bcast  eth0             # Linux
++ bcast  enp0s3            # 使用哪张网卡做心跳检测
+- #node   ken3
+- #node   kathy
++ node    C7B1
++ node    C7B2				# 所有主机名<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li><li><p>配置脚本文件<code>haresources</code>：Heartbeat默认提供了很多的配置文件，我们选的这个是用来做IP切换的</p><pre class="line-numbers language-diff" data-language="diff"><code class="language-diff">- #node1  10.0.0.170 Filesystem::&#x2F;dev&#x2F;sda1::&#x2F;data1::ext2
++ C7B1 IPaddr::10.10.10.100&#x2F;24&#x2F;enp0s3:0		# 注意修改主机名<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>这个脚本的作用相当于为我们配置了网卡接口，同时还做好了防止冲突，正确切换的操作</p></li><li><p>测试：正常可以访问，关掉一个机器可以访问另一个，注意，这个与之前修改网卡配置不同，这个是哪个服务器工作，哪个服务器才复制端口，非主机是不复制网卡的</p></li></ul><p><strong>注意，heartBeat是检测网络是否可用判断是否宕机，如果网络正常Nginx宕机，是不会切换的</strong></p><p>修复思路是：循环检测，如果发现Nginx宕机，立刻关闭heartBeat</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">[root@localhost ~]$ mkdir &#x2F;usr&#x2F;local&#x2F;script
+[root@localhost ~]$ vim 80.sh
+#!&#x2F;bin&#x2F;bash
+
+PWD&#x3D;&#x2F;usr&#x2F;local&#x2F;script&#x2F;
+
+URL&#x3D;&quot;http:&#x2F;&#x2F;10.10.10.11&#x2F;index.html&quot;
+
+HTTP_CODE&#x3D;&#96;curl -o &#x2F;dev&#x2F;null -s -w &quot;%&#123;http_code&#125;&quot; &quot;$&#123;URL&#125;&quot;&#96; 
+
+
+if [ $HTTP_CODE !&#x3D; 200 ]
+    then
+ service heartbeat stop
+fi
+[root@localhost ~]$ crontab -e
+*&#x2F;1 * * * * bash &#x2F;usr&#x2F;local&#x2F;script&#x2F;80.sh<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="多级负载">多级负载</h3><p>X层负载：服务运行在OSI七层的哪一层，例如七层负载的Nginx，四层负载的LVS</p><p>Nginx负载均衡支持虚拟主机，LVS支持高负载，考虑只有一个公网IP，想要做虚拟主机到两个网站，但是需要LVS高负载，可以使用多级负载，原理是：客户访问到LVS服务器，LVS负责了多个Nginx的负载均衡(一个Nginx的话LVS就没有意义了)，Nginx做虚拟主机负载均衡到Apache</p><p>需要六台虚拟机：</p><ul><li>机器C：客户机 物理机 192.168.177.162</li><li>机器LVS-DR：LVS负载均衡服务器 虚拟机1 网卡1(enpxxx)：10.10.10.11 网卡1(enpxxx)浮动：10.10.10.100</li><li>机器Ngx1：Nginx虚拟主机负载均衡服务器1 虚拟机2 网卡1(enpxxx)：10.10.10.12 网卡1(enpxxx)浮动：10.10.10.100</li><li>机器Ngx2：Nginx虚拟主机负载均衡服务器2 虚拟机3 网卡1(enpxxx)：10.10.10.13 网卡1(enpxxx)浮动：10.10.10.100</li><li>机器RS1：Apache服务器1-1 虚拟机1 网卡1(enpxxx)：10.10.10.14</li><li>机器RS2：Apache服务器1-2 虚拟机2 网卡1(enpxxx)：10.10.10.15</li><li>机器RS3：Apache服务器2-1 虚拟机3 网卡1(enpxxx)：10.10.10.16</li></ul><p><strong>机器RS1,2,3</strong></p><ul><li>开启Apache，分别写入页面</li></ul><p><strong>机器Ngx1,2</strong></p><ul><li><p>安装Nginx</p></li><li><p>配置文件</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">upstream demo1.com&#123;
+    server 10.10.10.14:80;
+    server 10.10.10.15:80;
+&#125;
+  
+upstream demo2.com&#123;
+    server 10.10.10.16:80;
+&#125;
+  
+server &#123;
+    listen       80;
+    server_name  www.demo1.com;
+    location &#x2F; &#123;
+        proxy_pass http:&#x2F;&#x2F;demo1.com;
+    &#125;
+&#125;
+  
+server &#123;
+    listen       80;
+    server_name  www.demo2.com;
+    location &#x2F; &#123;
+        proxy_pass http:&#x2F;&#x2F;demo2.com;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li><li><p>物理机修改Host文件测试</p></li></ul><p><strong>LVS-DR配置</strong></p><p>按照LVS-DR配置LVS服务器，Nginx作为“真实服务器”</p><p><strong>测试</strong></p><p>物理机修改host测试</p></div><footer class="post-footer"><p class="post-end-coffee">-------- 本文结束 <i class="fa-solid fa-mug-hot"></i> 感谢阅读 --------</p><div class="popular-posts-header">相关文章</div><ul class="popular-posts"><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/Linux系统管理教程笔记/" rel="bookmark">Linux系统管理教程笔记</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/Linux网络服务与数据库笔记/" rel="bookmark">Linux网络服务与数据库笔记</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/article/Manjaro-KDE-i3wm-PolyBar使用配置全指南/" rel="bookmark">Manjaro - KDE - i3wm - PolyBar 配置笔记</a></div></li></ul><script>let post_body = document.querySelector('.post-body');
+  let theme_switch = document.getElementById('theme_switch');
+  const theme = {};
+  Object.defineProperty(theme, 'value', {
+    set(v){
+      post_body.setAttribute('theme', v);
+      localStorage.setItem('md_theme', v);
+      theme_switch.value = v;
+    }
+  })
+  theme.value = localStorage.getItem('md_theme') || 'sneh';
+  theme_switch.addEventListener('change',e=>theme.value = e.target.value)
+  document.getElementById('theme_switch_wapper').classList.remove('hidden');</script><div class="reward-container"><div></div><button>赞赏</button><div class="post-reward"><div><img src="/images/wechatpay.png" alt="Liu Kairui 微信"> <span>微信</span></div><div><img src="/images/alipay.png" alt="Liu Kairui 支付宝"> <span>支付宝</span></div></div></div><div class="post-copyright"><ul><li class="post-copyright-author"><strong>本文作者： </strong>Liu Kairui</li><li class="post-copyright-link"><strong>本文链接：</strong> <a href="https://blog.liukairui.me/article/Linux%E9%9B%86%E7%BE%A4%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/" title="Linux集群教程笔记">https://blog.liukairui.me/article/Linux集群教程笔记/</a></li><li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div><div class="post-tags"><a href="/tags/%E8%BF%90%E7%BB%B4/" rel="tag"><i class="fa fa-tag"></i> 运维</a> <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a></div><div class="post-nav"><div class="post-nav-item"><a href="/article/Vue23%E5%9F%BA%E7%A1%80/" rel="prev" title="Vue2/3入门笔记"><i class="fa fa-chevron-left"></i> Vue2/3入门笔记</a></div><div class="post-nav-item"><a href="/article/2022%E5%AF%92%E5%81%87%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E5%89%8D%E7%AB%AF%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%94%E8%AE%B0/" rel="next" title="2022寒假字节跳动前端训练营笔记">2022寒假字节跳动前端训练营笔记 <i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div class="comments" id="valine-comments"></div></div></main><footer class="footer"><div class="footer-inner"><div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2022</span> <span class="with-love"><i class="fa fa-heart"></i> </span><span class="author" itemprop="copyrightHolder">Liu Kairui</span></div><div class="wordcount"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-chart-line"></i> </span><span>总字数：</span> <span title="总字数">1.7m</span></span></div><div class="busuanzi-count"><span class="post-meta-item" id="busuanzi_container_site_uv"><span class="post-meta-item-icon"><i class="fa fa-user"></i> </span><span class="site-uv" title="总访客量"><span id="busuanzi_value_site_uv"></span> </span></span><span class="post-meta-item" id="busuanzi_container_site_pv"><span class="post-meta-item-icon"><i class="fa fa-eye"></i> </span><span class="site-pv" title="总访问量"><span id="busuanzi_value_site_pv"></span></span></span></div><div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动</div><div class="addthis_inline_share_toolbox"><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-630c5bd30a606ba8" async></script></div><div id="time_and_count"></div><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script><script>function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20201101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span class="daysCnt" style="color: #1890ff">$&</span>');
+    div.innerHTML = `小站已悄悄运行了 ${ages}`;
+    div.className="workDays";
+  }
+  let div = document.createElement("div");
+  let time_and_count = document.getElementById("time_and_count");
+  time_and_count.appendChild(div);
+  timer();
+  setInterval("timer()",1000)</script><script>let footer = document.querySelector('.footer-inner')
+
+let wordCount = document.querySelector('.wordcount')
+wordCount.innerHTML = wordCount.innerText.replace('：',': ').replace('m','M')
+if(wordCount){
+  time_and_count.appendChild(wordCount);
+}
+
+let busaunzi = document.querySelector('.busuanzi-count')
+if(busaunzi){
+  footer.appendChild(busaunzi);
+}
+
+let powerby = document.querySelector('.powered-by')
+if(powerby){
+  footer.appendChild(powerby);
+}</script></div></footer><script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script><script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/algoliasearch/4.14.2/algoliasearch-lite.umd.js" integrity="sha256-dImjLPUsG/6p3+i7gVKBiDM8EemJAhQ0VvkRK2pVsQY=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/instantsearch.js/4.46.3/instantsearch.production.min.js" integrity="sha256-TDBtvQ4sIGgJS5bk8VOKto+yvrblCB/JxE/9odR5u+M=" crossorigin="anonymous"></script><script src="/js/third-party/search/algolia-search.js"></script><script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer"}</script><script src="/js/third-party/tags/pdf.js"></script><script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.1.7/mermaid.min.js","integrity":"sha256-G58AID1YoX5YaEtWfXSI0VLrZ6N4kvNvwg0BI8zUFxE="}}</script><script src="/js/third-party/tags/mermaid.js"></script><script src="/js/third-party/fancybox.js"></script><script src="/js/third-party/pace.js"></script><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"ABKlVtS4cyaWYEwunPyK3sXt-9Nh9j0Va","app_key":"xxGXdTTEGEVifs2TLB35844I","server_url":"https://abklvts4.lc-cn-e1-shared.com","security":false}</script><script src="/js/third-party/statistics/lean-analytics.js"></script><script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script><script src="/js/third-party/math/mathjax.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script><script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.liukairui.me/article/Linux%E9%9B%86%E7%BE%A4%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/"}</script><script src="/js/third-party/quicklink.js"></script><script src="https://unpkg.com/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script><script>var options = {
+  bottom: '71px',
+  right: 'unset',
+  left: '30px',
+  time: '0s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#222',
+  buttonColorLight: '#222',
+  saveInCookies: true,
+  label: '',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();</script><script>NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"ABKlVtS4cyaWYEwunPyK3sXt-9Nh9j0Va","appKey":"xxGXdTTEGEVifs2TLB35844I","serverURLs":"https://abklvts4.lc-cn-e1-shared.com","placeholder":"请开始你的表演","avatar":"identicon","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","visitor":false,"comment_count":true,"recordIP":true,"enableQQ":true,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/article/Linux%E9%9B%86%E7%BE%A4%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/",
+      serverURLs: "https://abklvts4.lc-cn-e1-shared.com"
+    }));
+  }, window.Valine);
+});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/hijiki.model.json"},display:{position:"right",width:150,height:300},mobile:{show:!1},react:{opacity:.7}})</script></body></html>
