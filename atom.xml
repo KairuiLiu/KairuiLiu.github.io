@@ -67,9 +67,9 @@
   </entry>
   
   <entry>
-    <title>前端安全策略及其解决方案</title>
-    <link href="https://blog.liukairui.me/article/%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E5%8F%8A%E5%85%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
-    <id>https://blog.liukairui.me/article/%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E5%8F%8A%E5%85%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</id>
+    <title>前端安全策略总结</title>
+    <link href="https://blog.liukairui.me/article/%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E6%80%BB%E7%BB%93/"/>
+    <id>https://blog.liukairui.me/article/%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E6%80%BB%E7%BB%93/</id>
     <published>2023-04-05T16:00:03.000Z</published>
     <updated>2023-04-05T16:00:03.000Z</updated>
     
@@ -338,7 +338,7 @@
     <content type="html"><![CDATA[<h2 id="库阶段library-2013-2015">库阶段(Library) 2013-2015</h2><p><strong>库与框架</strong>: 库更像是一个小模块嵌入于在大项目中,而框架则定义了一套自己的工程实践与配套工具</p><p>库阶段实现了基于 ES5 getter/setter 的响应式系统, MVVM, 模板数据绑定.并没有对构建工具等做出限制</p><p>此时 Vue 的组件与响应式系统强耦合, 没有编译过程, 直接将模板实例为 DOM并遍历实现数据绑定</p><h2 id="框架阶段framework-phase-2015-2016">框架阶段(Framework Phase)2015-2016</h2><p>实现 Vue 1.0</p><ul><li>引入了 Vue Router(SPA), vue-cli, Vuex(状态管理) 此时 Vue更像是一个框架了</li><li>引入了 <code>v-bind</code>, <code>v-on</code>, <code>v-for</code>及其缩写</li><li>实现了热更新与 Scoped CSS</li></ul><h2id="通用框架阶段universal-framework-phase-2016-2019">通用框架阶段(UniversalFramework Phase) 2016-2019</h2><p>完全重写, 实现 Vue 2.0.</p><ul><li>引入了模板编译 Virtual DOM</li><li>引入了基于 Virtual DOM 的服务端渲染</li><li>引入了基于 Virtual DOM 的跨端渲染</li><li>手动实现了 TS 定义</li><li>扩展了 vue-cli, 完成了工具链与 vue 的解绑</li><li>2.1 引入了作用域插槽</li><li>2.2 引入了基于路由的代码分割(SSR)</li><li>2.3 引入了基于路由的资源预加载(SSR, 基于 webpack 生成的 manifest文件分析资源引用关系)</li><li>2.4 引入了异步组件支持与编译输出(SSR)</li></ul><h2id="编译运行时混合阶compilerruntime-hybrid-phase-2019-now">编译/运行时混合阶(Compiler/RuntimeHybrid Phase) 2019-now</h2><p>Vue 2 的编译与运行模块是完全解耦的, 两者互不通信息,这导致编译器与运行时无法协作优化.</p><p>Vue 3</p><ul><li>实现了基于编译优化的 Virtual DOM 性能策略(Block Tree,PatchFlags)</li><li>提出了 Composition API(当时也提出了基于 class 的 API, 但是因为 class的装饰器语法不稳定, 最后选择了 Composition API). 切换 Composition API 后<ul><li>可扩展性得到了显著提升, 逻辑易于重组, 抽取, 复用</li><li>TS 更加友好</li></ul></li><li>实现了完全优化的 SSR 编译输出</li><li>开发了 Vite, 将 vue-cli 功能部分剥离到 Vite.</li><li>实现了同一份模版,不同的编译输出<ul><li>浏览器: 高度优化的 Virtual DOM 渲染函数</li><li>SSR: buffer + 字符串拼接</li><li>将来: Vapor mode (无 Virtual DOM 的渲染代码)</li></ul></li><li>单文件组件语法糖<ul><li><code>&lt;script setup&gt;</code></li><li>CSS v-bind()</li><li>Reactivity Transform</li></ul></li><li>3.1 引入了 Migration Build</li><li>3.2 引入了 <code>&lt;script setup&gt;</code></li></ul><p>现在的 Vue3</p><ul><li>core: 运行时, 编译器</li><li>文档</li><li>工具链 (create-vue)</li><li>SPA 路由 (Vue Router)</li><li>状态管理 (Pinia)</li><li>浏览器开发工具 (vue-devtools)</li><li>IDE 支持 (Volar)</li><li>TypeScript 支持 (将 tsc 扩展为 vue-tsc 以支持 sfc 检查)</li><li>静态分析 (eslint-plugin-vue)</li><li>单元测试 (<span class="citation"data-cites="vue/test-utils">@vue/test-utils</span>)</li></ul><h2 id="未来">未来</h2><ul><li>短期<ul><li>Reactivity Transform / Suspense 稳定化</li><li>SSR 水合改进 (lazy / on-demand / server-only)</li></ul></li><li>中到长期<ul><li>Vapor mode (受 Solid 启发的模版编译策略)</li></ul></li></ul>]]></content>
     
     
-    <summary type="html">尤雨溪</summary>
+    <summary type="html">尤雨溪讲的关于框架设计的思考</summary>
     
     
     
